@@ -45,17 +45,6 @@ char *php_zmq_get_libzmq_version(void)
 }
 /* }}} */
 
-/** {{{ zend_long php_zmq_libzmq_version_id()
-*/
-zend_long php_zmq_get_libzmq_version_id(void)
-{
-	int major = 0, minor = 0, patch = 0;
-
-	zmq_version(&major, &minor, &patch);
-	return (major * 10000) + (minor * 100) + patch;
-}
-/* }}} */
-
 /** {{{ char *php_zmq_printable_func()
 */
 char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_cache)

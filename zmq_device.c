@@ -40,8 +40,7 @@
 
 ZEND_EXTERN_MODULE_GLOBALS(php_zmq)
 
-static
-zend_bool s_invoke_device_cb (php_zmq_device_cb_t *cb, uint64_t current_ts)
+static bool s_invoke_device_cb (php_zmq_device_cb_t *cb, uint64_t current_ts)
 {
 	zend_bool retval = 0;
 	zval params[1];
@@ -49,11 +48,11 @@ zend_bool s_invoke_device_cb (php_zmq_device_cb_t *cb, uint64_t current_ts)
 
 	ZVAL_COPY(&params[0], &cb->user_data);
 
-	cb->fci.params      = params;
+	cb->fci.params = params;
 	cb->fci.param_count = 1;
 
 	/* Call the cb */
-	cb->fci.retval         = &fc_retval;
+	cb->fci.retval = &fc_retval;
 
 	if (zend_call_function(&(cb->fci), &(cb->fci_cache)) == FAILURE) {
 		if (!EG(exception)) {
@@ -73,8 +72,7 @@ zend_bool s_invoke_device_cb (php_zmq_device_cb_t *cb, uint64_t current_ts)
 	return retval;
 }
 
-static
-int s_capture_message (void *socket, zmq_msg_t *msg, int more)
+static int s_capture_message (void *socket, zmq_msg_t *msg, int more)
 {
 	int rc;
 	zmq_msg_t msg_cp;
@@ -88,12 +86,10 @@ int s_capture_message (void *socket, zmq_msg_t *msg, int more)
 		return -1;
 	}
 
-	return
-		zmq_sendmsg (socket, &msg_cp, more ? ZMQ_SNDMORE : 0);
+	return zmq_sendmsg(socket, &msg_cp, more ? ZMQ_SNDMORE : 0);
 }
 
-static
-int s_calculate_timeout (php_zmq_device_object *intern)
+static int s_calculate_timeout (php_zmq_device_object *intern)
 {
 	int timeout = -1;
 	uint64_t current = php_zmq_clock (ZMQ_G (clock_ctx));
@@ -123,14 +119,15 @@ int s_calculate_timeout (php_zmq_device_object *intern)
 			timeout = idle_timeout;
 	}
 
-	if (timeout > 0)
+	if (timeout > 0) {
 		timeout *= PHP_ZMQ_TIMEOUT;
+	}
 
 	return timeout;
 }
 
 
-zend_bool php_zmq_device (php_zmq_device_object *intern)
+bool php_zmq_device (php_zmq_device_object *intern)
 {
 	int errno_;
 	uint64_t last_message_received;
@@ -155,20 +152,20 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 	int rc = zmq_msg_init (&msg);
 
 	if (rc != 0) {
-		return 0;
+		return false;
 	}
 
 	front = php_zmq_socket_fetch_object(Z_OBJ(intern->front));
 	back = php_zmq_socket_fetch_object(Z_OBJ(intern->back));
 
-	items [0].socket = front->socket->z_socket;
-	items [0].fd = 0;
-	items [0].events = ZMQ_POLLIN;
-	items [0].revents = 0;
-	items [1].socket = back->socket->z_socket;
-	items [1].fd = 0;
-	items [1].events = ZMQ_POLLIN;
-	items [1].revents = 0;
+	items[0].socket = front->socket->z_socket;
+	items[0].fd = 0;
+	items[0].events = ZMQ_POLLIN;
+	items[0].revents = 0;
+	items[1].socket = back->socket->z_socket;
+	items[1].fd = 0;
+	items[1].events = ZMQ_POLLIN;
+	items[1].revents = 0;
 
 	capture_sock = NULL;
 	if (!Z_ISUNDEF(intern->capture)) {
@@ -192,7 +189,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 			errno_ = errno;
 			zmq_msg_close (&msg);
 			errno = errno_;
-			return 0;
+			return false;
 		}
 
 		current_ts = php_zmq_clock (ZMQ_G (clock_ctx));
@@ -206,7 +203,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 			if (intern->timer_cb.scheduled_at <= current_ts) {
 				if (!s_invoke_device_cb (&intern->timer_cb, current_ts)) {
 					zmq_msg_close (&msg);
-					return 1;
+					return true;
 				}
 			}
 		}
@@ -218,7 +215,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 				intern->idle_cb.scheduled_at <= current_ts) {
 				if (!s_invoke_device_cb (&intern->idle_cb, current_ts)) {
 					zmq_msg_close (&msg);
-					return 1;
+					return true;
 				}
 			}
 			continue;
@@ -232,7 +229,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 				moresz = sizeof(more);
@@ -241,7 +238,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 #if ZMQ_VERSION_MAJOR == 3 && ZMQ_VERSION_MINOR == 0
@@ -252,7 +249,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 				rc = zmq_sendmsg (items [1].socket, &msg, label ? ZMQ_SNDLABEL : (more ? ZMQ_SNDMORE : 0));
@@ -265,7 +262,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 						errno_ = errno;
 						zmq_msg_close (&msg);
 						errno = errno_;
-						return 0;
+						return false;
 					}
 				}
 				rc = zmq_sendmsg (items [1].socket, &msg, more ? ZMQ_SNDMORE : 0);
@@ -274,7 +271,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 				if (!more)
@@ -289,7 +286,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 				moresz = sizeof (more);
@@ -307,7 +304,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
 				rc = zmq_sendmsg (items [0].socket, &msg, label ? ZMQ_SNDLABEL : (more ? ZMQ_SNDMORE : 0));
@@ -320,7 +317,7 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 						errno_ = errno;
 						zmq_msg_close (&msg);
 						errno = errno_;
-						return 0;
+						return false;
 					}
 				}
 				rc = zmq_sendmsg (items [0].socket, &msg, more ? ZMQ_SNDMORE : 0);
@@ -329,15 +326,16 @@ zend_bool php_zmq_device (php_zmq_device_object *intern)
 					errno_ = errno;
 					zmq_msg_close (&msg);
 					errno = errno_;
-					return 0;
+					return false;
 				}
 
-				if (!more)
+				if (!more) {
 					break;
+				}
 			}
 		}
 	}
 	zmq_msg_close (&msg);
-	return 0;
+	return false;
 }
 

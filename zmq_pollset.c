@@ -52,8 +52,7 @@ struct _php_zmq_pollset {
 };
 /* }}} */
 
-static
-void s_pollset_clear(php_zmq_pollset *set, zend_bool reinit)
+static void s_pollset_clear(php_zmq_pollset *set, bool reinit)
 {
 	size_t i;
 
@@ -84,8 +83,7 @@ void s_pollset_clear(php_zmq_pollset *set, zend_bool reinit)
 	}
 }
 
-static
-size_t s_pollset_append(php_zmq_pollset *set, zmq_pollitem_t *item, zend_string *key, zval *entry)
+static size_t s_pollset_append(php_zmq_pollset *set, zmq_pollitem_t *item, zend_string *key, zval *entry)
 {
 	size_t index = set->num_items;
 
@@ -108,8 +106,7 @@ size_t s_pollset_append(php_zmq_pollset *set, zmq_pollitem_t *item, zend_string 
 	return index;
 }
 
-static
-void s_pollset_delete(php_zmq_pollset *set, size_t index)
+static void s_pollset_delete(php_zmq_pollset *set, size_t index)
 {
 	zend_string_release(set->keys[index]);
 	zval_ptr_dtor(&set->zv[index]);
@@ -143,10 +140,9 @@ void s_pollset_delete(php_zmq_pollset *set, size_t index)
 	}
 }
 
-static
-zend_bool s_index_for_key(php_zmq_pollset *set, zend_string *key, size_t *index)
+static bool s_index_for_key(php_zmq_pollset *set, zend_string *key, size_t *index)
 {
-	zend_bool retval = 0;
+	bool retval = 0;
 	size_t i;
 
 	for (i = 0; i < set->num_items; i++) {
@@ -159,14 +155,12 @@ zend_bool s_index_for_key(php_zmq_pollset *set, zend_string *key, size_t *index)
 	return retval;
 }
 
-static
-zval *s_zval_for_index(php_zmq_pollset *set, size_t index)
+static zval *s_zval_for_index(php_zmq_pollset *set, size_t index)
 {
 	return &set->zv[index];
 }
 
-static
-zend_string *s_create_key(zval *entry)
+static zend_string *s_create_key(zval *entry)
 {
 	if (Z_TYPE_P(entry) == IS_RESOURCE) {
 		/* zend_long since 8.1.0 */
@@ -200,12 +194,12 @@ php_zmq_pollset *php_zmq_pollset_init(void)
 	return set;
 }
 
-zend_bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value)
+bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value)
 {
 	size_t i;
 
 	if (set->num_items == 0) {
-		return 0;
+		return false;
 	}
 
 	for (i = 0; i < set->num_items; i++) {
@@ -216,7 +210,7 @@ zend_bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value)
 			add_assoc_zval(return_value, set->keys[i]->val, zv);
 		}
 	}
-	return 1;
+	return true;
 }
 
 size_t php_zmq_pollset_num_items(php_zmq_pollset *set)
@@ -265,8 +259,7 @@ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, 
 		}
 		item.fd = fd;
 		item.socket = NULL;
-	}
-	else {
+	} else {
 		php_zmq_socket_object *intern = php_zmq_socket_fetch_object(Z_OBJ_P(entry));
 		item.socket = intern->socket->z_socket;
 		item.fd = 0;
@@ -277,21 +270,21 @@ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, 
 	return key;
 }
 
-zend_bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key)
+bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key)
 {
 	size_t index;
 
 	if (!s_index_for_key(set, key, &index)) {
-		return 0;
+		return false;
 	}
 
 	s_pollset_delete(set, index);
-	return 1;
+	return true;
 }
 
-zend_bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry)
+bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry)
 {
-	zend_bool retval;
+	bool retval;
 	zend_string *key = s_create_key(entry);
 
 	retval = php_zmq_pollset_delete_by_key(set, key);
@@ -303,7 +296,7 @@ zend_bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry)
 int php_zmq_pollset_poll(php_zmq_pollset *set, int timeout, zval *r_array, zval *w_array)
 {
 	int rc, i;
-	zend_bool readable = 0, writable = 0;
+	bool readable = false, writable = false;
 
 	if (!set->items) {
 		return -1;
@@ -315,14 +308,14 @@ int php_zmq_pollset_poll(php_zmq_pollset *set, int timeout, zval *r_array, zval 
 		if (zend_hash_num_elements(Z_ARRVAL_P(r_array)) > 0) {
 			zend_hash_clean(Z_ARRVAL_P(r_array));
 		}
-		readable = 1;
+		readable = true;
 	}
 
 	if (w_array && Z_TYPE_P(w_array) == IS_ARRAY) {
 		if (zend_hash_num_elements(Z_ARRVAL_P(w_array)) > 0) {
 			zend_hash_clean(Z_ARRVAL_P(w_array));
 		}
-		writable = 1;
+		writable = true;
 	}
 
 	rc = zmq_poll(set->items, set->num_items, timeout);

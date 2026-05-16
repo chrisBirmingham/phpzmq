@@ -56,10 +56,10 @@ typedef struct _php_zmq_context {
 	int io_threads;
 
 	/* Is this a persistent context */
-	zend_bool is_persistent;
+	bool is_persistent;
 
 	/* Should this context live to end of process */
-	zend_bool use_shared_ctx;
+	bool use_shared_ctx;
 
 	/* How many active sockets */
 	zend_long socket_count;
@@ -79,7 +79,7 @@ typedef struct _php_zmq_socket  {
 	HashTable connect;
 	HashTable bind;
 
-	zend_bool is_persistent;
+	bool is_persistent;
 
 	/* Who created me */
 	int pid;
@@ -118,7 +118,7 @@ typedef struct _php_zmq_poll_object  {
 /* }}} */
 
 typedef struct _php_zmq_device_cb_t {
-	zend_bool initialized;
+	bool initialized;
 	long timeout;
 	zend_fcall_info fci;
 	zend_fcall_info_cache fci_cache;
@@ -181,7 +181,7 @@ typedef struct _php_zmq_device_object  {
 
 PHP_METHOD(ZMQSocket, getsockopt);
 PHP_METHOD(ZMQSocket, setsockopt);
-zend_bool php_zmq_device(php_zmq_device_object *intern);
+bool php_zmq_device(php_zmq_device_object *intern);
 
 zend_class_entry *php_zmq_socket_exception_sc_entry_get (void);
 zend_class_entry *php_zmq_device_exception_sc_entry_get (void);
@@ -205,7 +205,7 @@ zend_long php_zmq_get_libzmq_version_id(void);
 char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_cache);
 
 
-zend_bool php_zmq_shared_ctx_init(void);
+bool php_zmq_shared_ctx_init(void);
 
 void php_zmq_shared_ctx_assign_to(php_zmq_context *context);
 

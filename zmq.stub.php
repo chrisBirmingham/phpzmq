@@ -451,9 +451,9 @@ class ZMQ
 	public static function clock(): int {}
 
 #if PHP_ZMQ_HAVE_Z85
-	public static function z85encode(string $data): string|false {}
+	public static function z85encode(string $data): ?string {}
 
-	public static function z85decode(string $data): string|false {}
+	public static function z85decode(string $data): ?string {}
 #endif
 
 #if PHP_ZMQ_HAVE_CURVE_KEYPAIR

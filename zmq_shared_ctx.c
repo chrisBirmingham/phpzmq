@@ -35,51 +35,43 @@
 # define PHP_ZMQ_SHARED_CONTEXT_THREADS 1
 #endif
 
-static
-	void *s_ctx;
+static void *s_ctx;
 
-static
-	int s_ctx_socket_count = 0;
+static int s_ctx_socket_count = 0;
 
-static
-	int s_ctx_pid = 0;
+static int s_ctx_pid = 0;
 
 #ifdef ZTS
-static
-	MUTEX_T s_ctx_mutex;
+static MUTEX_T s_ctx_mutex;
 
-static
-zend_bool s_shared_ctx_init()
+static bool s_shared_ctx_init()
 {
 	if (!s_ctx) {
 		s_ctx_mutex = tsrm_mutex_alloc();
-		s_ctx_pid   = getpid();
-		s_ctx       = zmq_init(PHP_ZMQ_SHARED_CONTEXT_THREADS);
+		s_ctx_pid = getpid();
+		s_ctx = zmq_init(PHP_ZMQ_SHARED_CONTEXT_THREADS);
 	}
 	return (s_ctx != NULL);
 }
 
-static
-zend_bool s_shared_ctx_lock()
+static bool s_shared_ctx_lock()
 {
 	if (!s_ctx_mutex) {
-		return 0;
+		return false;
 	}
 
 	return tsrm_mutex_lock(s_ctx_mutex) == 0;
 }
 
-static
-zend_bool s_shared_ctx_unlock()
+static bool s_shared_ctx_unlock()
 {
 	if (!s_ctx_mutex) {
-		return 0;
+		return false;
 	}
 	return tsrm_mutex_unlock(s_ctx_mutex) == 0;
 }
 
-static
-void s_shared_ctx_destroy()
+static void s_shared_ctx_destroy()
 {
 	if (s_shared_ctx_lock()) {
 		if (s_ctx && s_ctx_pid == getpid()) {
@@ -96,8 +88,7 @@ void s_shared_ctx_destroy()
 			s_ctx_mutex = NULL;
 			s_ctx_pid   = -1;
 			return;
-		}
-		else {
+		} else {
 			s_shared_ctx_unlock();
 		}
 	}
@@ -105,41 +96,37 @@ void s_shared_ctx_destroy()
 
 #else
 
-static
-zend_bool s_shared_ctx_init()
+static bool s_shared_ctx_init()
 {
 	s_ctx = zmq_init(PHP_ZMQ_SHARED_CONTEXT_THREADS);
 	s_ctx_pid = getpid();
 	return (s_ctx != NULL);
 }
 
-static
-zend_bool s_shared_ctx_lock()
+static bool s_shared_ctx_lock()
 {
-	return 1;
-}
-static
-zend_bool s_shared_ctx_unlock()
-{
-	return 1;
+	return true;
 }
 
-static
-void s_shared_ctx_destroy() 
+static bool s_shared_ctx_unlock()
+{
+	return true;
+}
+
+static void s_shared_ctx_destroy()
 {
 	if (s_ctx && s_ctx_pid == getpid()) {
 		zmq_term(s_ctx);
 
-		s_ctx     = NULL;
+		s_ctx = NULL;
 		s_ctx_pid = -1;
 	}
 }
 #endif
 
-zend_bool php_zmq_shared_ctx_init(void)
+bool php_zmq_shared_ctx_init(void)
 {
-	return
-		s_shared_ctx_init();
+	return s_shared_ctx_init();
 }
 
 void php_zmq_shared_ctx_assign_to(php_zmq_context *context)
@@ -184,6 +171,3 @@ void php_zmq_shared_ctx_socket_count_decr(void)
 		s_shared_ctx_unlock();
 	}
 }
-
-
-
