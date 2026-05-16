@@ -28,8 +28,7 @@
 +-----------------------------------------------------------------------------------+
 */
 
-#ifndef _PHP_ZMQ_POLLSET_H_
-# define _PHP_ZMQ_POLLSET_H_
+#pragma once
 
 #define PHP_ZMQ_POLLSET_ERR_NO_STREAM    -1
 #define PHP_ZMQ_POLLSET_ERR_CANNOT_CAST  -2
@@ -90,5 +89,3 @@ zval *php_zmq_pollset_errors(php_zmq_pollset *set);
 */
 void php_zmq_pollset_destroy(php_zmq_pollset **set);
 /* }}} */
-
-#endif /* _PHP_ZMQ_POLLSET_H_ */

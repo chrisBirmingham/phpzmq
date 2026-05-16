@@ -1,17 +1,21 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: 47eed9bba692d53b321fc2176044786ef5d7bee8 */
+ * Stub hash: 8a7a078a8eeb0650aafd82adf54b75e85b77a85c */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+#if PHP_ZMQ_HAVE_Z85
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQ_z85encode, 0, 1, MAY_BE_STRING|MAY_BE_FALSE)
 	ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_class_ZMQ_z85decode arginfo_class_ZMQ_z85encode
+#endif
 
+#if PHP_ZMQ_HAVE_CURVE_KEYPAIR
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_curvekeypair, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQContext___construct, 0, 0, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, io_threads, IS_LONG, 0, "1")
@@ -32,6 +36,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_ispersistent, 0, 0, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
+#if PHP_ZMQ_HAVE_CTX_OPTIONS
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_setOpt, 0, 2, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
@@ -40,6 +45,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_getOpt, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
 ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQSocket___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, ZMQContext, ZMQContext, 0)
@@ -73,20 +79,28 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_ZMQSocket_connect arginfo_class_ZMQSocket_bind
 
+#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_monitor, 0, 1, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, events, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_recvevent, 0, 0, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, flags, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
+#if PHP_ZMQ_HAVE_UNBIND
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_unbind, 0, 1, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
 ZEND_END_ARG_INFO()
+#endif
 
-#define arginfo_class_ZMQSocket_disconnect arginfo_class_ZMQSocket_unbind
+#if PHP_ZMQ_HAVE_DISCONNECT
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_disconnect, 0, 1, IS_STATIC, 0)
+	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setsockopt, 0, 2, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
@@ -142,7 +156,8 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQDevice___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO_WITH_DEFAULT_VALUE(0, capture, ZMQSocket, 1, "null")
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_ZMQDevice_run arginfo_class_ZMQ_curvekeypair
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_run, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setidlecallback, 0, 2, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, idle_callback, IS_CALLABLE, 0)
@@ -163,16 +178,22 @@ ZEND_END_ARG_INFO()
 #define arginfo_class_ZMQDevice_gettimertimeout arginfo_class_ZMQ_clock
 
 ZEND_METHOD(ZMQ, clock);
+#if PHP_ZMQ_HAVE_Z85
 ZEND_METHOD(ZMQ, z85encode);
 ZEND_METHOD(ZMQ, z85decode);
+#endif
+#if PHP_ZMQ_HAVE_CURVE_KEYPAIR
 ZEND_METHOD(ZMQ, curvekeypair);
+#endif
 ZEND_METHOD(ZMQContext, __construct);
 ZEND_METHOD(ZMQContext, acquire);
 ZEND_METHOD(ZMQContext, getsocketcount);
 ZEND_METHOD(ZMQContext, getsocket);
 ZEND_METHOD(ZMQContext, ispersistent);
+#if PHP_ZMQ_HAVE_CTX_OPTIONS
 ZEND_METHOD(ZMQContext, setOpt);
 ZEND_METHOD(ZMQContext, getOpt);
+#endif
 ZEND_METHOD(ZMQSocket, __construct);
 ZEND_METHOD(ZMQSocket, send);
 ZEND_METHOD(ZMQSocket, recv);
@@ -180,18 +201,22 @@ ZEND_METHOD(ZMQSocket, sendmulti);
 ZEND_METHOD(ZMQSocket, recvmulti);
 ZEND_METHOD(ZMQSocket, bind);
 ZEND_METHOD(ZMQSocket, connect);
+#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 ZEND_METHOD(ZMQSocket, monitor);
+#endif
 ZEND_METHOD(ZMQSocket, recvevent);
+#if PHP_ZMQ_HAVE_UNBIND
 ZEND_METHOD(ZMQSocket, unbind);
+#endif
+#if PHP_ZMQ_HAVE_DISCONNECT
 ZEND_METHOD(ZMQSocket, disconnect);
+#endif
 ZEND_METHOD(ZMQSocket, setsockopt);
 ZEND_METHOD(ZMQSocket, getendpoints);
 ZEND_METHOD(ZMQSocket, getsockettype);
 ZEND_METHOD(ZMQSocket, ispersistent);
 ZEND_METHOD(ZMQSocket, getpersistentid);
 ZEND_METHOD(ZMQSocket, getsockopt);
-ZEND_METHOD(ZMQSocket, sendmsg);
-ZEND_METHOD(ZMQSocket, recvmsg);
 ZEND_METHOD(ZMQPoll, add);
 ZEND_METHOD(ZMQPoll, poll);
 ZEND_METHOD(ZMQPoll, getlasterrors);
@@ -209,21 +234,27 @@ ZEND_METHOD(ZMQDevice, settimertimeout);
 ZEND_METHOD(ZMQDevice, gettimertimeout);
 
 static const zend_function_entry class_ZMQ_methods[] = {
-	ZEND_ME(ZMQ, clock, arginfo_class_ZMQ_clock, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQ, z85encode, arginfo_class_ZMQ_z85encode, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQ, z85decode, arginfo_class_ZMQ_z85decode, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQ, curvekeypair, arginfo_class_ZMQ_curvekeypair, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQ, clock, arginfo_class_ZMQ_clock, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+#if PHP_ZMQ_HAVE_Z85
+	ZEND_ME(ZMQ, z85encode, arginfo_class_ZMQ_z85encode, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	ZEND_ME(ZMQ, z85decode, arginfo_class_ZMQ_z85decode, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+#endif
+#if PHP_ZMQ_HAVE_CURVE_KEYPAIR
+	ZEND_ME(ZMQ, curvekeypair, arginfo_class_ZMQ_curvekeypair, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+#endif
 	ZEND_FE_END
 };
 
 static const zend_function_entry class_ZMQContext_methods[] = {
 	ZEND_ME(ZMQContext, __construct, arginfo_class_ZMQContext___construct, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQContext, acquire, arginfo_class_ZMQContext_acquire, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQContext, acquire, arginfo_class_ZMQContext_acquire, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_ME(ZMQContext, getsocketcount, arginfo_class_ZMQContext_getsocketcount, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, getsocket, arginfo_class_ZMQContext_getsocket, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, ispersistent, arginfo_class_ZMQContext_ispersistent, ZEND_ACC_PUBLIC)
+#if PHP_ZMQ_HAVE_CTX_OPTIONS
 	ZEND_ME(ZMQContext, setOpt, arginfo_class_ZMQContext_setOpt, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, getOpt, arginfo_class_ZMQContext_getOpt, ZEND_ACC_PUBLIC)
+#endif
 	ZEND_FE_END
 };
 
@@ -235,18 +266,32 @@ static const zend_function_entry class_ZMQSocket_methods[] = {
 	ZEND_ME(ZMQSocket, recvmulti, arginfo_class_ZMQSocket_recvmulti, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, bind, arginfo_class_ZMQSocket_bind, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, connect, arginfo_class_ZMQSocket_connect, ZEND_ACC_PUBLIC)
+#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 	ZEND_ME(ZMQSocket, monitor, arginfo_class_ZMQSocket_monitor, ZEND_ACC_PUBLIC)
+#endif
 	ZEND_ME(ZMQSocket, recvevent, arginfo_class_ZMQSocket_recvevent, ZEND_ACC_PUBLIC)
+#if PHP_ZMQ_HAVE_UNBIND
 	ZEND_ME(ZMQSocket, unbind, arginfo_class_ZMQSocket_unbind, ZEND_ACC_PUBLIC)
+#endif
+#if PHP_ZMQ_HAVE_DISCONNECT
 	ZEND_ME(ZMQSocket, disconnect, arginfo_class_ZMQSocket_disconnect, ZEND_ACC_PUBLIC)
+#endif
 	ZEND_ME(ZMQSocket, setsockopt, arginfo_class_ZMQSocket_setsockopt, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getendpoints, arginfo_class_ZMQSocket_getendpoints, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getsockettype, arginfo_class_ZMQSocket_getsockettype, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, ispersistent, arginfo_class_ZMQSocket_ispersistent, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getpersistentid, arginfo_class_ZMQSocket_getpersistentid, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getsockopt, arginfo_class_ZMQSocket_getsockopt, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, sendmsg, arginfo_class_ZMQSocket_sendmsg, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, recvmsg, arginfo_class_ZMQSocket_recvmsg, ZEND_ACC_PUBLIC)
+#if (PHP_VERSION_ID >= 80400)
+	ZEND_RAW_FENTRY("sendmsg", zim_ZMQSocket_send, arginfo_class_ZMQSocket_sendmsg, ZEND_ACC_PUBLIC, NULL, NULL)
+#else
+	ZEND_RAW_FENTRY("sendmsg", zim_ZMQSocket_send, arginfo_class_ZMQSocket_sendmsg, ZEND_ACC_PUBLIC)
+#endif
+#if (PHP_VERSION_ID >= 80400)
+	ZEND_RAW_FENTRY("recvmsg", zim_ZMQSocket_recv, arginfo_class_ZMQSocket_recvmsg, ZEND_ACC_PUBLIC, NULL, NULL)
+#else
+	ZEND_RAW_FENTRY("recvmsg", zim_ZMQSocket_recv, arginfo_class_ZMQSocket_recvmsg, ZEND_ACC_PUBLIC)
+#endif
 	ZEND_FE_END
 };
 
@@ -429,13 +474,13 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_string_release_ex(const_ERR_ENOTSUP_name, true);
 
 	zval const_ERR_EFSM_value;
-	ZVAL_LONG(&const_ERR_EFSM_value, ZMQ_EFSM);
+	ZVAL_LONG(&const_ERR_EFSM_value, EFSM);
 	zend_string *const_ERR_EFSM_name = zend_string_init_interned("ERR_EFSM", sizeof("ERR_EFSM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_EFSM_name, &const_ERR_EFSM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_EFSM_name, true);
 
 	zval const_ERR_ETERM_value;
-	ZVAL_LONG(&const_ERR_ETERM_value, ZMQ_ETERM);
+	ZVAL_LONG(&const_ERR_ETERM_value, ETERM);
 	zend_string *const_ERR_ETERM_name = zend_string_init_interned("ERR_ETERM", sizeof("ERR_ETERM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_ETERM_name, &const_ERR_ETERM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_ETERM_name, true);
@@ -458,6 +503,90 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_PATCH_name, &const_LIBZMQ_VERSION_PATCH_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_LIBZMQ_VERSION_PATCH_name, true);
 
+	zval const_SOCKOPT_SNDHWM_value;
+	ZVAL_LONG(&const_SOCKOPT_SNDHWM_value, ZMQ_SNDHWM);
+	zend_string *const_SOCKOPT_SNDHWM_name = zend_string_init_interned("SOCKOPT_SNDHWM", sizeof("SOCKOPT_SNDHWM") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SNDHWM_name, &const_SOCKOPT_SNDHWM_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_SNDHWM_name, true);
+
+	zval const_SOCKOPT_RCVHWM_value;
+	ZVAL_LONG(&const_SOCKOPT_RCVHWM_value, ZMQ_RCVHWM);
+	zend_string *const_SOCKOPT_RCVHWM_name = zend_string_init_interned("SOCKOPT_RCVHWM", sizeof("SOCKOPT_RCVHWM") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVHWM_name, &const_SOCKOPT_RCVHWM_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_RCVHWM_name, true);
+
+	zval const_SOCKOPT_MAXMSGSIZE_value;
+	ZVAL_LONG(&const_SOCKOPT_MAXMSGSIZE_value, ZMQ_MAXMSGSIZE);
+	zend_string *const_SOCKOPT_MAXMSGSIZE_name = zend_string_init_interned("SOCKOPT_MAXMSGSIZE", sizeof("SOCKOPT_MAXMSGSIZE") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MAXMSGSIZE_name, &const_SOCKOPT_MAXMSGSIZE_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_MAXMSGSIZE_name, true);
+
+	zval const_SOCKOPT_MULTICAST_HOPS_value;
+	ZVAL_LONG(&const_SOCKOPT_MULTICAST_HOPS_value, ZMQ_MULTICAST_HOPS);
+	zend_string *const_SOCKOPT_MULTICAST_HOPS_name = zend_string_init_interned("SOCKOPT_MULTICAST_HOPS", sizeof("SOCKOPT_MULTICAST_HOPS") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MULTICAST_HOPS_name, &const_SOCKOPT_MULTICAST_HOPS_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_MULTICAST_HOPS_name, true);
+
+	zval const_SOCKOPT_XPUB_VERBOSE_value;
+	ZVAL_LONG(&const_SOCKOPT_XPUB_VERBOSE_value, ZMQ_XPUB_VERBOSE);
+	zend_string *const_SOCKOPT_XPUB_VERBOSE_name = zend_string_init_interned("SOCKOPT_XPUB_VERBOSE", sizeof("SOCKOPT_XPUB_VERBOSE") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_XPUB_VERBOSE_name, &const_SOCKOPT_XPUB_VERBOSE_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_XPUB_VERBOSE_name, true);
+
+	zval const_SOCKOPT_TCP_KEEPALIVE_value;
+	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_value, ZMQ_TCP_KEEPALIVE);
+	zend_string *const_SOCKOPT_TCP_KEEPALIVE_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE", sizeof("SOCKOPT_TCP_KEEPALIVE") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_name, &const_SOCKOPT_TCP_KEEPALIVE_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_name, true);
+
+	zval const_SOCKOPT_TCP_KEEPALIVE_IDLE_value;
+	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_IDLE_value, ZMQ_TCP_KEEPALIVE_IDLE);
+	zend_string *const_SOCKOPT_TCP_KEEPALIVE_IDLE_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_IDLE", sizeof("SOCKOPT_TCP_KEEPALIVE_IDLE") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_IDLE_name, &const_SOCKOPT_TCP_KEEPALIVE_IDLE_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_IDLE_name, true);
+
+	zval const_SOCKOPT_TCP_KEEPALIVE_CNT_value;
+	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_CNT_value, ZMQ_TCP_KEEPALIVE_CNT);
+	zend_string *const_SOCKOPT_TCP_KEEPALIVE_CNT_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_CNT", sizeof("SOCKOPT_TCP_KEEPALIVE_CNT") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_CNT_name, &const_SOCKOPT_TCP_KEEPALIVE_CNT_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_CNT_name, true);
+
+	zval const_SOCKOPT_TCP_KEEPALIVE_INTVL_value;
+	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_INTVL_value, ZMQ_TCP_KEEPALIVE_INTVL);
+	zend_string *const_SOCKOPT_TCP_KEEPALIVE_INTVL_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_INTVL", sizeof("SOCKOPT_TCP_KEEPALIVE_INTVL") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_INTVL_name, &const_SOCKOPT_TCP_KEEPALIVE_INTVL_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_INTVL_name, true);
+
+	zval const_SOCKOPT_TCP_ACCEPT_FILTER_value;
+	ZVAL_LONG(&const_SOCKOPT_TCP_ACCEPT_FILTER_value, ZMQ_TCP_ACCEPT_FILTER);
+	zend_string *const_SOCKOPT_TCP_ACCEPT_FILTER_name = zend_string_init_interned("SOCKOPT_TCP_ACCEPT_FILTER", sizeof("SOCKOPT_TCP_ACCEPT_FILTER") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_ACCEPT_FILTER_name, &const_SOCKOPT_TCP_ACCEPT_FILTER_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_TCP_ACCEPT_FILTER_name, true);
+
+	zval const_SOCKOPT_LAST_ENDPOINT_value;
+	ZVAL_LONG(&const_SOCKOPT_LAST_ENDPOINT_value, ZMQ_LAST_ENDPOINT);
+	zend_string *const_SOCKOPT_LAST_ENDPOINT_name = zend_string_init_interned("SOCKOPT_LAST_ENDPOINT", sizeof("SOCKOPT_LAST_ENDPOINT") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_LAST_ENDPOINT_name, &const_SOCKOPT_LAST_ENDPOINT_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_LAST_ENDPOINT_name, true);
+
+	zval const_SOCKOPT_ROUTER_RAW_value;
+	ZVAL_LONG(&const_SOCKOPT_ROUTER_RAW_value, ZMQ_ROUTER_RAW);
+	zend_string *const_SOCKOPT_ROUTER_RAW_name = zend_string_init_interned("SOCKOPT_ROUTER_RAW", sizeof("SOCKOPT_ROUTER_RAW") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_RAW_name, &const_SOCKOPT_ROUTER_RAW_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_ROUTER_RAW_name, true);
+
+	zval const_SOCKOPT_IPV4ONLY_value;
+	ZVAL_LONG(&const_SOCKOPT_IPV4ONLY_value, ZMQ_IPV4ONLY);
+	zend_string *const_SOCKOPT_IPV4ONLY_name = zend_string_init_interned("SOCKOPT_IPV4ONLY", sizeof("SOCKOPT_IPV4ONLY") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IPV4ONLY_name, &const_SOCKOPT_IPV4ONLY_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_IPV4ONLY_name, true);
+
+	zval const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value;
+	ZVAL_LONG(&const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value, ZMQ_DELAY_ATTACH_ON_CONNECT);
+	zend_string *const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name = zend_string_init_interned("SOCKOPT_DELAY_ATTACH_ON_CONNECT", sizeof("SOCKOPT_DELAY_ATTACH_ON_CONNECT") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name, &const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name, true);
+
 	zval const_SOCKOPT_HWM_value;
 	ZVAL_LONG(&const_SOCKOPT_HWM_value, ZMQ_HWM);
 	zend_string *const_SOCKOPT_HWM_name = zend_string_init_interned("SOCKOPT_HWM", sizeof("SOCKOPT_HWM") - 1, true);
@@ -476,29 +605,11 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IDENTITY_name, &const_SOCKOPT_IDENTITY_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_IDENTITY_name, true);
 
-	zval const_SOCKOPT_RATE_value;
-	ZVAL_LONG(&const_SOCKOPT_RATE_value, ZMQ_SOCKOPT_RATE);
-	zend_string *const_SOCKOPT_RATE_name = zend_string_init_interned("SOCKOPT_RATE", sizeof("SOCKOPT_RATE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RATE_name, &const_SOCKOPT_RATE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_RATE_name, true);
-
 	zval const_SOCKOPT_RECOVERY_IVL_value;
 	ZVAL_LONG(&const_SOCKOPT_RECOVERY_IVL_value, ZMQ_RECOVERY_IVL);
 	zend_string *const_SOCKOPT_RECOVERY_IVL_name = zend_string_init_interned("SOCKOPT_RECOVERY_IVL", sizeof("SOCKOPT_RECOVERY_IVL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECOVERY_IVL_name, &const_SOCKOPT_RECOVERY_IVL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RECOVERY_IVL_name, true);
-
-	zval const_SOCKOPT_RECOVERY_IVL_MSEC_value;
-	ZVAL_LONG(&const_SOCKOPT_RECOVERY_IVL_MSEC_value, ZMQ_RECOVERT_IVL_MSEC);
-	zend_string *const_SOCKOPT_RECOVERY_IVL_MSEC_name = zend_string_init_interned("SOCKOPT_RECOVERY_IVL_MSEC", sizeof("SOCKOPT_RECOVERY_IVL_MSEC") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECOVERY_IVL_MSEC_name, &const_SOCKOPT_RECOVERY_IVL_MSEC_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_RECOVERY_IVL_MSEC_name, true);
-
-	zval const_SOCKOPT_MCAST_LOOP_value;
-	ZVAL_LONG(&const_SOCKOPT_MCAST_LOOP_value, ZMQ_MCAST_LOOP);
-	zend_string *const_SOCKOPT_MCAST_LOOP_name = zend_string_init_interned("SOCKOPT_MCAST_LOOP", sizeof("SOCKOPT_MCAST_LOOP") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MCAST_LOOP_name, &const_SOCKOPT_MCAST_LOOP_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_MCAST_LOOP_name, true);
 
 	zval const_SOCKOPT_RCVTIMEO_value;
 	ZVAL_LONG(&const_SOCKOPT_RCVTIMEO_value, ZMQ_RCVTIMEO);
@@ -519,7 +630,7 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_string_release_ex(const_SOCKOPT_SNDBUF_name, true);
 
 	zval const_SOCKOPT_RCVBUF_value;
-	ZVAL_LONG(&const_SOCKOPT_RCVBUF_value, ZMQ_RCBUF);
+	ZVAL_LONG(&const_SOCKOPT_RCVBUF_value, ZMQ_RCVBUF);
 	zend_string *const_SOCKOPT_RCVBUF_name = zend_string_init_interned("SOCKOPT_RCVBUF", sizeof("SOCKOPT_RCVBUF") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVBUF_name, &const_SOCKOPT_RCVBUF_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RCVBUF_name, true);

@@ -61,13 +61,6 @@ if test "$PHP_ZMQ" != "no"; then
   fi
 
   AC_CHECK_LIB(
-    [zmq], [zmq_proxy_steerable],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_PROXY_STEERABLE], [1], [Whether zmq_proxy_steerable function is available]
-    )]
-  )
-
-  AC_CHECK_LIB(
     [zmq], [zmq_z85_decode],
     [AC_DEFINE(
       [PHP_ZMQ_HAVE_Z85], [1], [Whether zmq_z85_decode function is available]

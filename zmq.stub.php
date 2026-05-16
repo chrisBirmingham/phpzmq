@@ -153,13 +153,13 @@ class ZMQ
 
 	/**
 	 * @var int
-	 * @cvalue ZMQ_EFSM
+	 * @cvalue EFSM
 	 */
 	const ERR_EFSM = UNKNOWN;
 
 	/**
 	 * @var int
-	 * @cvalue ZMQ_ETERM
+	 * @cvalue ETERM
 	 */
 	const ERR_ETERM = UNKNOWN;
 
@@ -181,46 +181,89 @@ class ZMQ
 	 */
 	const LIBZMQ_VERSION_PATCH = UNKNOWN;
 
-	// const SOCKOPT_TOS = UNKNOWN;
-	// const SOCKOPT_ROUTER_HANDOVER = UNKNOWN;
-	// const SOCKOPT_CONNECT_RID = UNKNOWN;
-	// const SOCKOPT_HANDSHAKE_IVL = UNKNOWN;
-	// const SOCKOPT_SOCKS_PROXY = UNKNOWN;
-	// const SOCKOPT_XPUB_NODROP = UNKNOWN;
-	// const SOCKOPT_ROUTER_MANDATORY = UNKNOWN;
-	// const SOCKOPT_PROBE_ROUTER = UNKNOWN;
-	// const SOCKOPT_REQ_RELAXED = UNKNOWN;
-	// const SOCKOPT_REQ_CORRELATE = UNKNOWN;
-	// const SOCKOPT_CONFLATE = UNKNOWN;
-	// const SOCKOPT_ZAP_DOMAIN = UNKNOWN;
-	// const SOCKOPT_MECHANISM = UNKNOWN;
-	// const SOCKOPT_PLAIN_SERVER = UNKNOWN;
-	// const SOCKOPT_PLAIN_USERNAME = UNKNOWN;
-	// const SOCKOPT_PLAIN_PASSWORD = UNKNOWN;
-	// const SOCKOPT_CURVE_SERVER = UNKNOWN;
-	// const SOCKOPT_CURVE_PUBLICKEY = UNKNOWN;
-	// const SOCKOPT_CURVE_SECRETKEY = UNKNOWN;
-	// const SOCKOPT_CURVE_SERVERKEY = UNKNOWN;
-	// const SOCKOPT_GSSAPI_SERVER = UNKNOWN;
-	// const SOCKOPT_GSSAPI_PLAINTEXT = UNKNOWN;
-	// const SOCKOPT_GSSAPI_PRINCIPAL = UNKNOWN;
-	// const SOCKOPT_GSSAPI_SERVICE_PRINCIPAL = UNKNOWN;
-	// const SOCKOPT_IPV6 = UNKNOWN;
-	// const SOCKOPT_IMMEDIATE = UNKNOWN;
-	// const SOCKOPT_SNDHWM = UNKNOWN;
-	// const SOCKOPT_RCVHWM = UNKNOWN;
-	// const SOCKOPT_MAXMSGSIZE = UNKNOWN;
-	// const SOCKOPT_MULTICAST_HOPS = UNKNOWN;
-	// const SOCKOPT_XPUB_VERBOSE = UNKNOWN;
-	// const SOCKOPT_TCP_KEEPALIVE = UNKNOWN;
-	// const SOCKOPT_TCP_KEEPALIVE_IDLE = UNKNOWN;
-	// const SOCKOPT_TCP_KEEPALIVE_CNT = UNKNOWN;
-	// const SOCKOPT_TCP_KEEPALIVE_INTVL = UNKNOWN;
-	// const SOCKOPT_TCP_ACCEPT_FILTER = UNKNOWN;
-	// const SOCKOPT_LAST_ENDPOINT = UNKNOWN;
-	// const SOCKOPT_ROUTER_RAW = UNKNOWN;
-	// const SOCKOPT_IPV4ONLY = UNKNOWN;
-	// const SOCKOPT_DELAY_ATTACH_ON_CONNECT = UNKNOWN;
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SNDHWM
+	 */
+	const SOCKOPT_SNDHWM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RCVHWM
+	 */
+	const SOCKOPT_RCVHWM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_MAXMSGSIZE
+	 */
+	const SOCKOPT_MAXMSGSIZE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_MULTICAST_HOPS
+	 */
+	const SOCKOPT_MULTICAST_HOPS = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_XPUB_VERBOSE
+	 */
+	const SOCKOPT_XPUB_VERBOSE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TCP_KEEPALIVE
+	 */
+	const SOCKOPT_TCP_KEEPALIVE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TCP_KEEPALIVE_IDLE
+	 */
+	const SOCKOPT_TCP_KEEPALIVE_IDLE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TCP_KEEPALIVE_CNT
+	 */
+	const SOCKOPT_TCP_KEEPALIVE_CNT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TCP_KEEPALIVE_INTVL
+	 */
+	const SOCKOPT_TCP_KEEPALIVE_INTVL = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TCP_ACCEPT_FILTER
+	 */
+	const SOCKOPT_TCP_ACCEPT_FILTER = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_LAST_ENDPOINT
+	 */
+	const SOCKOPT_LAST_ENDPOINT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_ROUTER_RAW
+	 */
+	const SOCKOPT_ROUTER_RAW = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_IPV4ONLY
+	 */
+	const SOCKOPT_IPV4ONLY = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_DELAY_ATTACH_ON_CONNECT
+	 */
+	const SOCKOPT_DELAY_ATTACH_ON_CONNECT = UNKNOWN;
 
 	/**
 	 * @var int
@@ -242,27 +285,9 @@ class ZMQ
 
 	/**
 	 * @var int
-	 * @cvalue ZMQ_SOCKOPT_RATE
-	 */
-	const SOCKOPT_RATE = UNKNOWN;
-
-	/**
-	 * @var int
 	 * @cvalue ZMQ_RECOVERY_IVL
 	 */
 	const SOCKOPT_RECOVERY_IVL = UNKNOWN;
-
-	/**
-	 * @var int
-	 * @cvalue ZMQ_RECOVERT_IVL_MSEC
-	 */
-	const SOCKOPT_RECOVERY_IVL_MSEC = UNKNOWN;
-
-	/**
-	 * @var int
-	 * @cvalue ZMQ_MCAST_LOOP
-	 */
-	const SOCKOPT_MCAST_LOOP = UNKNOWN;
 
 	/**
 	 * @var int
@@ -284,7 +309,7 @@ class ZMQ
 
 	/**
 	 * @var int
-	 * @cvalue ZMQ_RCBUF
+	 * @cvalue ZMQ_RCVBUF
 	 */
 	const SOCKOPT_RCVBUF = UNKNOWN;
 
@@ -347,8 +372,6 @@ class ZMQ
 	 * @cvalue ZMQ_EVENTS
 	 */
 	const SOCKOPT_EVENTS = UNKNOWN;
-	// const CTXOPT_MAX_SOCKETS = UNKNOWN;
-	// const CTXOPT_MAX_SOCKETS_DEFAULT = UNKNOWN;
 
 	/**
 	 * @var int
@@ -425,13 +448,17 @@ class ZMQ
 	/**
 	 * A monotonic clock
 	 */
-	public function clock(): int {}
+	public static function clock(): int {}
 
-	public function z85encode(string $data): string|false {}
+#if PHP_ZMQ_HAVE_Z85
+	public static function z85encode(string $data): string|false {}
 
-	public function z85decode(string $data): string|false {}
+	public static function z85decode(string $data): string|false {}
+#endif
 
-	public function curvekeypair(): void {}
+#if PHP_ZMQ_HAVE_CURVE_KEYPAIR
+	public static function curvekeypair(): void {}
+#endif
 }
 
 class ZMQContext
@@ -450,7 +477,7 @@ class ZMQContext
 	 * 
 	 * @return ZMQContext
 	 */
-	public function acquire(): ZMQContext {}
+	public static function acquire(): ZMQContext {}
 
 	public function getsocketcount(): int {}
 
@@ -458,6 +485,7 @@ class ZMQContext
 
 	public function ispersistent(): bool {}
 
+#if PHP_ZMQ_HAVE_CTX_OPTIONS
 	/**
 	 * Set a context option
 	 * 
@@ -474,6 +502,7 @@ class ZMQContext
 	 * @return ZMQContext
 	 */
 	public function getOpt(int $option): int {}
+#endif
 }
 
 class ZMQSocket
@@ -529,10 +558,13 @@ class ZMQSocket
 	 */
 	public function connect(string $dsn, bool $force = false): static {}
 
+#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 	public function monitor(string $dsn, int $events = 0): static {}
+#endif
 
 	public function recvevent(int $flags = 0): array {}
 
+#if PHP_ZMQ_HAVE_UNBIND
 	/**
 	 * Unbind the socket from an endpoint
 	 * 
@@ -540,7 +572,9 @@ class ZMQSocket
 	 * @return ZMQSocket
 	 */
 	public function unbind(string $dsn): static {}
+#endif
 
+#if PHP_ZMQ_HAVE_DISCONNECT
 	/**
 	 * Disconnect the socket from an endpoint
 	 * 
@@ -548,6 +582,7 @@ class ZMQSocket
 	 * @return ZMQSocket
 	 */
 	public function disconnect(string $dsn): static {}
+#endif
 
 	public function setsockopt(int $key, mixed $value): void {}
 
@@ -561,8 +596,14 @@ class ZMQSocket
 
 	public function getsockopt(int $key): int {}
 
+	/**
+	 * @implementation-alias ZMQSocket::send
+	 */
 	public function sendmsg(string $message, int $mode = 0): static|false {}
 
+	/**
+	 * @implementation-alias ZMQSocket::recv
+	 */
 	public function recvmsg(int $mode = 0): string|false {}
 }
 

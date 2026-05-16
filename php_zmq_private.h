@@ -28,13 +28,13 @@
 +-----------------------------------------------------------------------------------+
 */
 
-#ifndef _PHP_ZMQ_PRIVATE_H_
-# define _PHP_ZMQ_PRIVATE_H_
+#pragma once
 
 #include "ext/standard/info.h"
 #include "Zend/zend_exceptions.h"
 #include "Zend/zend_llist.h"
 #include "main/php_ini.h"
+#include "zend_types.h"
 
 #include <zmq.h>
 
@@ -90,7 +90,7 @@ typedef struct _php_zmq_socket  {
 */
 typedef struct _php_zmq_context_object  {
 	php_zmq_context *context;
-	zend_object zo;
+	zend_object std;
 } php_zmq_context_object;
 
 /* }}} */
@@ -105,7 +105,7 @@ typedef struct _php_zmq_socket_object  {
 
 	/* zval of the context */
 	zval context_obj;
-	zend_object zo;
+	zend_object std;
 } php_zmq_socket_object;
 /* }}} */
 
@@ -113,7 +113,7 @@ typedef struct _php_zmq_socket_object  {
 */
 typedef struct _php_zmq_poll_object  {
 	php_zmq_pollset *set;
-	zend_object zo;
+	zend_object std;
 } php_zmq_poll_object;
 /* }}} */
 
@@ -135,7 +135,7 @@ typedef struct _php_zmq_device_object  {
 	zval front;
 	zval back;
 	zval capture;
-	zend_object zo;
+	zend_object std;
 } php_zmq_device_object;
 /* }}} */
 
@@ -179,8 +179,8 @@ typedef struct _php_zmq_device_object  {
 
 #define PHP_ZMQ_INTERNAL_ERROR -99
 
-PHP_METHOD(zmqsocket, getsockopt);
-PHP_METHOD(zmqsocket, setsockopt);
+PHP_METHOD(ZMQSocket, getsockopt);
+PHP_METHOD(ZMQSocket, setsockopt);
 zend_bool php_zmq_device(php_zmq_device_object *intern);
 
 zend_class_entry *php_zmq_socket_exception_sc_entry_get (void);
@@ -220,5 +220,3 @@ void php_zmq_shared_ctx_socket_count_decr(void);
 ZEND_BEGIN_MODULE_GLOBALS(php_zmq)
 	php_zmq_clock_ctx_t *clock_ctx;
 ZEND_END_MODULE_GLOBALS(php_zmq)
-
-#endif /* _PHP_ZMQ_PRIVATE_H_ */
