@@ -1,9 +1,6 @@
 PHP_ARG_WITH(zmq,     whether to enable 0MQ support,
 [  --with-zmq[=DIR]   Enable 0MQ support. DIR is the prefix to libzmq installation directory.], yes)
 
-PHP_ARG_WITH(czmq,    whether to enable CZMQ support,
-[  --with-czmq[=DIR]  Enable CZMQ support. DIR is the prefix to CZMQ installation directory.], no, no)
-
 if test "$PHP_ZMQ" != "no"; then
 
   AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -107,40 +104,6 @@ if test "$PHP_ZMQ" != "no"; then
 
   CFLAGS="$ORIG_CFLAGS"
   LDFLAGS="$ORIG_LDFLAGS"
-
-  if test "$PHP_CZMQ" != "no"; then
-    if test "x$PHP_CZMQ" != "xyes"; then
-      export PKG_CONFIG_PATH="${PHP_CZMQ}/${PHP_LIBDIR}/pkgconfig:${PHP_ZMQ_EXPLICIT_PKG_CONFIG_PATH}"
-    fi
-
-    AC_MSG_CHECKING(for czmq)
-    if $PKG_CONFIG --exists libczmq; then
-
-      AC_MSG_RESULT([yes])
-
-      AC_MSG_CHECKING([czmq version is below 3.0.0])
-      if $PKG_CONFIG libczmq --max-version=3.0.0; then
-        AC_MSG_RESULT([ok])
-      else
-        AC_MSG_ERROR([Only czmq 2.x is supported at the moment])
-      fi
-    
-      PHP_CZMQ_VERSION=`$PKG_CONFIG libczmq --modversion`
-      PHP_CZMQ_PREFIX=`$PKG_CONFIG libczmq --variable=prefix`
-      AC_MSG_RESULT([found version $PHP_CZMQ_VERSION in $PHP_CZMQ_PREFIX])
-
-      PHP_CZMQ_LIBS=`$PKG_CONFIG libczmq --libs`
-      PHP_CZMQ_INCS=`$PKG_CONFIG libczmq --cflags`
-
-      PHP_EVAL_LIBLINE($PHP_CZMQ_LIBS, ZMQ_SHARED_LIBADD)
-      PHP_EVAL_INCLINE($PHP_CZMQ_INCS)
-
-      AC_DEFINE([HAVE_CZMQ], [], [czmq was found])
-      AC_DEFINE([HAVE_CZMQ_2], [], [czmq was found])
-    else
-      AC_MSG_RESULT([no])
-    fi
-  fi
 
   AC_CHECK_HEADERS([stdint.h],[php_zmq_have_stdint=yes; break;])
   if test $php_zmq_have_stdint != "yes"; then

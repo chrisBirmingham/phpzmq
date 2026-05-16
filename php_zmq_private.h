@@ -38,13 +38,6 @@
 
 #include <zmq.h>
 
-#ifdef HAVE_CZMQ
-# include <czmq.h>
-# if CZMQ_VERSION_MAJOR >= 2
-#  define HAVE_CZMQ_2
-# endif
-#endif
-
 #ifdef PHP_WIN32
 # include "win32/php_stdint.h"
 #else
@@ -224,28 +217,8 @@ void php_zmq_shared_ctx_socket_count_incr(void);
 
 void php_zmq_shared_ctx_socket_count_decr(void);
 
-
-
-
 ZEND_BEGIN_MODULE_GLOBALS(php_zmq)
 	php_zmq_clock_ctx_t *clock_ctx;
 ZEND_END_MODULE_GLOBALS(php_zmq)
-
-#ifdef HAVE_CZMQ_2
-
-# define PHP_ZMQ_AUTH_TYPE_PLAIN 0
-# define PHP_ZMQ_AUTH_TYPE_CURVE 1
-
-typedef struct _php_zmq_cert {
-	zcert_t *zcert;
-	zend_object zo;
-} php_zmq_cert_object;
-
-typedef struct _php_zmq_auth {
-	zctx_t *shadow_context;
-	zauth_t *zauth;
-	zend_object zo;
-} php_zmq_auth_object;
-#endif
 
 #endif /* _PHP_ZMQ_PRIVATE_H_ */
