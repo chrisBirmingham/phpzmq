@@ -1,13 +1,12 @@
 <?php
-/**
- * zmq-API v@PACKAGE_VERSION@ Docs build by DocThor [2020-03-15]
- * @package zmq
- */
 
 /**
- * @package zmq
+ * @generate-class-entries
+ * @generate-legacy-arginfo 80100
  */
-class ZMQ {
+
+class ZMQ
+{
 	const SOCKET_PAIR = 0;
 	const SOCKET_PUB = 1;
 	const SOCKET_SUB = 2;
@@ -113,20 +112,21 @@ class ZMQ {
 	const EVENT_DISCONNECTED = 512;
 	const EVENT_MONITOR_STOPPED = 1024;
 	const EVENT_ALL = 65535;
+
 	/**
 	 * A monotonic clock
-	 * 
-	 * @return integer
 	 */
-	public function clock() {}
-	public function z85encode($data) {}
-	public function z85decode($data) {}
-	public function curvekeypair() {}
+	public function clock(): int {}
+
+	public function z85encode(string $data): string|false {}
+
+	public function z85decode(string $data): string|false {}
+
+	public function curvekeypair(): void {}
 }
-/**
- * @package zmq
- */
-class ZMQContext {
+
+class ZMQContext
+{
 	/**
 	 * Build a new ZMQContext object
 	 * 
@@ -134,16 +134,21 @@ class ZMQContext {
 	 * @param boolean $is_persistent
 	 * @return ZMQContext
 	 */
-	public function __construct($io_threads="", $persistent="") {}
+	public function __construct(int $io_threads = 1, bool $persistent = true) {}
+
 	/**
 	 * Acquires a handle to the request global context
 	 * 
 	 * @return ZMQContext
 	 */
-	public function acquire() {}
-	public function getsocketcount() {}
-	public function getsocket($type, $dsn, $on_new_socket="") {}
-	public function ispersistent() {}
+	public function acquire(): ZMQContext {}
+
+	public function getsocketcount(): int {}
+
+	public function getsocket(int $type, ?string $dsn = null, bool $on_new_socket = false): ZMQSocket {}
+
+	public function ispersistent(): bool {}
+
 	/**
 	 * Set a context option
 	 * 
@@ -151,19 +156,19 @@ class ZMQContext {
 	 * @param int $value
 	 * @return ZMQContext
 	 */
-	public function setOpt($option, $value) {}
+	public function setOpt(int $option, int $value): void {}
+
 	/**
 	 * Set a context option
 	 * 
 	 * @param int $option
 	 * @return ZMQContext
 	 */
-	public function getOpt($option) {}
+	public function getOpt(int $option): int {}
 }
-/**
- * @package zmq
- */
-class ZMQSocket {
+
+class ZMQSocket
+{
 	/**
 	 * Build a new ZMQSocket object
 	 * 
@@ -173,7 +178,8 @@ class ZMQSocket {
 	 * @param callback $on_new_socket
 	 * @return ZMQSocket
 	 */
-	public function __construct(ZMQContext $ZMQContext, $type, $persistent_id="", $on_new_socket="") {}
+	public function __construct(ZMQContext $ZMQContext, int $type, ?string $persistent_id = null, bool $on_new_socket = false) {}
+
 	/**
 	 * Send a message. Return true if message was sent and false on EAGAIN
 	 * 
@@ -181,17 +187,21 @@ class ZMQSocket {
 	 * @param integer $flags
 	 * @return ZMQSocket
 	 */
-	public function send($message, $mode="") {}
-	public function recv($mode="") {}
+	public function send(string $message, int $mode = 0): static|false {}
+
+	public function recv(int $mode = 0): string|false {}
+
 	/**
 	 * Send a multipart message. Return true if message was sent and false on EAGAIN
 	 * 
-	 * @param arrays $messages
+	 * @param string[] $messages
 	 * @param integer $flags
 	 * @return ZMQSocket
 	 */
-	public function sendmulti($message, $mode="") {}
-	public function recvmulti($mode="") {}
+	public function sendmulti(array $message, int $mode = 0): static|false {}
+
+	public function recvmulti(int $mode = 0): array|false {}
+
 	/**
 	 * Bind the socket to an endpoint
 	 * 
@@ -199,7 +209,8 @@ class ZMQSocket {
 	 * @param boolean $force
 	 * @return ZMQSocket
 	 */
-	public function bind($dsn, $force="") {}
+	public function bind(string $dsn, bool $force = false): static {}
+
 	/**
 	 * Connect the socket to an endpoint
 	 * 
@@ -207,36 +218,47 @@ class ZMQSocket {
 	 * @param boolean $force
 	 * @return ZMQSocket
 	 */
-	public function connect($dsn, $force="") {}
-	public function monitor($dsn, $events="") {}
-	public function recvevent($flags="") {}
+	public function connect(string $dsn, bool $force = false): static {}
+
+	public function monitor(string $dsn, int $events = 0): static {}
+
+	public function recvevent(int $flags = 0): array {}
+
 	/**
 	 * Unbind the socket from an endpoint
 	 * 
 	 * @param string $dsn
 	 * @return ZMQSocket
 	 */
-	public function unbind($dsn) {}
+	public function unbind(string $dsn): static {}
+
 	/**
 	 * Disconnect the socket from an endpoint
 	 * 
 	 * @param string $dsn
 	 * @return ZMQSocket
 	 */
-	public function disconnect($dsn) {}
-	public function setsockopt($key, $value) {}
-	public function getendpoints() {}
-	public function getsockettype() {}
-	public function ispersistent() {}
-	public function getpersistentid() {}
-	public function getsockopt($key) {}
-	public function sendmsg($message, $mode="") {}
-	public function recvmsg($mode="") {}
+	public function disconnect(string $dsn): static {}
+
+	public function setsockopt(int $key, mixed $value): void {}
+
+	public function getendpoints(): array {}
+
+	public function getsockettype(): int {}
+
+	public function ispersistent(): bool {}
+
+	public function getpersistentid(): ?string {}
+
+	public function getsockopt(int $key): int {}
+
+	public function sendmsg(string $message, int $mode = 0): static|false {}
+
+	public function recvmsg(int $mode = 0): string|false {}
 }
-/**
- * @package zmq
- */
-class ZMQPoll {
+
+class ZMQPoll
+{
 	/**
 	 * Add a ZMQSocket object into the pollset
 	 * 
@@ -244,7 +266,8 @@ class ZMQPoll {
 	 * @param integer $events
 	 * @return integer
 	 */
-	public function add($entry, $type) {}
+	public function add(ZMQSocket $entry, int $type): int {}
+
 	/**
 	 * Poll the sockets
 	 * 
@@ -253,38 +276,43 @@ class ZMQPoll {
 	 * @param integer $timeout
 	 * @return integer
 	 */
-	public function poll(&$readable, &$writable, $timeout="") {}
-	public function getlasterrors() {}
+	public function poll(array &$readable, array &$writable, int $timeout = -1): long {}
+
+	public function getlasterrors(): Object {}
+
 	/**
 	 * Remove item from poll set
 	 * 
 	 * @param mixed $item
 	 * @return boolean
 	 */
-	public function remove($remove) {}
+	public function remove(mixed $remove): bool {}
+
 	/**
 	 * Returns the number of items in the set
 	 * 
 	 * @return integer
 	 */
-	public function count() {}
+	public function count(): int {}
+
 	/**
 	 * Clear the pollset
 	 * 
 	 * @return ZMQPoll
 	 */
-	public function clear() {}
+	public function clear(): ZMQPoll {}
+
 	/**
 	 * Clear the pollset
 	 * 
 	 * @return array
 	 */
-	public function items() {}
+	public function items(): array {}
 }
-/**
- * @package zmq
- */
-class ZMQDevice {
+
+
+class ZMQDevice
+{
 	/**
 	 * Construct a device
 	 * 
@@ -292,42 +320,33 @@ class ZMQDevice {
 	 * @param ZMQSocket $backend
 	 * @return void
 	 */
-	public function __construct(ZMQSocket $frontend, ZMQSocket $backend, ZMQSocket $capture="") {}
+	public function __construct(ZMQSocket $frontend, ZMQSocket $backend, ?ZMQSocket $capture = null) {}
 	/**
 	 * Start a device
 	 * 
 	 * @return void
 	 */
-	public function run() {}
-	public function setidlecallback($idle_callback, $timeout, $user_data="") {}
-	public function setidletimeout($timeout) {}
-	public function getidletimeout() {}
-	public function settimercallback($idle_callback, $timeout, $user_data="") {}
-	public function settimertimeout($timeout) {}
-	public function gettimertimeout() {}
+	public function run(): void {}
+
+	public function setidlecallback(callable $idle_callback, int $timeout, ?object $user_data = null): static {}
+
+	public function setidletimeout(int $timeout): static {}
+
+	public function getidletimeout(): int {}
+
+	public function settimercallback(callable $idle_callback, int $timeout, ?object $user_data = null): static {}
+
+	public function settimertimeout(int $timeout): static {}
+
+	public function gettimertimeout(): int {}
 }
-/**
- * @package zmq
- */
-class ZMQException extends Exception {
-}
-/**
- * @package zmq
- */
-class ZMQContextException extends ZMQException {
-}
-/**
- * @package zmq
- */
-class ZMQSocketException extends ZMQException {
-}
-/**
- * @package zmq
- */
-class ZMQPollException extends ZMQException {
-}
-/**
- * @package zmq
- */
-class ZMQDeviceException extends ZMQException {
-}
+
+class ZMQException extends Exception {}
+
+class ZMQContextException extends ZMQException {}
+
+class ZMQSocketException extends ZMQException {}
+
+class ZMQPollException extends ZMQException {}
+
+class ZMQDeviceException extends ZMQException {}
