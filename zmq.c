@@ -221,11 +221,7 @@ static php_zmq_context *php_zmq_context_get(zend_long io_threads, zend_bool is_p
 		le.type = php_zmq_context_list_entry();
 		le.ptr  = context;
 
-#if PHP_VERSION_ID < 70300
-		GC_REFCOUNT(&le) = 1;
-#else
 		GC_SET_REFCOUNT(&le, 1);
-#endif
 
 		/* plist_key is not a persistent allocated key, thus we use str_update here */
 		if (zend_hash_str_update_mem(&EG(persistent_list), plist_key->val, plist_key->len, &le, sizeof(le)) == NULL) {
@@ -522,11 +518,7 @@ static void php_zmq_socket_store(php_zmq_socket *zmq_sock_p, zend_long type, zen
 	le.type = php_zmq_socket_list_entry();
 	le.ptr  = zmq_sock_p;
 
-#if PHP_VERSION_ID < 70300
-	GC_REFCOUNT(&le) = 1;
-#else
 	GC_SET_REFCOUNT(&le, 1);
-#endif
 
 	plist_key = php_zmq_socket_plist_key(type, persistent_id, use_shared_ctx);
 
@@ -603,9 +595,6 @@ static zend_bool php_zmq_connect_callback(zval *socket, zend_fcall_info *fci, ze
 	fci->params         = params;
 	fci->param_count    = 2;
 	fci->retval         = &retval;
-#if PHP_VERSION_ID < 80000
-	fci->no_separation  = 1;
-#endif
 
 	if (zend_call_function(fci, fci_cache) == FAILURE) {
 		if (!EG(exception)) {
