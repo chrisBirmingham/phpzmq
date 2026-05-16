@@ -7,111 +7,420 @@
 
 class ZMQ
 {
-	const SOCKET_PAIR = 0;
-	const SOCKET_PUB = 1;
-	const SOCKET_SUB = 2;
-	const SOCKET_REQ = 3;
-	const SOCKET_REP = 4;
-	const SOCKET_XREQ = 5;
-	const SOCKET_XREP = 6;
-	const SOCKET_PUSH = 8;
-	const SOCKET_PULL = 7;
-	const SOCKET_DEALER = 5;
-	const SOCKET_ROUTER = 6;
-	const SOCKET_XSUB = 10;
-	const SOCKET_XPUB = 9;
-	const SOCKET_STREAM = 11;
-	const SOCKET_UPSTREAM = 7;
-	const SOCKET_DOWNSTREAM = 8;
-	const POLL_IN = 1;
-	const POLL_OUT = 2;
-	const MODE_SNDMORE = 2;
-	const MODE_NOBLOCK = 1;
-	const MODE_DONTWAIT = 1;
-	const ERR_INTERNAL = -99;
-	const ERR_EAGAIN = 11;
-	const ERR_ENOTSUP = 95;
-	const ERR_EFSM = 156384763;
-	const ERR_ETERM = 156384765;
-	const LIBZMQ_VER = '4.1.7';
-	const LIBZMQ_VERSION = '4.1.7';
-	const LIBZMQ_VERSION_ID = 40107;
-	const LIBZMQ_VERSION_MAJOR = 4;
-	const LIBZMQ_VERSION_MINOR = 1;
-	const LIBZMQ_VERSION_PATCH = 7;
-	const SOCKOPT_TOS = 57;
-	const SOCKOPT_ROUTER_HANDOVER = 56;
-	const SOCKOPT_CONNECT_RID = 61;
-	const SOCKOPT_HANDSHAKE_IVL = 66;
-	const SOCKOPT_SOCKS_PROXY = 68;
-	const SOCKOPT_XPUB_NODROP = 69;
-	const SOCKOPT_ROUTER_MANDATORY = 33;
-	const SOCKOPT_PROBE_ROUTER = 51;
-	const SOCKOPT_REQ_RELAXED = 53;
-	const SOCKOPT_REQ_CORRELATE = 52;
-	const SOCKOPT_CONFLATE = 54;
-	const SOCKOPT_ZAP_DOMAIN = 55;
-	const SOCKOPT_MECHANISM = 43;
-	const SOCKOPT_PLAIN_SERVER = 44;
-	const SOCKOPT_PLAIN_USERNAME = 45;
-	const SOCKOPT_PLAIN_PASSWORD = 46;
-	const SOCKOPT_CURVE_SERVER = 47;
-	const SOCKOPT_CURVE_PUBLICKEY = 48;
-	const SOCKOPT_CURVE_SECRETKEY = 49;
-	const SOCKOPT_CURVE_SERVERKEY = 50;
-	const SOCKOPT_GSSAPI_SERVER = 62;
-	const SOCKOPT_GSSAPI_PLAINTEXT = 65;
-	const SOCKOPT_GSSAPI_PRINCIPAL = 63;
-	const SOCKOPT_GSSAPI_SERVICE_PRINCIPAL = 64;
-	const SOCKOPT_IPV6 = 42;
-	const SOCKOPT_IMMEDIATE = 39;
-	const SOCKOPT_SNDHWM = 23;
-	const SOCKOPT_RCVHWM = 24;
-	const SOCKOPT_MAXMSGSIZE = 22;
-	const SOCKOPT_MULTICAST_HOPS = 25;
-	const SOCKOPT_XPUB_VERBOSE = 40;
-	const SOCKOPT_TCP_KEEPALIVE = 34;
-	const SOCKOPT_TCP_KEEPALIVE_IDLE = 36;
-	const SOCKOPT_TCP_KEEPALIVE_CNT = 35;
-	const SOCKOPT_TCP_KEEPALIVE_INTVL = 37;
-	const SOCKOPT_TCP_ACCEPT_FILTER = 38;
-	const SOCKOPT_LAST_ENDPOINT = 32;
-	const SOCKOPT_ROUTER_RAW = 41;
-	const SOCKOPT_IPV4ONLY = 31;
-	const SOCKOPT_DELAY_ATTACH_ON_CONNECT = 39;
-	const SOCKOPT_HWM = 2001;
-	const SOCKOPT_AFFINITY = 4;
-	const SOCKOPT_IDENTITY = 5;
-	const SOCKOPT_RATE = 8;
-	const SOCKOPT_RECOVERY_IVL = 9;
-	const SOCKOPT_RCVTIMEO = 27;
-	const SOCKOPT_SNDTIMEO = 28;
-	const SOCKOPT_SNDBUF = 11;
-	const SOCKOPT_RCVBUF = 12;
-	const SOCKOPT_LINGER = 17;
-	const SOCKOPT_RECONNECT_IVL = 18;
-	const SOCKOPT_RECONNECT_IVL_MAX = 21;
-	const SOCKOPT_BACKLOG = 19;
-	const SOCKOPT_SUBSCRIBE = 6;
-	const SOCKOPT_UNSUBSCRIBE = 7;
-	const SOCKOPT_TYPE = 16;
-	const SOCKOPT_RCVMORE = 13;
-	const SOCKOPT_FD = 14;
-	const SOCKOPT_EVENTS = 15;
-	const CTXOPT_MAX_SOCKETS = 2;
-	const CTXOPT_MAX_SOCKETS_DEFAULT = 1023;
-	const EVENT_CONNECTED = 1;
-	const EVENT_CONNECT_DELAYED = 2;
-	const EVENT_CONNECT_RETRIED = 4;
-	const EVENT_LISTENING = 8;
-	const EVENT_BIND_FAILED = 16;
-	const EVENT_ACCEPTED = 32;
-	const EVENT_ACCEPT_FAILED = 64;
-	const EVENT_CLOSED = 128;
-	const EVENT_CLOSE_FAILED = 256;
-	const EVENT_DISCONNECTED = 512;
-	const EVENT_MONITOR_STOPPED = 1024;
-	const EVENT_ALL = 65535;
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PAIR
+	 */
+	const SOCKET_PAIR = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PUB
+	 */
+	const SOCKET_PUB = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SUB
+	 */
+	const SOCKET_SUB = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_REQ
+	 */
+	const SOCKET_REQ = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_REP
+	 */
+	const SOCKET_REP = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_XREQ
+	 */
+	const SOCKET_XREQ = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_XREP
+	 */
+	const SOCKET_XREP = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PUSH
+	 */
+	const SOCKET_PUSH = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PULL
+	 */
+	const SOCKET_PULL = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_DEALER
+	 */
+	const SOCKET_DEALER = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_ROUTER
+	 */
+	const SOCKET_ROUTER = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_XSUB
+	 */
+	const SOCKET_XSUB = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_XPUB
+	 */
+	const SOCKET_XPUB = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_STREAM
+	 */
+	const SOCKET_STREAM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PULL
+	 */
+	const SOCKET_UPSTREAM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_PUSH
+	 */
+	const SOCKET_DOWNSTREAM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_POLLIN
+	 */
+	const POLL_IN = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_POLLOUT
+	 */
+	const POLL_OUT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SNDMORE
+	 */
+	const MODE_SNDMORE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_DONTWAIT
+	 */
+	const MODE_NOBLOCK = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_DONTWAIT
+	 */
+	const MODE_DONTWAIT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue PHP_ZMQ_INTERNAL_ERROR
+	 */
+	const ERR_INTERNAL = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue EAGAIN
+	 */
+	const ERR_EAGAIN = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ENOTSUP
+	 */
+	const ERR_ENOTSUP = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EFSM
+	 */
+	const ERR_EFSM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_ETERM
+	 */
+	const ERR_ETERM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_VERSION_MAJOR
+	 */
+	const LIBZMQ_VERSION_MAJOR = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_VERSION_MINOR
+	 */
+	const LIBZMQ_VERSION_MINOR = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_VERSION_PATCH
+	 */
+	const LIBZMQ_VERSION_PATCH = UNKNOWN;
+
+	// const SOCKOPT_TOS = UNKNOWN;
+	// const SOCKOPT_ROUTER_HANDOVER = UNKNOWN;
+	// const SOCKOPT_CONNECT_RID = UNKNOWN;
+	// const SOCKOPT_HANDSHAKE_IVL = UNKNOWN;
+	// const SOCKOPT_SOCKS_PROXY = UNKNOWN;
+	// const SOCKOPT_XPUB_NODROP = UNKNOWN;
+	// const SOCKOPT_ROUTER_MANDATORY = UNKNOWN;
+	// const SOCKOPT_PROBE_ROUTER = UNKNOWN;
+	// const SOCKOPT_REQ_RELAXED = UNKNOWN;
+	// const SOCKOPT_REQ_CORRELATE = UNKNOWN;
+	// const SOCKOPT_CONFLATE = UNKNOWN;
+	// const SOCKOPT_ZAP_DOMAIN = UNKNOWN;
+	// const SOCKOPT_MECHANISM = UNKNOWN;
+	// const SOCKOPT_PLAIN_SERVER = UNKNOWN;
+	// const SOCKOPT_PLAIN_USERNAME = UNKNOWN;
+	// const SOCKOPT_PLAIN_PASSWORD = UNKNOWN;
+	// const SOCKOPT_CURVE_SERVER = UNKNOWN;
+	// const SOCKOPT_CURVE_PUBLICKEY = UNKNOWN;
+	// const SOCKOPT_CURVE_SECRETKEY = UNKNOWN;
+	// const SOCKOPT_CURVE_SERVERKEY = UNKNOWN;
+	// const SOCKOPT_GSSAPI_SERVER = UNKNOWN;
+	// const SOCKOPT_GSSAPI_PLAINTEXT = UNKNOWN;
+	// const SOCKOPT_GSSAPI_PRINCIPAL = UNKNOWN;
+	// const SOCKOPT_GSSAPI_SERVICE_PRINCIPAL = UNKNOWN;
+	// const SOCKOPT_IPV6 = UNKNOWN;
+	// const SOCKOPT_IMMEDIATE = UNKNOWN;
+	// const SOCKOPT_SNDHWM = UNKNOWN;
+	// const SOCKOPT_RCVHWM = UNKNOWN;
+	// const SOCKOPT_MAXMSGSIZE = UNKNOWN;
+	// const SOCKOPT_MULTICAST_HOPS = UNKNOWN;
+	// const SOCKOPT_XPUB_VERBOSE = UNKNOWN;
+	// const SOCKOPT_TCP_KEEPALIVE = UNKNOWN;
+	// const SOCKOPT_TCP_KEEPALIVE_IDLE = UNKNOWN;
+	// const SOCKOPT_TCP_KEEPALIVE_CNT = UNKNOWN;
+	// const SOCKOPT_TCP_KEEPALIVE_INTVL = UNKNOWN;
+	// const SOCKOPT_TCP_ACCEPT_FILTER = UNKNOWN;
+	// const SOCKOPT_LAST_ENDPOINT = UNKNOWN;
+	// const SOCKOPT_ROUTER_RAW = UNKNOWN;
+	// const SOCKOPT_IPV4ONLY = UNKNOWN;
+	// const SOCKOPT_DELAY_ATTACH_ON_CONNECT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_HWM
+	 */
+	const SOCKOPT_HWM = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_AFFINITY
+	 */
+	const SOCKOPT_AFFINITY = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_IDENTITY
+	 */
+	const SOCKOPT_IDENTITY = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SOCKOPT_RATE
+	 */
+	const SOCKOPT_RATE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RECOVERY_IVL
+	 */
+	const SOCKOPT_RECOVERY_IVL = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RECOVERT_IVL_MSEC
+	 */
+	const SOCKOPT_RECOVERY_IVL_MSEC = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_MCAST_LOOP
+	 */
+	const SOCKOPT_MCAST_LOOP = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RCVTIMEO
+	 */
+	const SOCKOPT_RCVTIMEO = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SNDTIMEO
+	 */
+	const SOCKOPT_SNDTIMEO = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SNDBUF
+	 */
+	const SOCKOPT_SNDBUF = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RCBUF
+	 */
+	const SOCKOPT_RCVBUF = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_LINGER
+	 */
+	const SOCKOPT_LINGER = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RECONNECT_IVL
+	 */
+	const SOCKOPT_RECONNECT_IVL = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RECONNECT_IVL_MAX
+	 */
+	const SOCKOPT_RECONNECT_IVL_MAX = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_BACKLOG
+	 */
+	const SOCKOPT_BACKLOG = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_SUBSCRIBE
+	 */
+	const SOCKOPT_SUBSCRIBE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_UNSUBSCRIBE
+	 */
+	const SOCKOPT_UNSUBSCRIBE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_TYPE
+	 */
+	const SOCKOPT_TYPE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_RCVMORE
+	 */
+	const SOCKOPT_RCVMORE = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_FD
+	 */
+	const SOCKOPT_FD = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENTS
+	 */
+	const SOCKOPT_EVENTS = UNKNOWN;
+	// const CTXOPT_MAX_SOCKETS = UNKNOWN;
+	// const CTXOPT_MAX_SOCKETS_DEFAULT = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_CONNECTED
+	 */
+	const EVENT_CONNECTED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_CONNECT_DELAYED
+	 */
+	const EVENT_CONNECT_DELAYED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_CONNECT_RETRIED
+	 */
+	const EVENT_CONNECT_RETRIED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_LISTENING
+	 */
+	const EVENT_LISTENING = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_BIND_FAILED
+	 */
+	const EVENT_BIND_FAILED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_ACCEPTED
+	 */
+	const EVENT_ACCEPTED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_ACCEPT_FAILED
+	 */
+	const EVENT_ACCEPT_FAILED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_CLOSED
+	 */
+	const EVENT_CLOSED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_CLOSE_FAILED
+	 */
+	const EVENT_CLOSE_FAILED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_DISCONNECTED
+	 */
+	const EVENT_DISCONNECTED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_MONITOR_STOPPED
+	 */
+	const EVENT_MONITOR_STOPPED = UNKNOWN;
+
+	/**
+	 * @var int
+	 * @cvalue ZMQ_EVENT_ALL
+	 */
+	const EVENT_ALL = UNKNOWN;
 
 	/**
 	 * A monotonic clock

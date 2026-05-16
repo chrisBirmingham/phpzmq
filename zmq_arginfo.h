@@ -1,5 +1,5 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: 7b2c41e44505b78deebfb9de2c2d1e9d254a7eda */
+ * Stub hash: 47eed9bba692d53b321fc2176044786ef5d7bee8 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -285,633 +285,373 @@ static zend_class_entry *register_class_ZMQ(void)
 #endif
 
 	zval const_SOCKET_PAIR_value;
-	ZVAL_LONG(&const_SOCKET_PAIR_value, 0);
+	ZVAL_LONG(&const_SOCKET_PAIR_value, ZMQ_PAIR);
 	zend_string *const_SOCKET_PAIR_name = zend_string_init_interned("SOCKET_PAIR", sizeof("SOCKET_PAIR") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_PAIR_name, &const_SOCKET_PAIR_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_PAIR_name, true);
 
 	zval const_SOCKET_PUB_value;
-	ZVAL_LONG(&const_SOCKET_PUB_value, 1);
+	ZVAL_LONG(&const_SOCKET_PUB_value, ZMQ_PUB);
 	zend_string *const_SOCKET_PUB_name = zend_string_init_interned("SOCKET_PUB", sizeof("SOCKET_PUB") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_PUB_name, &const_SOCKET_PUB_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_PUB_name, true);
 
 	zval const_SOCKET_SUB_value;
-	ZVAL_LONG(&const_SOCKET_SUB_value, 2);
+	ZVAL_LONG(&const_SOCKET_SUB_value, ZMQ_SUB);
 	zend_string *const_SOCKET_SUB_name = zend_string_init_interned("SOCKET_SUB", sizeof("SOCKET_SUB") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_SUB_name, &const_SOCKET_SUB_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_SUB_name, true);
 
 	zval const_SOCKET_REQ_value;
-	ZVAL_LONG(&const_SOCKET_REQ_value, 3);
+	ZVAL_LONG(&const_SOCKET_REQ_value, ZMQ_REQ);
 	zend_string *const_SOCKET_REQ_name = zend_string_init_interned("SOCKET_REQ", sizeof("SOCKET_REQ") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_REQ_name, &const_SOCKET_REQ_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_REQ_name, true);
 
 	zval const_SOCKET_REP_value;
-	ZVAL_LONG(&const_SOCKET_REP_value, 4);
+	ZVAL_LONG(&const_SOCKET_REP_value, ZMQ_REP);
 	zend_string *const_SOCKET_REP_name = zend_string_init_interned("SOCKET_REP", sizeof("SOCKET_REP") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_REP_name, &const_SOCKET_REP_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_REP_name, true);
 
 	zval const_SOCKET_XREQ_value;
-	ZVAL_LONG(&const_SOCKET_XREQ_value, 5);
+	ZVAL_LONG(&const_SOCKET_XREQ_value, ZMQ_XREQ);
 	zend_string *const_SOCKET_XREQ_name = zend_string_init_interned("SOCKET_XREQ", sizeof("SOCKET_XREQ") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_XREQ_name, &const_SOCKET_XREQ_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_XREQ_name, true);
 
 	zval const_SOCKET_XREP_value;
-	ZVAL_LONG(&const_SOCKET_XREP_value, 6);
+	ZVAL_LONG(&const_SOCKET_XREP_value, ZMQ_XREP);
 	zend_string *const_SOCKET_XREP_name = zend_string_init_interned("SOCKET_XREP", sizeof("SOCKET_XREP") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_XREP_name, &const_SOCKET_XREP_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_XREP_name, true);
 
 	zval const_SOCKET_PUSH_value;
-	ZVAL_LONG(&const_SOCKET_PUSH_value, 8);
+	ZVAL_LONG(&const_SOCKET_PUSH_value, ZMQ_PUSH);
 	zend_string *const_SOCKET_PUSH_name = zend_string_init_interned("SOCKET_PUSH", sizeof("SOCKET_PUSH") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_PUSH_name, &const_SOCKET_PUSH_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_PUSH_name, true);
 
 	zval const_SOCKET_PULL_value;
-	ZVAL_LONG(&const_SOCKET_PULL_value, 7);
+	ZVAL_LONG(&const_SOCKET_PULL_value, ZMQ_PULL);
 	zend_string *const_SOCKET_PULL_name = zend_string_init_interned("SOCKET_PULL", sizeof("SOCKET_PULL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_PULL_name, &const_SOCKET_PULL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_PULL_name, true);
 
 	zval const_SOCKET_DEALER_value;
-	ZVAL_LONG(&const_SOCKET_DEALER_value, 5);
+	ZVAL_LONG(&const_SOCKET_DEALER_value, ZMQ_DEALER);
 	zend_string *const_SOCKET_DEALER_name = zend_string_init_interned("SOCKET_DEALER", sizeof("SOCKET_DEALER") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_DEALER_name, &const_SOCKET_DEALER_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_DEALER_name, true);
 
 	zval const_SOCKET_ROUTER_value;
-	ZVAL_LONG(&const_SOCKET_ROUTER_value, 6);
+	ZVAL_LONG(&const_SOCKET_ROUTER_value, ZMQ_ROUTER);
 	zend_string *const_SOCKET_ROUTER_name = zend_string_init_interned("SOCKET_ROUTER", sizeof("SOCKET_ROUTER") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_ROUTER_name, &const_SOCKET_ROUTER_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_ROUTER_name, true);
 
 	zval const_SOCKET_XSUB_value;
-	ZVAL_LONG(&const_SOCKET_XSUB_value, 10);
+	ZVAL_LONG(&const_SOCKET_XSUB_value, ZMQ_XSUB);
 	zend_string *const_SOCKET_XSUB_name = zend_string_init_interned("SOCKET_XSUB", sizeof("SOCKET_XSUB") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_XSUB_name, &const_SOCKET_XSUB_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_XSUB_name, true);
 
 	zval const_SOCKET_XPUB_value;
-	ZVAL_LONG(&const_SOCKET_XPUB_value, 9);
+	ZVAL_LONG(&const_SOCKET_XPUB_value, ZMQ_XPUB);
 	zend_string *const_SOCKET_XPUB_name = zend_string_init_interned("SOCKET_XPUB", sizeof("SOCKET_XPUB") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_XPUB_name, &const_SOCKET_XPUB_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_XPUB_name, true);
 
 	zval const_SOCKET_STREAM_value;
-	ZVAL_LONG(&const_SOCKET_STREAM_value, 11);
+	ZVAL_LONG(&const_SOCKET_STREAM_value, ZMQ_STREAM);
 	zend_string *const_SOCKET_STREAM_name = zend_string_init_interned("SOCKET_STREAM", sizeof("SOCKET_STREAM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_STREAM_name, &const_SOCKET_STREAM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_STREAM_name, true);
 
 	zval const_SOCKET_UPSTREAM_value;
-	ZVAL_LONG(&const_SOCKET_UPSTREAM_value, 7);
+	ZVAL_LONG(&const_SOCKET_UPSTREAM_value, ZMQ_PULL);
 	zend_string *const_SOCKET_UPSTREAM_name = zend_string_init_interned("SOCKET_UPSTREAM", sizeof("SOCKET_UPSTREAM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_UPSTREAM_name, &const_SOCKET_UPSTREAM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_UPSTREAM_name, true);
 
 	zval const_SOCKET_DOWNSTREAM_value;
-	ZVAL_LONG(&const_SOCKET_DOWNSTREAM_value, 8);
+	ZVAL_LONG(&const_SOCKET_DOWNSTREAM_value, ZMQ_PUSH);
 	zend_string *const_SOCKET_DOWNSTREAM_name = zend_string_init_interned("SOCKET_DOWNSTREAM", sizeof("SOCKET_DOWNSTREAM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKET_DOWNSTREAM_name, &const_SOCKET_DOWNSTREAM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKET_DOWNSTREAM_name, true);
 
 	zval const_POLL_IN_value;
-	ZVAL_LONG(&const_POLL_IN_value, 1);
+	ZVAL_LONG(&const_POLL_IN_value, ZMQ_POLLIN);
 	zend_string *const_POLL_IN_name = zend_string_init_interned("POLL_IN", sizeof("POLL_IN") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_POLL_IN_name, &const_POLL_IN_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_POLL_IN_name, true);
 
 	zval const_POLL_OUT_value;
-	ZVAL_LONG(&const_POLL_OUT_value, 2);
+	ZVAL_LONG(&const_POLL_OUT_value, ZMQ_POLLOUT);
 	zend_string *const_POLL_OUT_name = zend_string_init_interned("POLL_OUT", sizeof("POLL_OUT") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_POLL_OUT_name, &const_POLL_OUT_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_POLL_OUT_name, true);
 
 	zval const_MODE_SNDMORE_value;
-	ZVAL_LONG(&const_MODE_SNDMORE_value, 2);
+	ZVAL_LONG(&const_MODE_SNDMORE_value, ZMQ_SNDMORE);
 	zend_string *const_MODE_SNDMORE_name = zend_string_init_interned("MODE_SNDMORE", sizeof("MODE_SNDMORE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_MODE_SNDMORE_name, &const_MODE_SNDMORE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_MODE_SNDMORE_name, true);
 
 	zval const_MODE_NOBLOCK_value;
-	ZVAL_LONG(&const_MODE_NOBLOCK_value, 1);
+	ZVAL_LONG(&const_MODE_NOBLOCK_value, ZMQ_DONTWAIT);
 	zend_string *const_MODE_NOBLOCK_name = zend_string_init_interned("MODE_NOBLOCK", sizeof("MODE_NOBLOCK") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_MODE_NOBLOCK_name, &const_MODE_NOBLOCK_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_MODE_NOBLOCK_name, true);
 
 	zval const_MODE_DONTWAIT_value;
-	ZVAL_LONG(&const_MODE_DONTWAIT_value, 1);
+	ZVAL_LONG(&const_MODE_DONTWAIT_value, ZMQ_DONTWAIT);
 	zend_string *const_MODE_DONTWAIT_name = zend_string_init_interned("MODE_DONTWAIT", sizeof("MODE_DONTWAIT") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_MODE_DONTWAIT_name, &const_MODE_DONTWAIT_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_MODE_DONTWAIT_name, true);
 
 	zval const_ERR_INTERNAL_value;
-	ZVAL_LONG(&const_ERR_INTERNAL_value, -99);
+	ZVAL_LONG(&const_ERR_INTERNAL_value, PHP_ZMQ_INTERNAL_ERROR);
 	zend_string *const_ERR_INTERNAL_name = zend_string_init_interned("ERR_INTERNAL", sizeof("ERR_INTERNAL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_INTERNAL_name, &const_ERR_INTERNAL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_INTERNAL_name, true);
 
 	zval const_ERR_EAGAIN_value;
-	ZVAL_LONG(&const_ERR_EAGAIN_value, 11);
+	ZVAL_LONG(&const_ERR_EAGAIN_value, EAGAIN);
 	zend_string *const_ERR_EAGAIN_name = zend_string_init_interned("ERR_EAGAIN", sizeof("ERR_EAGAIN") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_EAGAIN_name, &const_ERR_EAGAIN_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_EAGAIN_name, true);
 
 	zval const_ERR_ENOTSUP_value;
-	ZVAL_LONG(&const_ERR_ENOTSUP_value, 95);
+	ZVAL_LONG(&const_ERR_ENOTSUP_value, ENOTSUP);
 	zend_string *const_ERR_ENOTSUP_name = zend_string_init_interned("ERR_ENOTSUP", sizeof("ERR_ENOTSUP") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_ENOTSUP_name, &const_ERR_ENOTSUP_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_ENOTSUP_name, true);
 
 	zval const_ERR_EFSM_value;
-	ZVAL_LONG(&const_ERR_EFSM_value, 156384763);
+	ZVAL_LONG(&const_ERR_EFSM_value, ZMQ_EFSM);
 	zend_string *const_ERR_EFSM_name = zend_string_init_interned("ERR_EFSM", sizeof("ERR_EFSM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_EFSM_name, &const_ERR_EFSM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_EFSM_name, true);
 
 	zval const_ERR_ETERM_value;
-	ZVAL_LONG(&const_ERR_ETERM_value, 156384765);
+	ZVAL_LONG(&const_ERR_ETERM_value, ZMQ_ETERM);
 	zend_string *const_ERR_ETERM_name = zend_string_init_interned("ERR_ETERM", sizeof("ERR_ETERM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_ERR_ETERM_name, &const_ERR_ETERM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_ERR_ETERM_name, true);
 
-	zval const_LIBZMQ_VER_value;
-	zend_string *const_LIBZMQ_VER_value_str = zend_string_init("4.1.7", strlen("4.1.7"), 1);
-	ZVAL_STR(&const_LIBZMQ_VER_value, const_LIBZMQ_VER_value_str);
-	zend_string *const_LIBZMQ_VER_name = zend_string_init_interned("LIBZMQ_VER", sizeof("LIBZMQ_VER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VER_name, &const_LIBZMQ_VER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_LIBZMQ_VER_name, true);
-
-	zval const_LIBZMQ_VERSION_value;
-	zend_string *const_LIBZMQ_VERSION_value_str = zend_string_init("4.1.7", strlen("4.1.7"), 1);
-	ZVAL_STR(&const_LIBZMQ_VERSION_value, const_LIBZMQ_VERSION_value_str);
-	zend_string *const_LIBZMQ_VERSION_name = zend_string_init_interned("LIBZMQ_VERSION", sizeof("LIBZMQ_VERSION") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_name, &const_LIBZMQ_VERSION_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_LIBZMQ_VERSION_name, true);
-
-	zval const_LIBZMQ_VERSION_ID_value;
-	ZVAL_LONG(&const_LIBZMQ_VERSION_ID_value, 40107);
-	zend_string *const_LIBZMQ_VERSION_ID_name = zend_string_init_interned("LIBZMQ_VERSION_ID", sizeof("LIBZMQ_VERSION_ID") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_ID_name, &const_LIBZMQ_VERSION_ID_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_LIBZMQ_VERSION_ID_name, true);
-
 	zval const_LIBZMQ_VERSION_MAJOR_value;
-	ZVAL_LONG(&const_LIBZMQ_VERSION_MAJOR_value, 4);
+	ZVAL_LONG(&const_LIBZMQ_VERSION_MAJOR_value, ZMQ_VERSION_MAJOR);
 	zend_string *const_LIBZMQ_VERSION_MAJOR_name = zend_string_init_interned("LIBZMQ_VERSION_MAJOR", sizeof("LIBZMQ_VERSION_MAJOR") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_MAJOR_name, &const_LIBZMQ_VERSION_MAJOR_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_LIBZMQ_VERSION_MAJOR_name, true);
 
 	zval const_LIBZMQ_VERSION_MINOR_value;
-	ZVAL_LONG(&const_LIBZMQ_VERSION_MINOR_value, 1);
+	ZVAL_LONG(&const_LIBZMQ_VERSION_MINOR_value, ZMQ_VERSION_MINOR);
 	zend_string *const_LIBZMQ_VERSION_MINOR_name = zend_string_init_interned("LIBZMQ_VERSION_MINOR", sizeof("LIBZMQ_VERSION_MINOR") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_MINOR_name, &const_LIBZMQ_VERSION_MINOR_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_LIBZMQ_VERSION_MINOR_name, true);
 
 	zval const_LIBZMQ_VERSION_PATCH_value;
-	ZVAL_LONG(&const_LIBZMQ_VERSION_PATCH_value, 7);
+	ZVAL_LONG(&const_LIBZMQ_VERSION_PATCH_value, ZMQ_VERSION_PATCH);
 	zend_string *const_LIBZMQ_VERSION_PATCH_name = zend_string_init_interned("LIBZMQ_VERSION_PATCH", sizeof("LIBZMQ_VERSION_PATCH") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_LIBZMQ_VERSION_PATCH_name, &const_LIBZMQ_VERSION_PATCH_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_LIBZMQ_VERSION_PATCH_name, true);
 
-	zval const_SOCKOPT_TOS_value;
-	ZVAL_LONG(&const_SOCKOPT_TOS_value, 57);
-	zend_string *const_SOCKOPT_TOS_name = zend_string_init_interned("SOCKOPT_TOS", sizeof("SOCKOPT_TOS") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TOS_name, &const_SOCKOPT_TOS_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TOS_name, true);
-
-	zval const_SOCKOPT_ROUTER_HANDOVER_value;
-	ZVAL_LONG(&const_SOCKOPT_ROUTER_HANDOVER_value, 56);
-	zend_string *const_SOCKOPT_ROUTER_HANDOVER_name = zend_string_init_interned("SOCKOPT_ROUTER_HANDOVER", sizeof("SOCKOPT_ROUTER_HANDOVER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_HANDOVER_name, &const_SOCKOPT_ROUTER_HANDOVER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_ROUTER_HANDOVER_name, true);
-
-	zval const_SOCKOPT_CONNECT_RID_value;
-	ZVAL_LONG(&const_SOCKOPT_CONNECT_RID_value, 61);
-	zend_string *const_SOCKOPT_CONNECT_RID_name = zend_string_init_interned("SOCKOPT_CONNECT_RID", sizeof("SOCKOPT_CONNECT_RID") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CONNECT_RID_name, &const_SOCKOPT_CONNECT_RID_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CONNECT_RID_name, true);
-
-	zval const_SOCKOPT_HANDSHAKE_IVL_value;
-	ZVAL_LONG(&const_SOCKOPT_HANDSHAKE_IVL_value, 66);
-	zend_string *const_SOCKOPT_HANDSHAKE_IVL_name = zend_string_init_interned("SOCKOPT_HANDSHAKE_IVL", sizeof("SOCKOPT_HANDSHAKE_IVL") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_HANDSHAKE_IVL_name, &const_SOCKOPT_HANDSHAKE_IVL_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_HANDSHAKE_IVL_name, true);
-
-	zval const_SOCKOPT_SOCKS_PROXY_value;
-	ZVAL_LONG(&const_SOCKOPT_SOCKS_PROXY_value, 68);
-	zend_string *const_SOCKOPT_SOCKS_PROXY_name = zend_string_init_interned("SOCKOPT_SOCKS_PROXY", sizeof("SOCKOPT_SOCKS_PROXY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SOCKS_PROXY_name, &const_SOCKOPT_SOCKS_PROXY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_SOCKS_PROXY_name, true);
-
-	zval const_SOCKOPT_XPUB_NODROP_value;
-	ZVAL_LONG(&const_SOCKOPT_XPUB_NODROP_value, 69);
-	zend_string *const_SOCKOPT_XPUB_NODROP_name = zend_string_init_interned("SOCKOPT_XPUB_NODROP", sizeof("SOCKOPT_XPUB_NODROP") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_XPUB_NODROP_name, &const_SOCKOPT_XPUB_NODROP_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_XPUB_NODROP_name, true);
-
-	zval const_SOCKOPT_ROUTER_MANDATORY_value;
-	ZVAL_LONG(&const_SOCKOPT_ROUTER_MANDATORY_value, 33);
-	zend_string *const_SOCKOPT_ROUTER_MANDATORY_name = zend_string_init_interned("SOCKOPT_ROUTER_MANDATORY", sizeof("SOCKOPT_ROUTER_MANDATORY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_MANDATORY_name, &const_SOCKOPT_ROUTER_MANDATORY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_ROUTER_MANDATORY_name, true);
-
-	zval const_SOCKOPT_PROBE_ROUTER_value;
-	ZVAL_LONG(&const_SOCKOPT_PROBE_ROUTER_value, 51);
-	zend_string *const_SOCKOPT_PROBE_ROUTER_name = zend_string_init_interned("SOCKOPT_PROBE_ROUTER", sizeof("SOCKOPT_PROBE_ROUTER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_PROBE_ROUTER_name, &const_SOCKOPT_PROBE_ROUTER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_PROBE_ROUTER_name, true);
-
-	zval const_SOCKOPT_REQ_RELAXED_value;
-	ZVAL_LONG(&const_SOCKOPT_REQ_RELAXED_value, 53);
-	zend_string *const_SOCKOPT_REQ_RELAXED_name = zend_string_init_interned("SOCKOPT_REQ_RELAXED", sizeof("SOCKOPT_REQ_RELAXED") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_REQ_RELAXED_name, &const_SOCKOPT_REQ_RELAXED_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_REQ_RELAXED_name, true);
-
-	zval const_SOCKOPT_REQ_CORRELATE_value;
-	ZVAL_LONG(&const_SOCKOPT_REQ_CORRELATE_value, 52);
-	zend_string *const_SOCKOPT_REQ_CORRELATE_name = zend_string_init_interned("SOCKOPT_REQ_CORRELATE", sizeof("SOCKOPT_REQ_CORRELATE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_REQ_CORRELATE_name, &const_SOCKOPT_REQ_CORRELATE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_REQ_CORRELATE_name, true);
-
-	zval const_SOCKOPT_CONFLATE_value;
-	ZVAL_LONG(&const_SOCKOPT_CONFLATE_value, 54);
-	zend_string *const_SOCKOPT_CONFLATE_name = zend_string_init_interned("SOCKOPT_CONFLATE", sizeof("SOCKOPT_CONFLATE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CONFLATE_name, &const_SOCKOPT_CONFLATE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CONFLATE_name, true);
-
-	zval const_SOCKOPT_ZAP_DOMAIN_value;
-	ZVAL_LONG(&const_SOCKOPT_ZAP_DOMAIN_value, 55);
-	zend_string *const_SOCKOPT_ZAP_DOMAIN_name = zend_string_init_interned("SOCKOPT_ZAP_DOMAIN", sizeof("SOCKOPT_ZAP_DOMAIN") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ZAP_DOMAIN_name, &const_SOCKOPT_ZAP_DOMAIN_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_ZAP_DOMAIN_name, true);
-
-	zval const_SOCKOPT_MECHANISM_value;
-	ZVAL_LONG(&const_SOCKOPT_MECHANISM_value, 43);
-	zend_string *const_SOCKOPT_MECHANISM_name = zend_string_init_interned("SOCKOPT_MECHANISM", sizeof("SOCKOPT_MECHANISM") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MECHANISM_name, &const_SOCKOPT_MECHANISM_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_MECHANISM_name, true);
-
-	zval const_SOCKOPT_PLAIN_SERVER_value;
-	ZVAL_LONG(&const_SOCKOPT_PLAIN_SERVER_value, 44);
-	zend_string *const_SOCKOPT_PLAIN_SERVER_name = zend_string_init_interned("SOCKOPT_PLAIN_SERVER", sizeof("SOCKOPT_PLAIN_SERVER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_PLAIN_SERVER_name, &const_SOCKOPT_PLAIN_SERVER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_PLAIN_SERVER_name, true);
-
-	zval const_SOCKOPT_PLAIN_USERNAME_value;
-	ZVAL_LONG(&const_SOCKOPT_PLAIN_USERNAME_value, 45);
-	zend_string *const_SOCKOPT_PLAIN_USERNAME_name = zend_string_init_interned("SOCKOPT_PLAIN_USERNAME", sizeof("SOCKOPT_PLAIN_USERNAME") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_PLAIN_USERNAME_name, &const_SOCKOPT_PLAIN_USERNAME_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_PLAIN_USERNAME_name, true);
-
-	zval const_SOCKOPT_PLAIN_PASSWORD_value;
-	ZVAL_LONG(&const_SOCKOPT_PLAIN_PASSWORD_value, 46);
-	zend_string *const_SOCKOPT_PLAIN_PASSWORD_name = zend_string_init_interned("SOCKOPT_PLAIN_PASSWORD", sizeof("SOCKOPT_PLAIN_PASSWORD") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_PLAIN_PASSWORD_name, &const_SOCKOPT_PLAIN_PASSWORD_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_PLAIN_PASSWORD_name, true);
-
-	zval const_SOCKOPT_CURVE_SERVER_value;
-	ZVAL_LONG(&const_SOCKOPT_CURVE_SERVER_value, 47);
-	zend_string *const_SOCKOPT_CURVE_SERVER_name = zend_string_init_interned("SOCKOPT_CURVE_SERVER", sizeof("SOCKOPT_CURVE_SERVER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CURVE_SERVER_name, &const_SOCKOPT_CURVE_SERVER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CURVE_SERVER_name, true);
-
-	zval const_SOCKOPT_CURVE_PUBLICKEY_value;
-	ZVAL_LONG(&const_SOCKOPT_CURVE_PUBLICKEY_value, 48);
-	zend_string *const_SOCKOPT_CURVE_PUBLICKEY_name = zend_string_init_interned("SOCKOPT_CURVE_PUBLICKEY", sizeof("SOCKOPT_CURVE_PUBLICKEY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CURVE_PUBLICKEY_name, &const_SOCKOPT_CURVE_PUBLICKEY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CURVE_PUBLICKEY_name, true);
-
-	zval const_SOCKOPT_CURVE_SECRETKEY_value;
-	ZVAL_LONG(&const_SOCKOPT_CURVE_SECRETKEY_value, 49);
-	zend_string *const_SOCKOPT_CURVE_SECRETKEY_name = zend_string_init_interned("SOCKOPT_CURVE_SECRETKEY", sizeof("SOCKOPT_CURVE_SECRETKEY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CURVE_SECRETKEY_name, &const_SOCKOPT_CURVE_SECRETKEY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CURVE_SECRETKEY_name, true);
-
-	zval const_SOCKOPT_CURVE_SERVERKEY_value;
-	ZVAL_LONG(&const_SOCKOPT_CURVE_SERVERKEY_value, 50);
-	zend_string *const_SOCKOPT_CURVE_SERVERKEY_name = zend_string_init_interned("SOCKOPT_CURVE_SERVERKEY", sizeof("SOCKOPT_CURVE_SERVERKEY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_CURVE_SERVERKEY_name, &const_SOCKOPT_CURVE_SERVERKEY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_CURVE_SERVERKEY_name, true);
-
-	zval const_SOCKOPT_GSSAPI_SERVER_value;
-	ZVAL_LONG(&const_SOCKOPT_GSSAPI_SERVER_value, 62);
-	zend_string *const_SOCKOPT_GSSAPI_SERVER_name = zend_string_init_interned("SOCKOPT_GSSAPI_SERVER", sizeof("SOCKOPT_GSSAPI_SERVER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_GSSAPI_SERVER_name, &const_SOCKOPT_GSSAPI_SERVER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_GSSAPI_SERVER_name, true);
-
-	zval const_SOCKOPT_GSSAPI_PLAINTEXT_value;
-	ZVAL_LONG(&const_SOCKOPT_GSSAPI_PLAINTEXT_value, 65);
-	zend_string *const_SOCKOPT_GSSAPI_PLAINTEXT_name = zend_string_init_interned("SOCKOPT_GSSAPI_PLAINTEXT", sizeof("SOCKOPT_GSSAPI_PLAINTEXT") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_GSSAPI_PLAINTEXT_name, &const_SOCKOPT_GSSAPI_PLAINTEXT_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_GSSAPI_PLAINTEXT_name, true);
-
-	zval const_SOCKOPT_GSSAPI_PRINCIPAL_value;
-	ZVAL_LONG(&const_SOCKOPT_GSSAPI_PRINCIPAL_value, 63);
-	zend_string *const_SOCKOPT_GSSAPI_PRINCIPAL_name = zend_string_init_interned("SOCKOPT_GSSAPI_PRINCIPAL", sizeof("SOCKOPT_GSSAPI_PRINCIPAL") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_GSSAPI_PRINCIPAL_name, &const_SOCKOPT_GSSAPI_PRINCIPAL_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_GSSAPI_PRINCIPAL_name, true);
-
-	zval const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_value;
-	ZVAL_LONG(&const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_value, 64);
-	zend_string *const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_name = zend_string_init_interned("SOCKOPT_GSSAPI_SERVICE_PRINCIPAL", sizeof("SOCKOPT_GSSAPI_SERVICE_PRINCIPAL") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_name, &const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_GSSAPI_SERVICE_PRINCIPAL_name, true);
-
-	zval const_SOCKOPT_IPV6_value;
-	ZVAL_LONG(&const_SOCKOPT_IPV6_value, 42);
-	zend_string *const_SOCKOPT_IPV6_name = zend_string_init_interned("SOCKOPT_IPV6", sizeof("SOCKOPT_IPV6") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IPV6_name, &const_SOCKOPT_IPV6_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_IPV6_name, true);
-
-	zval const_SOCKOPT_IMMEDIATE_value;
-	ZVAL_LONG(&const_SOCKOPT_IMMEDIATE_value, 39);
-	zend_string *const_SOCKOPT_IMMEDIATE_name = zend_string_init_interned("SOCKOPT_IMMEDIATE", sizeof("SOCKOPT_IMMEDIATE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IMMEDIATE_name, &const_SOCKOPT_IMMEDIATE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_IMMEDIATE_name, true);
-
-	zval const_SOCKOPT_SNDHWM_value;
-	ZVAL_LONG(&const_SOCKOPT_SNDHWM_value, 23);
-	zend_string *const_SOCKOPT_SNDHWM_name = zend_string_init_interned("SOCKOPT_SNDHWM", sizeof("SOCKOPT_SNDHWM") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SNDHWM_name, &const_SOCKOPT_SNDHWM_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_SNDHWM_name, true);
-
-	zval const_SOCKOPT_RCVHWM_value;
-	ZVAL_LONG(&const_SOCKOPT_RCVHWM_value, 24);
-	zend_string *const_SOCKOPT_RCVHWM_name = zend_string_init_interned("SOCKOPT_RCVHWM", sizeof("SOCKOPT_RCVHWM") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVHWM_name, &const_SOCKOPT_RCVHWM_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_RCVHWM_name, true);
-
-	zval const_SOCKOPT_MAXMSGSIZE_value;
-	ZVAL_LONG(&const_SOCKOPT_MAXMSGSIZE_value, 22);
-	zend_string *const_SOCKOPT_MAXMSGSIZE_name = zend_string_init_interned("SOCKOPT_MAXMSGSIZE", sizeof("SOCKOPT_MAXMSGSIZE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MAXMSGSIZE_name, &const_SOCKOPT_MAXMSGSIZE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_MAXMSGSIZE_name, true);
-
-	zval const_SOCKOPT_MULTICAST_HOPS_value;
-	ZVAL_LONG(&const_SOCKOPT_MULTICAST_HOPS_value, 25);
-	zend_string *const_SOCKOPT_MULTICAST_HOPS_name = zend_string_init_interned("SOCKOPT_MULTICAST_HOPS", sizeof("SOCKOPT_MULTICAST_HOPS") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MULTICAST_HOPS_name, &const_SOCKOPT_MULTICAST_HOPS_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_MULTICAST_HOPS_name, true);
-
-	zval const_SOCKOPT_XPUB_VERBOSE_value;
-	ZVAL_LONG(&const_SOCKOPT_XPUB_VERBOSE_value, 40);
-	zend_string *const_SOCKOPT_XPUB_VERBOSE_name = zend_string_init_interned("SOCKOPT_XPUB_VERBOSE", sizeof("SOCKOPT_XPUB_VERBOSE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_XPUB_VERBOSE_name, &const_SOCKOPT_XPUB_VERBOSE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_XPUB_VERBOSE_name, true);
-
-	zval const_SOCKOPT_TCP_KEEPALIVE_value;
-	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_value, 34);
-	zend_string *const_SOCKOPT_TCP_KEEPALIVE_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE", sizeof("SOCKOPT_TCP_KEEPALIVE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_name, &const_SOCKOPT_TCP_KEEPALIVE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_name, true);
-
-	zval const_SOCKOPT_TCP_KEEPALIVE_IDLE_value;
-	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_IDLE_value, 36);
-	zend_string *const_SOCKOPT_TCP_KEEPALIVE_IDLE_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_IDLE", sizeof("SOCKOPT_TCP_KEEPALIVE_IDLE") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_IDLE_name, &const_SOCKOPT_TCP_KEEPALIVE_IDLE_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_IDLE_name, true);
-
-	zval const_SOCKOPT_TCP_KEEPALIVE_CNT_value;
-	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_CNT_value, 35);
-	zend_string *const_SOCKOPT_TCP_KEEPALIVE_CNT_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_CNT", sizeof("SOCKOPT_TCP_KEEPALIVE_CNT") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_CNT_name, &const_SOCKOPT_TCP_KEEPALIVE_CNT_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_CNT_name, true);
-
-	zval const_SOCKOPT_TCP_KEEPALIVE_INTVL_value;
-	ZVAL_LONG(&const_SOCKOPT_TCP_KEEPALIVE_INTVL_value, 37);
-	zend_string *const_SOCKOPT_TCP_KEEPALIVE_INTVL_name = zend_string_init_interned("SOCKOPT_TCP_KEEPALIVE_INTVL", sizeof("SOCKOPT_TCP_KEEPALIVE_INTVL") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_KEEPALIVE_INTVL_name, &const_SOCKOPT_TCP_KEEPALIVE_INTVL_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TCP_KEEPALIVE_INTVL_name, true);
-
-	zval const_SOCKOPT_TCP_ACCEPT_FILTER_value;
-	ZVAL_LONG(&const_SOCKOPT_TCP_ACCEPT_FILTER_value, 38);
-	zend_string *const_SOCKOPT_TCP_ACCEPT_FILTER_name = zend_string_init_interned("SOCKOPT_TCP_ACCEPT_FILTER", sizeof("SOCKOPT_TCP_ACCEPT_FILTER") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TCP_ACCEPT_FILTER_name, &const_SOCKOPT_TCP_ACCEPT_FILTER_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_TCP_ACCEPT_FILTER_name, true);
-
-	zval const_SOCKOPT_LAST_ENDPOINT_value;
-	ZVAL_LONG(&const_SOCKOPT_LAST_ENDPOINT_value, 32);
-	zend_string *const_SOCKOPT_LAST_ENDPOINT_name = zend_string_init_interned("SOCKOPT_LAST_ENDPOINT", sizeof("SOCKOPT_LAST_ENDPOINT") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_LAST_ENDPOINT_name, &const_SOCKOPT_LAST_ENDPOINT_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_LAST_ENDPOINT_name, true);
-
-	zval const_SOCKOPT_ROUTER_RAW_value;
-	ZVAL_LONG(&const_SOCKOPT_ROUTER_RAW_value, 41);
-	zend_string *const_SOCKOPT_ROUTER_RAW_name = zend_string_init_interned("SOCKOPT_ROUTER_RAW", sizeof("SOCKOPT_ROUTER_RAW") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_RAW_name, &const_SOCKOPT_ROUTER_RAW_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_ROUTER_RAW_name, true);
-
-	zval const_SOCKOPT_IPV4ONLY_value;
-	ZVAL_LONG(&const_SOCKOPT_IPV4ONLY_value, 31);
-	zend_string *const_SOCKOPT_IPV4ONLY_name = zend_string_init_interned("SOCKOPT_IPV4ONLY", sizeof("SOCKOPT_IPV4ONLY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IPV4ONLY_name, &const_SOCKOPT_IPV4ONLY_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_IPV4ONLY_name, true);
-
-	zval const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value;
-	ZVAL_LONG(&const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value, 39);
-	zend_string *const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name = zend_string_init_interned("SOCKOPT_DELAY_ATTACH_ON_CONNECT", sizeof("SOCKOPT_DELAY_ATTACH_ON_CONNECT") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name, &const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_name, true);
-
 	zval const_SOCKOPT_HWM_value;
-	ZVAL_LONG(&const_SOCKOPT_HWM_value, 2001);
+	ZVAL_LONG(&const_SOCKOPT_HWM_value, ZMQ_HWM);
 	zend_string *const_SOCKOPT_HWM_name = zend_string_init_interned("SOCKOPT_HWM", sizeof("SOCKOPT_HWM") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_HWM_name, &const_SOCKOPT_HWM_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_HWM_name, true);
 
 	zval const_SOCKOPT_AFFINITY_value;
-	ZVAL_LONG(&const_SOCKOPT_AFFINITY_value, 4);
+	ZVAL_LONG(&const_SOCKOPT_AFFINITY_value, ZMQ_AFFINITY);
 	zend_string *const_SOCKOPT_AFFINITY_name = zend_string_init_interned("SOCKOPT_AFFINITY", sizeof("SOCKOPT_AFFINITY") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_AFFINITY_name, &const_SOCKOPT_AFFINITY_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_AFFINITY_name, true);
 
 	zval const_SOCKOPT_IDENTITY_value;
-	ZVAL_LONG(&const_SOCKOPT_IDENTITY_value, 5);
+	ZVAL_LONG(&const_SOCKOPT_IDENTITY_value, ZMQ_IDENTITY);
 	zend_string *const_SOCKOPT_IDENTITY_name = zend_string_init_interned("SOCKOPT_IDENTITY", sizeof("SOCKOPT_IDENTITY") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IDENTITY_name, &const_SOCKOPT_IDENTITY_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_IDENTITY_name, true);
 
 	zval const_SOCKOPT_RATE_value;
-	ZVAL_LONG(&const_SOCKOPT_RATE_value, 8);
+	ZVAL_LONG(&const_SOCKOPT_RATE_value, ZMQ_SOCKOPT_RATE);
 	zend_string *const_SOCKOPT_RATE_name = zend_string_init_interned("SOCKOPT_RATE", sizeof("SOCKOPT_RATE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RATE_name, &const_SOCKOPT_RATE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RATE_name, true);
 
 	zval const_SOCKOPT_RECOVERY_IVL_value;
-	ZVAL_LONG(&const_SOCKOPT_RECOVERY_IVL_value, 9);
+	ZVAL_LONG(&const_SOCKOPT_RECOVERY_IVL_value, ZMQ_RECOVERY_IVL);
 	zend_string *const_SOCKOPT_RECOVERY_IVL_name = zend_string_init_interned("SOCKOPT_RECOVERY_IVL", sizeof("SOCKOPT_RECOVERY_IVL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECOVERY_IVL_name, &const_SOCKOPT_RECOVERY_IVL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RECOVERY_IVL_name, true);
 
+	zval const_SOCKOPT_RECOVERY_IVL_MSEC_value;
+	ZVAL_LONG(&const_SOCKOPT_RECOVERY_IVL_MSEC_value, ZMQ_RECOVERT_IVL_MSEC);
+	zend_string *const_SOCKOPT_RECOVERY_IVL_MSEC_name = zend_string_init_interned("SOCKOPT_RECOVERY_IVL_MSEC", sizeof("SOCKOPT_RECOVERY_IVL_MSEC") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECOVERY_IVL_MSEC_name, &const_SOCKOPT_RECOVERY_IVL_MSEC_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_RECOVERY_IVL_MSEC_name, true);
+
+	zval const_SOCKOPT_MCAST_LOOP_value;
+	ZVAL_LONG(&const_SOCKOPT_MCAST_LOOP_value, ZMQ_MCAST_LOOP);
+	zend_string *const_SOCKOPT_MCAST_LOOP_name = zend_string_init_interned("SOCKOPT_MCAST_LOOP", sizeof("SOCKOPT_MCAST_LOOP") - 1, true);
+	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_MCAST_LOOP_name, &const_SOCKOPT_MCAST_LOOP_value, ZEND_ACC_PUBLIC, NULL);
+	zend_string_release_ex(const_SOCKOPT_MCAST_LOOP_name, true);
+
 	zval const_SOCKOPT_RCVTIMEO_value;
-	ZVAL_LONG(&const_SOCKOPT_RCVTIMEO_value, 27);
+	ZVAL_LONG(&const_SOCKOPT_RCVTIMEO_value, ZMQ_RCVTIMEO);
 	zend_string *const_SOCKOPT_RCVTIMEO_name = zend_string_init_interned("SOCKOPT_RCVTIMEO", sizeof("SOCKOPT_RCVTIMEO") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVTIMEO_name, &const_SOCKOPT_RCVTIMEO_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RCVTIMEO_name, true);
 
 	zval const_SOCKOPT_SNDTIMEO_value;
-	ZVAL_LONG(&const_SOCKOPT_SNDTIMEO_value, 28);
+	ZVAL_LONG(&const_SOCKOPT_SNDTIMEO_value, ZMQ_SNDTIMEO);
 	zend_string *const_SOCKOPT_SNDTIMEO_name = zend_string_init_interned("SOCKOPT_SNDTIMEO", sizeof("SOCKOPT_SNDTIMEO") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SNDTIMEO_name, &const_SOCKOPT_SNDTIMEO_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_SNDTIMEO_name, true);
 
 	zval const_SOCKOPT_SNDBUF_value;
-	ZVAL_LONG(&const_SOCKOPT_SNDBUF_value, 11);
+	ZVAL_LONG(&const_SOCKOPT_SNDBUF_value, ZMQ_SNDBUF);
 	zend_string *const_SOCKOPT_SNDBUF_name = zend_string_init_interned("SOCKOPT_SNDBUF", sizeof("SOCKOPT_SNDBUF") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SNDBUF_name, &const_SOCKOPT_SNDBUF_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_SNDBUF_name, true);
 
 	zval const_SOCKOPT_RCVBUF_value;
-	ZVAL_LONG(&const_SOCKOPT_RCVBUF_value, 12);
+	ZVAL_LONG(&const_SOCKOPT_RCVBUF_value, ZMQ_RCBUF);
 	zend_string *const_SOCKOPT_RCVBUF_name = zend_string_init_interned("SOCKOPT_RCVBUF", sizeof("SOCKOPT_RCVBUF") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVBUF_name, &const_SOCKOPT_RCVBUF_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RCVBUF_name, true);
 
 	zval const_SOCKOPT_LINGER_value;
-	ZVAL_LONG(&const_SOCKOPT_LINGER_value, 17);
+	ZVAL_LONG(&const_SOCKOPT_LINGER_value, ZMQ_LINGER);
 	zend_string *const_SOCKOPT_LINGER_name = zend_string_init_interned("SOCKOPT_LINGER", sizeof("SOCKOPT_LINGER") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_LINGER_name, &const_SOCKOPT_LINGER_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_LINGER_name, true);
 
 	zval const_SOCKOPT_RECONNECT_IVL_value;
-	ZVAL_LONG(&const_SOCKOPT_RECONNECT_IVL_value, 18);
+	ZVAL_LONG(&const_SOCKOPT_RECONNECT_IVL_value, ZMQ_RECONNECT_IVL);
 	zend_string *const_SOCKOPT_RECONNECT_IVL_name = zend_string_init_interned("SOCKOPT_RECONNECT_IVL", sizeof("SOCKOPT_RECONNECT_IVL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECONNECT_IVL_name, &const_SOCKOPT_RECONNECT_IVL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RECONNECT_IVL_name, true);
 
 	zval const_SOCKOPT_RECONNECT_IVL_MAX_value;
-	ZVAL_LONG(&const_SOCKOPT_RECONNECT_IVL_MAX_value, 21);
+	ZVAL_LONG(&const_SOCKOPT_RECONNECT_IVL_MAX_value, ZMQ_RECONNECT_IVL_MAX);
 	zend_string *const_SOCKOPT_RECONNECT_IVL_MAX_name = zend_string_init_interned("SOCKOPT_RECONNECT_IVL_MAX", sizeof("SOCKOPT_RECONNECT_IVL_MAX") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RECONNECT_IVL_MAX_name, &const_SOCKOPT_RECONNECT_IVL_MAX_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RECONNECT_IVL_MAX_name, true);
 
 	zval const_SOCKOPT_BACKLOG_value;
-	ZVAL_LONG(&const_SOCKOPT_BACKLOG_value, 19);
+	ZVAL_LONG(&const_SOCKOPT_BACKLOG_value, ZMQ_BACKLOG);
 	zend_string *const_SOCKOPT_BACKLOG_name = zend_string_init_interned("SOCKOPT_BACKLOG", sizeof("SOCKOPT_BACKLOG") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_BACKLOG_name, &const_SOCKOPT_BACKLOG_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_BACKLOG_name, true);
 
 	zval const_SOCKOPT_SUBSCRIBE_value;
-	ZVAL_LONG(&const_SOCKOPT_SUBSCRIBE_value, 6);
+	ZVAL_LONG(&const_SOCKOPT_SUBSCRIBE_value, ZMQ_SUBSCRIBE);
 	zend_string *const_SOCKOPT_SUBSCRIBE_name = zend_string_init_interned("SOCKOPT_SUBSCRIBE", sizeof("SOCKOPT_SUBSCRIBE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_SUBSCRIBE_name, &const_SOCKOPT_SUBSCRIBE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_SUBSCRIBE_name, true);
 
 	zval const_SOCKOPT_UNSUBSCRIBE_value;
-	ZVAL_LONG(&const_SOCKOPT_UNSUBSCRIBE_value, 7);
+	ZVAL_LONG(&const_SOCKOPT_UNSUBSCRIBE_value, ZMQ_UNSUBSCRIBE);
 	zend_string *const_SOCKOPT_UNSUBSCRIBE_name = zend_string_init_interned("SOCKOPT_UNSUBSCRIBE", sizeof("SOCKOPT_UNSUBSCRIBE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_UNSUBSCRIBE_name, &const_SOCKOPT_UNSUBSCRIBE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_UNSUBSCRIBE_name, true);
 
 	zval const_SOCKOPT_TYPE_value;
-	ZVAL_LONG(&const_SOCKOPT_TYPE_value, 16);
+	ZVAL_LONG(&const_SOCKOPT_TYPE_value, ZMQ_TYPE);
 	zend_string *const_SOCKOPT_TYPE_name = zend_string_init_interned("SOCKOPT_TYPE", sizeof("SOCKOPT_TYPE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_TYPE_name, &const_SOCKOPT_TYPE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_TYPE_name, true);
 
 	zval const_SOCKOPT_RCVMORE_value;
-	ZVAL_LONG(&const_SOCKOPT_RCVMORE_value, 13);
+	ZVAL_LONG(&const_SOCKOPT_RCVMORE_value, ZMQ_RCVMORE);
 	zend_string *const_SOCKOPT_RCVMORE_name = zend_string_init_interned("SOCKOPT_RCVMORE", sizeof("SOCKOPT_RCVMORE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVMORE_name, &const_SOCKOPT_RCVMORE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RCVMORE_name, true);
 
 	zval const_SOCKOPT_FD_value;
-	ZVAL_LONG(&const_SOCKOPT_FD_value, 14);
+	ZVAL_LONG(&const_SOCKOPT_FD_value, ZMQ_FD);
 	zend_string *const_SOCKOPT_FD_name = zend_string_init_interned("SOCKOPT_FD", sizeof("SOCKOPT_FD") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_FD_name, &const_SOCKOPT_FD_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_FD_name, true);
 
 	zval const_SOCKOPT_EVENTS_value;
-	ZVAL_LONG(&const_SOCKOPT_EVENTS_value, 15);
+	ZVAL_LONG(&const_SOCKOPT_EVENTS_value, ZMQ_EVENTS);
 	zend_string *const_SOCKOPT_EVENTS_name = zend_string_init_interned("SOCKOPT_EVENTS", sizeof("SOCKOPT_EVENTS") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_EVENTS_name, &const_SOCKOPT_EVENTS_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_EVENTS_name, true);
 
-	zval const_CTXOPT_MAX_SOCKETS_value;
-	ZVAL_LONG(&const_CTXOPT_MAX_SOCKETS_value, 2);
-	zend_string *const_CTXOPT_MAX_SOCKETS_name = zend_string_init_interned("CTXOPT_MAX_SOCKETS", sizeof("CTXOPT_MAX_SOCKETS") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_CTXOPT_MAX_SOCKETS_name, &const_CTXOPT_MAX_SOCKETS_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_CTXOPT_MAX_SOCKETS_name, true);
-
-	zval const_CTXOPT_MAX_SOCKETS_DEFAULT_value;
-	ZVAL_LONG(&const_CTXOPT_MAX_SOCKETS_DEFAULT_value, 1023);
-	zend_string *const_CTXOPT_MAX_SOCKETS_DEFAULT_name = zend_string_init_interned("CTXOPT_MAX_SOCKETS_DEFAULT", sizeof("CTXOPT_MAX_SOCKETS_DEFAULT") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_CTXOPT_MAX_SOCKETS_DEFAULT_name, &const_CTXOPT_MAX_SOCKETS_DEFAULT_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_CTXOPT_MAX_SOCKETS_DEFAULT_name, true);
-
 	zval const_EVENT_CONNECTED_value;
-	ZVAL_LONG(&const_EVENT_CONNECTED_value, 1);
+	ZVAL_LONG(&const_EVENT_CONNECTED_value, ZMQ_EVENT_CONNECTED);
 	zend_string *const_EVENT_CONNECTED_name = zend_string_init_interned("EVENT_CONNECTED", sizeof("EVENT_CONNECTED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_CONNECTED_name, &const_EVENT_CONNECTED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_CONNECTED_name, true);
 
 	zval const_EVENT_CONNECT_DELAYED_value;
-	ZVAL_LONG(&const_EVENT_CONNECT_DELAYED_value, 2);
+	ZVAL_LONG(&const_EVENT_CONNECT_DELAYED_value, ZMQ_EVENT_CONNECT_DELAYED);
 	zend_string *const_EVENT_CONNECT_DELAYED_name = zend_string_init_interned("EVENT_CONNECT_DELAYED", sizeof("EVENT_CONNECT_DELAYED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_CONNECT_DELAYED_name, &const_EVENT_CONNECT_DELAYED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_CONNECT_DELAYED_name, true);
 
 	zval const_EVENT_CONNECT_RETRIED_value;
-	ZVAL_LONG(&const_EVENT_CONNECT_RETRIED_value, 4);
+	ZVAL_LONG(&const_EVENT_CONNECT_RETRIED_value, ZMQ_EVENT_CONNECT_RETRIED);
 	zend_string *const_EVENT_CONNECT_RETRIED_name = zend_string_init_interned("EVENT_CONNECT_RETRIED", sizeof("EVENT_CONNECT_RETRIED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_CONNECT_RETRIED_name, &const_EVENT_CONNECT_RETRIED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_CONNECT_RETRIED_name, true);
 
 	zval const_EVENT_LISTENING_value;
-	ZVAL_LONG(&const_EVENT_LISTENING_value, 8);
+	ZVAL_LONG(&const_EVENT_LISTENING_value, ZMQ_EVENT_LISTENING);
 	zend_string *const_EVENT_LISTENING_name = zend_string_init_interned("EVENT_LISTENING", sizeof("EVENT_LISTENING") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_LISTENING_name, &const_EVENT_LISTENING_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_LISTENING_name, true);
 
 	zval const_EVENT_BIND_FAILED_value;
-	ZVAL_LONG(&const_EVENT_BIND_FAILED_value, 16);
+	ZVAL_LONG(&const_EVENT_BIND_FAILED_value, ZMQ_EVENT_BIND_FAILED);
 	zend_string *const_EVENT_BIND_FAILED_name = zend_string_init_interned("EVENT_BIND_FAILED", sizeof("EVENT_BIND_FAILED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_BIND_FAILED_name, &const_EVENT_BIND_FAILED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_BIND_FAILED_name, true);
 
 	zval const_EVENT_ACCEPTED_value;
-	ZVAL_LONG(&const_EVENT_ACCEPTED_value, 32);
+	ZVAL_LONG(&const_EVENT_ACCEPTED_value, ZMQ_EVENT_ACCEPTED);
 	zend_string *const_EVENT_ACCEPTED_name = zend_string_init_interned("EVENT_ACCEPTED", sizeof("EVENT_ACCEPTED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_ACCEPTED_name, &const_EVENT_ACCEPTED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_ACCEPTED_name, true);
 
 	zval const_EVENT_ACCEPT_FAILED_value;
-	ZVAL_LONG(&const_EVENT_ACCEPT_FAILED_value, 64);
+	ZVAL_LONG(&const_EVENT_ACCEPT_FAILED_value, ZMQ_EVENT_ACCEPT_FAILED);
 	zend_string *const_EVENT_ACCEPT_FAILED_name = zend_string_init_interned("EVENT_ACCEPT_FAILED", sizeof("EVENT_ACCEPT_FAILED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_ACCEPT_FAILED_name, &const_EVENT_ACCEPT_FAILED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_ACCEPT_FAILED_name, true);
 
 	zval const_EVENT_CLOSED_value;
-	ZVAL_LONG(&const_EVENT_CLOSED_value, 128);
+	ZVAL_LONG(&const_EVENT_CLOSED_value, ZMQ_EVENT_CLOSED);
 	zend_string *const_EVENT_CLOSED_name = zend_string_init_interned("EVENT_CLOSED", sizeof("EVENT_CLOSED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_CLOSED_name, &const_EVENT_CLOSED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_CLOSED_name, true);
 
 	zval const_EVENT_CLOSE_FAILED_value;
-	ZVAL_LONG(&const_EVENT_CLOSE_FAILED_value, 256);
+	ZVAL_LONG(&const_EVENT_CLOSE_FAILED_value, ZMQ_EVENT_CLOSE_FAILED);
 	zend_string *const_EVENT_CLOSE_FAILED_name = zend_string_init_interned("EVENT_CLOSE_FAILED", sizeof("EVENT_CLOSE_FAILED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_CLOSE_FAILED_name, &const_EVENT_CLOSE_FAILED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_CLOSE_FAILED_name, true);
 
 	zval const_EVENT_DISCONNECTED_value;
-	ZVAL_LONG(&const_EVENT_DISCONNECTED_value, 512);
+	ZVAL_LONG(&const_EVENT_DISCONNECTED_value, ZMQ_EVENT_DISCONNECTED);
 	zend_string *const_EVENT_DISCONNECTED_name = zend_string_init_interned("EVENT_DISCONNECTED", sizeof("EVENT_DISCONNECTED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_DISCONNECTED_name, &const_EVENT_DISCONNECTED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_DISCONNECTED_name, true);
 
 	zval const_EVENT_MONITOR_STOPPED_value;
-	ZVAL_LONG(&const_EVENT_MONITOR_STOPPED_value, 1024);
+	ZVAL_LONG(&const_EVENT_MONITOR_STOPPED_value, ZMQ_EVENT_MONITOR_STOPPED);
 	zend_string *const_EVENT_MONITOR_STOPPED_name = zend_string_init_interned("EVENT_MONITOR_STOPPED", sizeof("EVENT_MONITOR_STOPPED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_MONITOR_STOPPED_name, &const_EVENT_MONITOR_STOPPED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_MONITOR_STOPPED_name, true);
 
 	zval const_EVENT_ALL_value;
-	ZVAL_LONG(&const_EVENT_ALL_value, 65535);
+	ZVAL_LONG(&const_EVENT_ALL_value, ZMQ_EVENT_ALL);
 	zend_string *const_EVENT_ALL_name = zend_string_init_interned("EVENT_ALL", sizeof("EVENT_ALL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_ALL_name, &const_EVENT_ALL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_ALL_name, true);

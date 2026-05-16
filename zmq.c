@@ -52,18 +52,6 @@ static zend_object_handlers zmq_context_object_handlers;
 static zend_object_handlers zmq_poll_object_handlers;
 static zend_object_handlers zmq_device_object_handlers;
 
-#ifdef HAVE_CZMQ_2
-static zend_class_entry *php_zmq_cert_sc_entry;
-static zend_class_entry *php_zmq_auth_sc_entry;
-
-static zend_class_entry *php_zmq_cert_exception_sc_entry;
-static zend_class_entry *php_zmq_auth_exception_sc_entry;
-
-static zend_object_handlers zmq_cert_object_handlers;
-static zend_object_handlers zmq_auth_object_handlers;
-#endif
-
-
 #include "zmq_object_access.c"
 
 zend_class_entry *php_zmq_context_exception_sc_entry_get ()
@@ -2428,7 +2416,7 @@ PHP_MINIT_FUNCTION(zmq)
 PHP_MSHUTDOWN_FUNCTION(zmq)
 {
 	php_zmq_shared_ctx_destroy();
-	php_zmq_clock_destroy (&ZMQ_G (clock_ctx));
+	php_zmq_clock_destroy(&ZMQ_G (clock_ctx));
 	return SUCCESS;
 }
 
@@ -2438,9 +2426,9 @@ PHP_MINFO_FUNCTION(zmq)
 
 	php_info_print_table_start();
 
-		php_info_print_table_header(2, "ZMQ extension", "enabled");
-		php_info_print_table_row(2, "ZMQ extension version", PHP_ZMQ_VERSION);
-		php_info_print_table_row(2, "libzmq version", version);
+	php_info_print_table_header(2, "ZMQ extension", "enabled");
+	php_info_print_table_row(2, "ZMQ extension version", PHP_ZMQ_VERSION);
+	php_info_print_table_row(2, "libzmq version", version);
 
 	php_info_print_table_end();
 	DISPLAY_INI_ENTRIES();
