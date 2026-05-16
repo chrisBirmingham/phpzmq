@@ -36,7 +36,6 @@
 
 #include "php_zmq.h"
 #include "php_zmq_private.h"
-#include "zmq_object_access.c"
 
 ZEND_EXTERN_MODULE_GLOBALS(php_zmq)
 
@@ -72,7 +71,7 @@ static bool s_invoke_device_cb (php_zmq_device_cb_t *cb, uint64_t current_ts)
 	return retval;
 }
 
-static int s_capture_message (void *socket, zmq_msg_t *msg, int more)
+static int s_capture_message(void *socket, zmq_msg_t *msg, int more)
 {
 	int rc;
 	zmq_msg_t msg_cp;

@@ -36,7 +36,6 @@
 
 #include "php_zmq.h"
 #include "php_zmq_private.h"
-#include "zmq_object_access.c"
 #include "zmq_sockopts_makros.h"
 
 /* {{{ proto mixed ZMQSocket::getSockOpt()
@@ -52,7 +51,7 @@ PHP_METHOD(ZMQSocket, getsockopt)
         return;
     }
 
-    intern = PHP_ZMQ_SOCKET_OBJECT;
+    intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
 
     if (!intern->socket || !intern->socket->z_socket) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get (), "The socket is not properly initialised", PHP_ZMQ_INTERNAL_ERROR);
@@ -882,7 +881,7 @@ PHP_METHOD(ZMQSocket, setsockopt)
         return;
     }
 
-    intern = PHP_ZMQ_SOCKET_OBJECT;
+    intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
 
     if (!intern->socket || !intern->socket->z_socket) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get (), "The socket is not properly initialised", PHP_ZMQ_INTERNAL_ERROR);

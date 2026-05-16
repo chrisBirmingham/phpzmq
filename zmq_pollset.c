@@ -31,7 +31,6 @@
 #include "php_zmq.h"
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
-#include "zmq_object_access.c"
 #include "ext/spl/php_spl.h"
 
 #define PHP_ZMQ_ALLOC_SIZE 20

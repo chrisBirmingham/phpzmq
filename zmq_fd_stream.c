@@ -30,7 +30,6 @@
 
 #include "php_zmq.h"
 #include "php_zmq_private.h"
-#include "zmq_object_access.c"
 
 #ifndef PHP_WIN32
 	typedef int fd_t;
@@ -60,22 +59,22 @@ static int php_zmq_fd_close(php_stream *stream, int close_handle)
 	return EOF;
 }
 
-static int php_zmq_fd_flush(php_stream *stream)
+static zend_result php_zmq_fd_flush(php_stream *stream)
 {
 	return FAILURE;
 }
 
-static int php_zmq_fd_cast(php_stream *stream, int cast_as, void **ret)
+static zend_result php_zmq_fd_cast(php_stream *stream, int cast_as, void **ret)
 {
 	php_zmq_stream_container *container = (php_zmq_stream_container *) stream->abstract;
-	php_zmq_socket_object *intern = php_zmq_socket_fetch_object(Z_OBJ(container->object));
+	php_zmq_socket_object *intern = PHP_ZMQ_SOCKET_OBJECT(&container->object);
 
 	switch (cast_as)	{
 		case PHP_STREAM_AS_FD_FOR_SELECT:
 		case PHP_STREAM_AS_FD:
 		case PHP_STREAM_AS_SOCKETD:
 			if (ret) {
-				size_t optsiz = sizeof (fd_t);
+				size_t optsiz = sizeof(fd_t);
 
 				if (!intern->socket) {
 					return FAILURE;

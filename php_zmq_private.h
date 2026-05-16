@@ -204,7 +204,6 @@ zend_long php_zmq_get_libzmq_version_id(void);
 
 char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_cache);
 
-
 bool php_zmq_shared_ctx_init(void);
 
 void php_zmq_shared_ctx_assign_to(php_zmq_context *context);
@@ -219,4 +218,29 @@ void php_zmq_shared_ctx_socket_count_decr(void);
 
 ZEND_BEGIN_MODULE_GLOBALS(php_zmq)
 	php_zmq_clock_ctx_t *clock_ctx;
-ZEND_END_MODULE_GLOBALS(php_zmq)
+ZEND_END_MODULE_GLOBALS(php_zmq);
+
+static inline php_zmq_context_object *php_zmq_context_fetch_object(zend_object *obj)
+{
+	return (php_zmq_context_object *)((char *)obj - XtOffsetOf(php_zmq_context_object, std));
+}
+
+static inline php_zmq_socket_object *php_zmq_socket_fetch_object(zend_object *obj)
+{
+	return (php_zmq_socket_object *)((char *)obj - XtOffsetOf(php_zmq_socket_object, std));
+}
+
+static inline php_zmq_poll_object *php_zmq_poll_fetch_object(zend_object *obj)
+{
+	return (php_zmq_poll_object *)((char *)obj - XtOffsetOf(php_zmq_poll_object, std));
+}
+
+static inline php_zmq_device_object *php_zmq_device_fetch_object(zend_object *obj)
+{
+	return (php_zmq_device_object *)((char *)obj - XtOffsetOf(php_zmq_device_object, std));
+}
+
+#define PHP_ZMQ_CONTEXT_OBJECT(zv) php_zmq_context_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_SOCKET_OBJECT(zv) php_zmq_socket_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_POLL_OBJECT(zv) php_zmq_poll_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_DEVICE_OBJECT(zv) php_zmq_device_fetch_object(Z_OBJ_P(zv));
