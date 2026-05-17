@@ -47,18 +47,17 @@ char *php_zmq_get_libzmq_version(void)
 
 /** {{{ char *php_zmq_printable_func()
 */
-char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_cache)
+char *php_zmq_printable_func(zend_fcall_info *fci, zend_fcall_info_cache *fci_cache)
 {
 	char *buffer = NULL;
 
 	if (fci->object) {
-		spprintf (&buffer, 0, "%s::%s", fci->object->ce->name->val, ZSTR_VAL(fci_cache->function_handler->common.function_name));
+		spprintf(&buffer, 0, "%s::%s", fci->object->ce->name->val, ZSTR_VAL(fci_cache->function_handler->common.function_name));
 	} else {
-		if (Z_TYPE (fci->function_name) == IS_OBJECT) {
-			spprintf (&buffer, 0, "%s", Z_OBJCE (fci->function_name)->name->val);
-		}
-		else {
-			spprintf (&buffer, 0, "%s", Z_STRVAL (fci->function_name));
+		if (Z_TYPE(fci->function_name) == IS_OBJECT) {
+			spprintf(&buffer, 0, "%s", Z_OBJCE(fci->function_name)->name->val);
+		} else {
+			spprintf(&buffer, 0, "%s", Z_STRVAL(fci->function_name));
 		}
 	}
 	return buffer;

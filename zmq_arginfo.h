@@ -1,5 +1,5 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: c135d978dd49b4c706b09ac70da7098595957b14 */
+ * Stub hash: 2609a91e3a2de0f762238b2fba6a6d7b79005084 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -18,7 +18,7 @@ ZEND_END_ARG_INFO()
 #endif
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQContext___construct, 0, 0, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, io_threads, IS_LONG, 0, "1")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, ioThreads, IS_LONG, 0, "1")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, persistent, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
@@ -30,7 +30,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQContext_getsocket, 0, 1, ZMQSocket, 0)
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, dsn, IS_STRING, 1, "null")
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, on_new_socket, _IS_BOOL, 0, "false")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_ispersistent, 0, 0, _IS_BOOL, 0)
@@ -50,8 +50,8 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQSocket___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, ZMQContext, ZMQContext, 0)
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, persistent_id, IS_STRING, 1, "null")
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, on_new_socket, _IS_BOOL, 0, "false")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, persistentId, IS_STRING, 1, "null")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQSocket_send, 0, 1, MAY_BE_STATIC|MAY_BE_FALSE)
@@ -102,9 +102,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_disconnect, 0, 1
 ZEND_END_ARG_INFO()
 #endif
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setsockopt, 0, 2, IS_VOID, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setsockopt, 0, 2, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
+	ZEND_ARG_TYPE_MASK(0, value, MAY_BE_STRING|MAY_BE_LONG, NULL)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getendpoints, 0, 0, IS_ARRAY, 0)
@@ -117,7 +117,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getpersistentid, 0, 0, IS_STRING, 1)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getsockopt, 0, 1, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQSocket_getsockopt, 0, 1, MAY_BE_STRING|MAY_BE_LONG)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
@@ -160,7 +160,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_run, 0, 0, IS_VO
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setidlecallback, 0, 2, IS_STATIC, 0)
-	ZEND_ARG_TYPE_INFO(0, idle_callback, IS_CALLABLE, 0)
+	ZEND_ARG_TYPE_INFO(0, idleCallback, IS_CALLABLE, 0)
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, user_data, IS_OBJECT, 1, "null")
 ZEND_END_ARG_INFO()
@@ -682,12 +682,6 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_string *const_SOCKOPT_RCVMORE_name = zend_string_init_interned("SOCKOPT_RCVMORE", sizeof("SOCKOPT_RCVMORE") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_RCVMORE_name, &const_SOCKOPT_RCVMORE_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_SOCKOPT_RCVMORE_name, true);
-
-	zval const_SOCKOPT_FD_value;
-	ZVAL_LONG(&const_SOCKOPT_FD_value, ZMQ_FD);
-	zend_string *const_SOCKOPT_FD_name = zend_string_init_interned("SOCKOPT_FD", sizeof("SOCKOPT_FD") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_FD_name, &const_SOCKOPT_FD_value, ZEND_ACC_PUBLIC, NULL);
-	zend_string_release_ex(const_SOCKOPT_FD_name, true);
 
 	zval const_SOCKOPT_EVENTS_value;
 	ZVAL_LONG(&const_SOCKOPT_EVENTS_value, ZMQ_EVENTS);

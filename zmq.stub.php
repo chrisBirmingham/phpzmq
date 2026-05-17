@@ -363,12 +363,6 @@ class ZMQ
 
 	/**
 	 * @var int
-	 * @cvalue ZMQ_FD
-	 */
-	const SOCKOPT_FD = UNKNOWN;
-
-	/**
-	 * @var int
 	 * @cvalue ZMQ_EVENTS
 	 */
 	const SOCKOPT_EVENTS = UNKNOWN;
@@ -470,7 +464,7 @@ class ZMQContext
 	 * @param boolean $is_persistent
 	 * @return ZMQContext
 	 */
-	public function __construct(int $io_threads = 1, bool $persistent = true) {}
+	public function __construct(int $ioThreads = 1, bool $persistent = true) {}
 
 	/**
 	 * Acquires a handle to the request global context
@@ -481,7 +475,7 @@ class ZMQContext
 
 	public function getsocketcount(): int {}
 
-	public function getsocket(int $type, ?string $dsn = null, bool $on_new_socket = false): ZMQSocket {}
+	public function getsocket(int $type, ?string $dsn = null, bool $onNewSocket = false): ZMQSocket {}
 
 	public function ispersistent(): bool {}
 
@@ -516,7 +510,7 @@ class ZMQSocket
 	 * @param callback $on_new_socket
 	 * @return ZMQSocket
 	 */
-	public function __construct(ZMQContext $ZMQContext, int $type, ?string $persistent_id = null, bool $on_new_socket = false) {}
+	public function __construct(ZMQContext $ZMQContext, int $type, ?string $persistentId = null, bool $onNewSocket = false) {}
 
 	/**
 	 * Send a message. Return true if message was sent and false on EAGAIN
@@ -584,7 +578,7 @@ class ZMQSocket
 	public function disconnect(string $dsn): static {}
 #endif
 
-	public function setsockopt(int $key, mixed $value): void {}
+	public function setsockopt(int $key, string|int $value): static {}
 
 	public function getendpoints(): array {}
 
@@ -594,7 +588,7 @@ class ZMQSocket
 
 	public function getpersistentid(): ?string {}
 
-	public function getsockopt(int $key): int {}
+	public function getsockopt(int $key): string|int {}
 
 	/**
 	 * @implementation-alias ZMQSocket::send
@@ -678,13 +672,13 @@ class ZMQDevice
 	 */
 	public function run(): void {}
 
-	public function setidlecallback(callable $idle_callback, int $timeout, ?object $user_data = null): static {}
+	public function setidlecallback(callable $idleCallback, int $timeout, ?object $user_data = null): static {}
 
 	public function setidletimeout(int $timeout): static {}
 
 	public function getidletimeout(): int {}
 
-	public function settimercallback(callable $idle_callback, int $timeout, ?object $user_data = null): static {}
+	public function settimercallback(callable $idleCallback, int $timeout, ?object $user_data = null): static {}
 
 	public function settimertimeout(int $timeout): static {}
 

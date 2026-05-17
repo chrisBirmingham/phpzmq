@@ -375,25 +375,6 @@ if (defined ("ZMQ::SOCKOPT_RCVMORE") && ($removedVersion === false || ZMQ::LIBZM
 
 }
 $removedVersion = false;
-/* socket option is marked mode="r" type=socket php_type=resource */
-if (defined ("ZMQ::SOCKOPT_FD") && ($removedVersion === false || ZMQ::LIBZMQ_VERSION_MAJOR < $removedVersion)) {
-
-    $socket = ZMQContext::acquire()->getSocket(ZMQ::SOCKET_SUB);
-
-    // Test read-only
-    $retval = $socket->getSockOpt(ZMQ::SOCKOPT_FD);
-    if (is_resource($retval) === false) {
-        echo "Incorrect return type for ZMQ::SOCKOPT_FD: expected=[resource] actual=[" .gettype($retval). "]" . PHP_EOL;
-    }
-    $tested++;
-
-    try {
-        $socket->setSockOpt(ZMQ::SOCKOPT_FD, 'x');
-        echo "Should not be able to set ZMQ::SOCKOPT_FD" . PHP_EOL;
-    } catch (ZMQSocketException $e) {}
-
-}
-$removedVersion = false;
 /* socket option is marked mode="r" type=uint32 php_type=int */
 if (defined ("ZMQ::SOCKOPT_EVENTS") && ($removedVersion === false || ZMQ::LIBZMQ_VERSION_MAJOR < $removedVersion)) {
     $test_value = 1;

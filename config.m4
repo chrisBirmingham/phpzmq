@@ -108,6 +108,6 @@ if test "$PHP_ZMQ" != "no"; then
   AC_CHECK_FUNCS(clock_gettime gettimeofday mach_absolute_time)
 
   PHP_SUBST(ZMQ_SHARED_LIBADD)
-  PHP_NEW_EXTENSION(zmq, zmq.c zmq_helpers.c zmq_pollset.c zmq_device.c zmq_sockopt.c zmq_fd_stream.c zmq_clock.c zmq_shared_ctx.c, $ext_shared)
+  PHP_NEW_EXTENSION(zmq, zmq.c zmq_helpers.c zmq_pollset.c zmq_device.c zmq_sockopt.c zmq_clock.c zmq_shared_ctx.c, $ext_shared)
   PKG_CONFIG_PATH="$ORIG_PKG_CONFIG_PATH"
 fi
