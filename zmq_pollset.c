@@ -32,6 +32,7 @@
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
 #include "ext/spl/php_spl.h"
+#include "zend_types.h"
 
 #define PHP_ZMQ_ALLOC_SIZE 20
 
@@ -74,11 +75,11 @@ static void s_pollset_clear(php_zmq_pollset *set, bool reinit)
 	}
 
 	if (reinit) {
-		set->items      = ecalloc(set->alloc_size, sizeof(zmq_pollitem_t));
-		set->keys       = ecalloc(set->alloc_size, sizeof(zend_string *));
-		set->zv         = ecalloc(set->alloc_size, sizeof(zval));
-		set->allocated  = set->alloc_size;
-		set->num_items  = 0;
+		set->items = ecalloc(set->alloc_size, sizeof(zmq_pollitem_t));
+		set->keys = ecalloc(set->alloc_size, sizeof(zend_string *));
+		set->zv = ecalloc(set->alloc_size, sizeof(zval));
+		set->allocated = set->alloc_size;
+		set->num_items = 0;
 	}
 }
 
@@ -89,8 +90,8 @@ static size_t s_pollset_append(php_zmq_pollset *set, zmq_pollitem_t *item, zend_
 	if (set->allocated <= set->num_items + 1) {
 
 		set->items = erealloc (set->items, (set->allocated + set->alloc_size) * sizeof(zmq_pollitem_t));
-		set->keys  = erealloc (set->keys,  (set->allocated + set->alloc_size) * sizeof(zend_string *));
-		set->zv    = erealloc (set->zv,    (set->allocated + set->alloc_size) * sizeof(zval));
+		set->keys = erealloc (set->keys, (set->allocated + set->alloc_size) * sizeof(zend_string *));
+		set->zv = erealloc (set->zv, (set->allocated + set->alloc_size) * sizeof(zval));
 
 		set->allocated += set->alloc_size;
 	}
@@ -132,26 +133,24 @@ static void s_pollset_delete(php_zmq_pollset *set, size_t index)
 	    (set->allocated - set->alloc_size > set->alloc_size)) {
 
 		set->items = erealloc (set->items, (set->allocated - set->alloc_size) * sizeof(zmq_pollitem_t));
-		set->keys  = erealloc (set->keys,  (set->allocated - set->alloc_size) * sizeof(zend_string *));
-		set->zv    = erealloc (set->zv,    (set->allocated - set->alloc_size) * sizeof(zval));
+		set->keys = erealloc (set->keys, (set->allocated - set->alloc_size) * sizeof(zend_string *));
+		set->zv = erealloc (set->zv, (set->allocated - set->alloc_size) * sizeof(zval));
 
 		set->allocated -= set->alloc_size;
 	}
 }
 
-static bool s_index_for_key(php_zmq_pollset *set, zend_string *key, size_t *index)
+static zend_result s_index_for_key(php_zmq_pollset *set, zend_string *key, size_t *index)
 {
-	bool retval = 0;
 	size_t i;
 
 	for (i = 0; i < set->num_items; i++) {
-		if (zend_string_equals (set->keys[i], key)) {
+		if (zend_string_equals(set->keys[i], key)) {
 			*index = i;
-			retval = 1;
-			break;
+			return SUCCESS;
 		}
 	}
-	return retval;
+	return FAILURE;
 }
 
 static zval *s_zval_for_index(php_zmq_pollset *set, size_t index)
@@ -163,14 +162,9 @@ static zend_string *s_create_key(zval *entry)
 {
 	if (Z_TYPE_P(entry) == IS_RESOURCE) {
 		/* zend_long since 8.1.0 */
-		return strpprintf(0, "r:%ld", (long)Z_RES_P(entry)->handle);
-	}
-	else {
-#if PHP_VERSION_ID >= 80100
+		return strpprintf(0, "r:" ZEND_LONG_FMT, (long)Z_RES_P(entry)->handle);
+	} else {
 		zend_string *hash = php_spl_object_hash(Z_OBJ_P(entry));
-#else
-		zend_string *hash = php_spl_object_hash(entry);
-#endif
 		zend_string *key = strpprintf(0, "o:%s", hash->val);
 		zend_string_release(hash);
 		return key;
@@ -179,16 +173,16 @@ static zend_string *s_create_key(zval *entry)
 
 php_zmq_pollset *php_zmq_pollset_init(void)
 {
-	php_zmq_pollset *set = ecalloc (1, sizeof(php_zmq_pollset));
+	php_zmq_pollset *set = ecalloc(1, sizeof(php_zmq_pollset));
 
 	array_init(&set->errors);
 
-	set->items      = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zmq_pollitem_t));
-	set->keys       = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zend_string *));
-	set->zv         = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zval));
-	set->allocated  = PHP_ZMQ_ALLOC_SIZE;
+	set->items = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zmq_pollitem_t));
+	set->keys = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zend_string *));
+	set->zv = ecalloc(PHP_ZMQ_ALLOC_SIZE, sizeof(zval));
+	set->allocated = PHP_ZMQ_ALLOC_SIZE;
 	set->alloc_size = PHP_ZMQ_ALLOC_SIZE;
-	set->num_items  = 0;
+	set->num_items = 0;
 
 	return set;
 }
@@ -227,7 +221,7 @@ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, 
 	key = s_create_key(entry);
 
 	// Does this already exist?
-	if (s_index_for_key(set, key, &index)) {
+	if (s_index_for_key(set, key, &index) == SUCCESS) {
 		return key;
 	}
 
@@ -273,7 +267,7 @@ bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key)
 {
 	size_t index;
 
-	if (!s_index_for_key(set, key, &index)) {
+	if (s_index_for_key(set, key, &index) == FAILURE) {
 		return false;
 	}
 
@@ -377,4 +371,3 @@ void php_zmq_pollset_destroy(php_zmq_pollset **ptr)
 	efree(set);
 	*ptr = NULL;
 }
-

@@ -1597,7 +1597,6 @@ PHP_METHOD(ZMQDevice, setidletimeout)
 	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
 	intern->idle_cb.timeout = timeout;
 	ZMQ_RETURN_THIS;
-
 }
 /* }}} */
 
