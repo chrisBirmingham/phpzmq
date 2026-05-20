@@ -101,7 +101,7 @@ static int le_zmq_socket, le_zmq_context;
 
 /** {{{ static int php_zmq_socket_list_entry(void)
 */
-static int php_zmq_socket_list_entry(void)
+static inline int php_zmq_socket_list_entry(void)
 {
 	return le_zmq_socket;
 }
@@ -109,7 +109,7 @@ static int php_zmq_socket_list_entry(void)
 
 /* {{{ static int php_zmq_context_list_entry(void)
 */
-static int php_zmq_context_list_entry(void)
+static inline int php_zmq_context_list_entry(void)
 {
 	return le_zmq_context;
 }
@@ -625,7 +625,7 @@ PHP_METHOD(ZMQContext, getSocket)
 
 	if (!socket) {
 		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Error creating socket: %s", zmq_strerror(errno));
-		return;
+		RETURN_THROWS();
 	}
 
 	object_init_ex(return_value, php_zmq_socket_sc_entry);
@@ -643,7 +643,7 @@ PHP_METHOD(ZMQContext, getSocket)
 			if (!php_zmq_connect_callback(return_value, &fci, &fci_cache, persistent_id)) {
 				php_zmq_socket_destroy(socket);
 				interns->socket = NULL;
-				return;
+				RETURN_THROWS();
 			}
 		}
 		if (socket->is_persistent) {
@@ -711,7 +711,7 @@ PHP_METHOD(ZMQSocket, __construct)
 
 	if (!socket) {
 		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Error creating socket: %s", zmq_strerror(errno));
-		return;
+		RETURN_THROWS();
 	}
 
 	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
@@ -728,7 +728,7 @@ PHP_METHOD(ZMQSocket, __construct)
 			if (!php_zmq_connect_callback(getThis(), &fci, &fci_cache, persistent_id)) {
 				php_zmq_socket_destroy(socket);
 				intern->socket = NULL;
-				return;
+				RETURN_THROWS();
 			}
 		}
 		if (socket->is_persistent) {
@@ -743,35 +743,31 @@ PHP_METHOD(ZMQSocket, __construct)
 
 /* {{{ static zend_bool php_zmq_send(php_zmq_socket_object *intern, char *message_param, long flags)
 */
-static bool php_zmq_send(php_zmq_socket_object *intern, zend_string *message_param, zend_long flags)
+static zend_result php_zmq_send(php_zmq_socket_object *intern, zend_string *message_param, zend_long flags)
 {
-	int rc, errno_;
 	zmq_msg_t message;
 
 	if (zmq_msg_init_size(&message, message_param->len) != 0) {
 		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to initialize message structure: %s", zmq_strerror(errno));
-		return false;
+		return FAILURE;
 	}
 	memcpy(zmq_msg_data(&message), message_param->val, message_param->len);
 
-	rc = zmq_sendmsg(intern->socket->z_socket, &message, flags);
-	errno_ = errno;
-
-	zmq_msg_close(&message);
-
-	if (rc == -1) {
-	  if (errno_ == EAGAIN) {
-			return false;
-	  }
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno_, "Failed to send message: %s", zmq_strerror(errno_));
-		return false;
+	if (zmq_sendmsg(intern->socket->z_socket, &message, flags) < 0) {
+		zmq_msg_close(&message);
+		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to send message: %s", zmq_strerror(errno));
+		return FAILURE;
 	}
 
-	return true;
+	zmq_msg_close(&message);
+	return SUCCESS;
 }
 /* }}} */
 
-static void php_zmq_sendmsg_impl(INTERNAL_FUNCTION_PARAMETERS)
+/* {{{ proto ZMQSocket ZMQSocket::send(string $message[, integer $flags = 0])
+	Send a message. Return true if message was sent and false on EAGAIN
+*/
+PHP_METHOD(ZMQSocket, send)
 {
 	php_zmq_socket_object *intern;
 	zend_string *message_param;
@@ -786,21 +782,12 @@ static void php_zmq_sendmsg_impl(INTERNAL_FUNCTION_PARAMETERS)
 	ZEND_PARSE_PARAMETERS_END();
 
 	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
-	ret = php_zmq_send(intern, message_param, flags);
 
-	if (ret) {
-		ZMQ_RETURN_THIS;
-	} else {
-		RETURN_FALSE;
+	if (php_zmq_send(intern, message_param, flags) == FAILURE) {
+		RETURN_THROWS();
 	}
-}
 
-/* {{{ proto ZMQSocket ZMQSocket::send(string $message[, integer $flags = 0])
-	Send a message. Return true if message was sent and false on EAGAIN
-*/
-PHP_METHOD(ZMQSocket, send)
-{
-	php_zmq_sendmsg_impl(INTERNAL_FUNCTION_PARAM_PASSTHRU);
+	ZMQ_RETURN_THIS;
 }
 
 /* }}} */
@@ -808,12 +795,13 @@ PHP_METHOD(ZMQSocket, send)
 static int php_zmq_send_cb(zval *zv, int num_args, va_list args, zend_hash_key *hash_key)
 {
 	php_zmq_socket_object *intern;
-	int flags, *rc, *to_send;
+	int flags, *to_send;
+	zend_result *rc;
 
 	intern = va_arg(args, php_zmq_socket_object *);
 	flags = va_arg(args, int);
 	to_send = va_arg(args, int *);
-	rc = va_arg(args, int *);
+	rc = va_arg(args, zend_result *);
 
 	if (--(*to_send)) {
 		flags = flags | ZMQ_SNDMORE;
@@ -826,7 +814,7 @@ static int php_zmq_send_cb(zval *zv, int num_args, va_list args, zend_hash_key *
 
 	zend_string_release(str);
 
-	if (!*rc) {
+	if (*rc == FAILURE) {
 		return ZEND_HASH_APPLY_STOP;
 	}
 	return ZEND_HASH_APPLY_KEEP;
@@ -839,8 +827,9 @@ PHP_METHOD(ZMQSocket, sendmulti)
 {
 	zval *messages;
 	php_zmq_socket_object *intern;
-	int to_send, ret = 0;
+	int to_send = 0;
 	zend_long flags = 0;
+	zend_result ret;
 
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_ARRAY(messages)
@@ -852,18 +841,17 @@ PHP_METHOD(ZMQSocket, sendmulti)
 	to_send = zend_hash_num_elements(Z_ARRVAL_P(messages));
 	zend_hash_apply_with_arguments(Z_ARRVAL_P(messages), (apply_func_args_t) php_zmq_send_cb, 4, intern, flags, &to_send, &ret);
 
-	if (ret) {
-		ZMQ_RETURN_THIS;
-	} else {
-		RETURN_FALSE;
+	if (ret == FAILURE) {
+		RETURN_THROWS();
 	}
+
+	ZMQ_RETURN_THIS;
 }
 
 /* {{{ static zend_bool php_zmq_recv(php_zmq_socket_object *intern, long flags, zval *return_value)
 */
 static zend_string *php_zmq_recv(php_zmq_socket_object *intern, zend_long flags)
 {
-	int rc, errno_;
 	zmq_msg_t message;
 	zend_string *str = NULL;
 
@@ -872,15 +860,9 @@ static zend_string *php_zmq_recv(php_zmq_socket_object *intern, zend_long flags)
 		return NULL;
 	}
 
-	rc = zmq_recvmsg(intern->socket->z_socket, &message, flags);
-	errno_ = errno;
-
-	if (rc == -1) {
+	if (zmq_recvmsg(intern->socket->z_socket, &message, flags) < 0) {
 		zmq_msg_close(&message);
-		if (errno == EAGAIN) {
-			return NULL;
-		}
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno_, "Failed to receive message: %s", zmq_strerror(errno_));
+		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to receive message: %s", zmq_strerror(errno));
 		return NULL;
 	}
 
@@ -890,7 +872,10 @@ static zend_string *php_zmq_recv(php_zmq_socket_object *intern, zend_long flags)
 }
 /* }}} */
 
-static void php_zmq_recvmsg_impl(INTERNAL_FUNCTION_PARAMETERS)
+/* {{{ proto string ZMQ::recv([integer $flags = 0])
+	Receive a message
+*/
+PHP_METHOD(ZMQSocket, recv)
 {
 	zend_string *str = NULL;
 	php_zmq_socket_object *intern;
@@ -905,17 +890,10 @@ static void php_zmq_recvmsg_impl(INTERNAL_FUNCTION_PARAMETERS)
 	str = php_zmq_recv(intern, flags);
 
 	if (!str) {
-		RETURN_FALSE;
+		RETURN_THROWS();
 	}
-	RETURN_STR(str);
-}
 
-/* {{{ proto string ZMQ::recv([integer $flags = 0])
-	Receive a message
-*/
-PHP_METHOD(ZMQSocket, recv)
-{
-	php_zmq_recvmsg_impl(INTERNAL_FUNCTION_PARAM_PASSTHRU);
+	RETURN_STR(str);
 }
 
 /* }}} */
@@ -928,11 +906,7 @@ PHP_METHOD(ZMQSocket, recvmulti)
 	php_zmq_socket_object *intern;
 	size_t value_len;
 	zend_long flags = 0;
-#if ZMQ_VERSION_MAJOR < 3
-	int64_t value;
-#else
 	int value;
-#endif
 
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
@@ -947,7 +921,7 @@ PHP_METHOD(ZMQSocket, recvmulti)
 		zend_string *part = php_zmq_recv(intern, flags);
 		if (!part) {
 			zval_dtor(return_value);
-			RETURN_FALSE;
+			RETURN_THROWS();
 		}
 		add_next_index_str(return_value, part);
 		zmq_getsockopt(intern->socket->z_socket, ZMQ_RCVMORE, &value, &value_len);
@@ -991,7 +965,7 @@ PHP_METHOD(ZMQSocket, recvevent)
 		RETURN_THROWS();
 	}
 
-	data  = (uint8_t *)metadata->val;
+	data = (uint8_t *)metadata->val;
 	event = *(uint16_t *)(data);
 	value = *(uint32_t *)(data + sizeof(uint16_t));
 
@@ -1322,7 +1296,6 @@ PHP_METHOD(ZMQPoll, add)
 		default:
 			zend_throw_exception(php_zmq_poll_exception_sc_entry, "The first argument must be an instance of ZMQSocket or a resource", PHP_ZMQ_INTERNAL_ERROR);
 			RETURN_THROWS();
-			break;
 	}
 
 	key = php_zmq_pollset_add(intern->set, object, events, &error);
@@ -1348,7 +1321,6 @@ PHP_METHOD(ZMQPoll, add)
 				break;
 			default:
 				message = "Unknown error";
-				break;
 		}
 
 		zend_throw_exception(php_zmq_poll_exception_sc_entry, message, PHP_ZMQ_INTERNAL_ERROR);
@@ -1414,21 +1386,21 @@ PHP_METHOD(ZMQPoll, poll)
 	int rc;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS(), "a!/a!/|l", &r_array, &w_array, &timeout) == FAILURE) {
-		return;
-	}
+    return;
+  }
 
 	intern = PHP_ZMQ_POLL_OBJECT(ZEND_THIS);
 
 	if (php_zmq_pollset_num_items(intern->set) == 0) {
 		zend_throw_exception(php_zmq_poll_exception_sc_entry, "No sockets assigned to the ZMQPoll", PHP_ZMQ_INTERNAL_ERROR);
-		return;
+		RETURN_THROWS();
 	}
 
 	rc = php_zmq_pollset_poll(intern->set, timeout * PHP_ZMQ_TIMEOUT, r_array, w_array);
 
 	if (rc == -1) {
 		zend_throw_exception_ex(php_zmq_poll_exception_sc_entry, errno, "Poll failed: %s", zmq_strerror(errno));
-		return;
+		RETURN_THROWS();
 	}
 	RETURN_LONG(rc);
 }

@@ -919,11 +919,11 @@ class ZMQSocket
      *
      * @param string $message
      * @param int $flags
-     * @return static|false
+     * @return static
      */
-    public function send(string $message, int $mode = 0): static|false {}
+    public function send(string $message, int $mode = 0): static {}
 
-    public function recv(int $mode = 0): string|false {}
+    public function recv(int $mode = 0): string {}
 
     /**
      * Send a multipart message. Return true if message was sent and false on EAGAIN
@@ -932,9 +932,9 @@ class ZMQSocket
      * @param int $flags
      * @return ZMQSocket
      */
-    public function sendmulti(array $message, int $mode = 0): static|false {}
+    public function sendmulti(array $message, int $mode = 0): static {}
 
-    public function recvmulti(int $mode = 0): array|false {}
+    public function recvmulti(int $mode = 0): array {}
 
     /**
      * Bind the socket to an endpoint
@@ -995,12 +995,12 @@ class ZMQSocket
     /**
      * @implementation-alias ZMQSocket::send
      */
-    public function sendmsg(string $message, int $mode = 0): static|false {}
+    public function sendmsg(string $message, int $mode = 0): static {}
 
     /**
      * @implementation-alias ZMQSocket::recv
      */
-    public function recvmsg(int $mode = 0): string|false {}
+    public function recvmsg(int $mode = 0): string {}
 }
 
 class ZMQPoll
@@ -1072,13 +1072,13 @@ class ZMQDevice
      */
     public function run(): void {}
 
-    public function setIdleCallback(callable $idleCallback, int $timeout, ?object $user_data = null): static {}
+    public function setIdleCallback(callable $idleCallback, int $timeout, ?object $userData = null): static {}
 
     public function setIdleTimeout(int $timeout): static {}
 
     public function getIdleTimeout(): int {}
 
-    public function setTimerCallback(callable $idleCallback, int $timeout, ?object $user_data = null): static {}
+    public function setTimerCallback(callable $idleCallback, int $timeout, ?object $userData = null): static {}
 
     public function setTimerTimeout(int $timeout): static {}
 
