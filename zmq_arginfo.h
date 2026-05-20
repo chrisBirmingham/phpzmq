@@ -1,5 +1,5 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: 85efe8de09f8fd97d21df7eec87c57aa19ecc53a */
+ * Stub hash: 93e2977cd7240d4e849ac5db9887005ce77bf0b7 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -25,15 +25,15 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQContext_acquire, 0, 0, ZMQContext, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_ZMQContext_getsocketcount arginfo_class_ZMQ_clock
+#define arginfo_class_ZMQContext_getSocketCount arginfo_class_ZMQ_clock
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQContext_getsocket, 0, 1, ZMQSocket, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQContext_getSocket, 0, 1, ZMQSocket, 0)
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, dsn, IS_STRING, 1, "null")
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, _IS_BOOL, 0, "false")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, IS_CALLABLE, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_ispersistent, 0, 0, _IS_BOOL, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_isPersistent, 0, 0, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
 #if PHP_ZMQ_HAVE_CTX_OPTIONS
@@ -51,7 +51,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQSocket___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, ZMQContext, ZMQContext, 0)
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, persistentId, IS_STRING, 1, "null")
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, _IS_BOOL, 0, "false")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, onNewSocket, IS_CALLABLE, 1, "null")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQSocket_send, 0, 1, MAY_BE_STATIC|MAY_BE_FALSE)
@@ -102,22 +102,22 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_disconnect, 0, 1
 ZEND_END_ARG_INFO()
 #endif
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setsockopt, 0, 2, IS_STATIC, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setSockOpt, 0, 2, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
 	ZEND_ARG_TYPE_MASK(0, value, MAY_BE_STRING|MAY_BE_LONG, NULL)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getendpoints, 0, 0, IS_ARRAY, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getEndpoints, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_ZMQSocket_getsockettype arginfo_class_ZMQ_clock
+#define arginfo_class_ZMQSocket_getSocketType arginfo_class_ZMQ_clock
 
-#define arginfo_class_ZMQSocket_ispersistent arginfo_class_ZMQContext_ispersistent
+#define arginfo_class_ZMQSocket_isPersistent arginfo_class_ZMQContext_isPersistent
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getpersistentid, 0, 0, IS_STRING, 1)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_getPersistentId, 0, 0, IS_STRING, 1)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQSocket_getsockopt, 0, 1, MAY_BE_STRING|MAY_BE_LONG)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ZMQSocket_getSockOpt, 0, 1, MAY_BE_STRING|MAY_BE_LONG)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
@@ -130,14 +130,13 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_add, 0, 2, IS_LONG
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQPoll_poll, 0, 2, long, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_poll, 0, 2, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(1, readable, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(1, writable, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, timeout, IS_LONG, 0, "-1")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_getlasterrors, 0, 0, IS_OBJECT, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_class_ZMQPoll_getLastErrors arginfo_class_ZMQSocket_getEndpoints
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_remove, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, remove, IS_MIXED, 0)
@@ -148,7 +147,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ZMQPoll_clear, 0, 0, ZMQPoll, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_ZMQPoll_items arginfo_class_ZMQSocket_getendpoints
+#define arginfo_class_ZMQPoll_items arginfo_class_ZMQSocket_getEndpoints
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQDevice___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, frontend, ZMQSocket, 0)
@@ -159,23 +158,23 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_run, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setidlecallback, 0, 2, IS_STATIC, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setIdleCallback, 0, 2, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, idleCallback, IS_CALLABLE, 0)
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, user_data, IS_OBJECT, 1, "null")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setidletimeout, 0, 1, IS_STATIC, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQDevice_setIdleTimeout, 0, 1, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, timeout, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_ZMQDevice_getidletimeout arginfo_class_ZMQ_clock
+#define arginfo_class_ZMQDevice_getIdleTimeout arginfo_class_ZMQ_clock
 
-#define arginfo_class_ZMQDevice_settimercallback arginfo_class_ZMQDevice_setidlecallback
+#define arginfo_class_ZMQDevice_setTimerCallback arginfo_class_ZMQDevice_setIdleCallback
 
-#define arginfo_class_ZMQDevice_settimertimeout arginfo_class_ZMQDevice_setidletimeout
+#define arginfo_class_ZMQDevice_setTimerTimeout arginfo_class_ZMQDevice_setIdleTimeout
 
-#define arginfo_class_ZMQDevice_gettimertimeout arginfo_class_ZMQ_clock
+#define arginfo_class_ZMQDevice_getTimerTimeout arginfo_class_ZMQ_clock
 
 ZEND_METHOD(ZMQ, clock);
 #if PHP_ZMQ_HAVE_Z85
@@ -187,9 +186,9 @@ ZEND_METHOD(ZMQ, curvekeypair);
 #endif
 ZEND_METHOD(ZMQContext, __construct);
 ZEND_METHOD(ZMQContext, acquire);
-ZEND_METHOD(ZMQContext, getsocketcount);
-ZEND_METHOD(ZMQContext, getsocket);
-ZEND_METHOD(ZMQContext, ispersistent);
+ZEND_METHOD(ZMQContext, getSocketCount);
+ZEND_METHOD(ZMQContext, getSocket);
+ZEND_METHOD(ZMQContext, isPersistent);
 #if PHP_ZMQ_HAVE_CTX_OPTIONS
 ZEND_METHOD(ZMQContext, setOpt);
 ZEND_METHOD(ZMQContext, getOpt);
@@ -211,27 +210,27 @@ ZEND_METHOD(ZMQSocket, unbind);
 #if PHP_ZMQ_HAVE_DISCONNECT
 ZEND_METHOD(ZMQSocket, disconnect);
 #endif
-ZEND_METHOD(ZMQSocket, setsockopt);
-ZEND_METHOD(ZMQSocket, getendpoints);
-ZEND_METHOD(ZMQSocket, getsockettype);
-ZEND_METHOD(ZMQSocket, ispersistent);
-ZEND_METHOD(ZMQSocket, getpersistentid);
-ZEND_METHOD(ZMQSocket, getsockopt);
+ZEND_METHOD(ZMQSocket, setSockOpt);
+ZEND_METHOD(ZMQSocket, getEndpoints);
+ZEND_METHOD(ZMQSocket, getSocketType);
+ZEND_METHOD(ZMQSocket, isPersistent);
+ZEND_METHOD(ZMQSocket, getPersistentId);
+ZEND_METHOD(ZMQSocket, getSockOpt);
 ZEND_METHOD(ZMQPoll, add);
 ZEND_METHOD(ZMQPoll, poll);
-ZEND_METHOD(ZMQPoll, getlasterrors);
+ZEND_METHOD(ZMQPoll, getLastErrors);
 ZEND_METHOD(ZMQPoll, remove);
 ZEND_METHOD(ZMQPoll, count);
 ZEND_METHOD(ZMQPoll, clear);
 ZEND_METHOD(ZMQPoll, items);
 ZEND_METHOD(ZMQDevice, __construct);
 ZEND_METHOD(ZMQDevice, run);
-ZEND_METHOD(ZMQDevice, setidlecallback);
-ZEND_METHOD(ZMQDevice, setidletimeout);
-ZEND_METHOD(ZMQDevice, getidletimeout);
-ZEND_METHOD(ZMQDevice, settimercallback);
-ZEND_METHOD(ZMQDevice, settimertimeout);
-ZEND_METHOD(ZMQDevice, gettimertimeout);
+ZEND_METHOD(ZMQDevice, setIdleCallback);
+ZEND_METHOD(ZMQDevice, setIdleTimeout);
+ZEND_METHOD(ZMQDevice, getIdleTimeout);
+ZEND_METHOD(ZMQDevice, setTimerCallback);
+ZEND_METHOD(ZMQDevice, setTimerTimeout);
+ZEND_METHOD(ZMQDevice, getTimerTimeout);
 
 static const zend_function_entry class_ZMQ_methods[] = {
 	ZEND_ME(ZMQ, clock, arginfo_class_ZMQ_clock, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
@@ -248,9 +247,9 @@ static const zend_function_entry class_ZMQ_methods[] = {
 static const zend_function_entry class_ZMQContext_methods[] = {
 	ZEND_ME(ZMQContext, __construct, arginfo_class_ZMQContext___construct, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, acquire, arginfo_class_ZMQContext_acquire, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	ZEND_ME(ZMQContext, getsocketcount, arginfo_class_ZMQContext_getsocketcount, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQContext, getsocket, arginfo_class_ZMQContext_getsocket, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQContext, ispersistent, arginfo_class_ZMQContext_ispersistent, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQContext, getSocketCount, arginfo_class_ZMQContext_getSocketCount, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQContext, getSocket, arginfo_class_ZMQContext_getSocket, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQContext, isPersistent, arginfo_class_ZMQContext_isPersistent, ZEND_ACC_PUBLIC)
 #if PHP_ZMQ_HAVE_CTX_OPTIONS
 	ZEND_ME(ZMQContext, setOpt, arginfo_class_ZMQContext_setOpt, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, getOpt, arginfo_class_ZMQContext_getOpt, ZEND_ACC_PUBLIC)
@@ -276,12 +275,12 @@ static const zend_function_entry class_ZMQSocket_methods[] = {
 #if PHP_ZMQ_HAVE_DISCONNECT
 	ZEND_ME(ZMQSocket, disconnect, arginfo_class_ZMQSocket_disconnect, ZEND_ACC_PUBLIC)
 #endif
-	ZEND_ME(ZMQSocket, setsockopt, arginfo_class_ZMQSocket_setsockopt, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, getendpoints, arginfo_class_ZMQSocket_getendpoints, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, getsockettype, arginfo_class_ZMQSocket_getsockettype, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, ispersistent, arginfo_class_ZMQSocket_ispersistent, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, getpersistentid, arginfo_class_ZMQSocket_getpersistentid, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQSocket, getsockopt, arginfo_class_ZMQSocket_getsockopt, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, setSockOpt, arginfo_class_ZMQSocket_setSockOpt, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, getEndpoints, arginfo_class_ZMQSocket_getEndpoints, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, getSocketType, arginfo_class_ZMQSocket_getSocketType, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, isPersistent, arginfo_class_ZMQSocket_isPersistent, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, getPersistentId, arginfo_class_ZMQSocket_getPersistentId, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQSocket, getSockOpt, arginfo_class_ZMQSocket_getSockOpt, ZEND_ACC_PUBLIC)
 #if (PHP_VERSION_ID >= 80400)
 	ZEND_RAW_FENTRY("sendmsg", zim_ZMQSocket_send, arginfo_class_ZMQSocket_sendmsg, ZEND_ACC_PUBLIC, NULL, NULL)
 #else
@@ -298,7 +297,7 @@ static const zend_function_entry class_ZMQSocket_methods[] = {
 static const zend_function_entry class_ZMQPoll_methods[] = {
 	ZEND_ME(ZMQPoll, add, arginfo_class_ZMQPoll_add, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQPoll, poll, arginfo_class_ZMQPoll_poll, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQPoll, getlasterrors, arginfo_class_ZMQPoll_getlasterrors, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQPoll, getLastErrors, arginfo_class_ZMQPoll_getLastErrors, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQPoll, remove, arginfo_class_ZMQPoll_remove, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQPoll, count, arginfo_class_ZMQPoll_count, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQPoll, clear, arginfo_class_ZMQPoll_clear, ZEND_ACC_PUBLIC)
@@ -309,12 +308,12 @@ static const zend_function_entry class_ZMQPoll_methods[] = {
 static const zend_function_entry class_ZMQDevice_methods[] = {
 	ZEND_ME(ZMQDevice, __construct, arginfo_class_ZMQDevice___construct, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQDevice, run, arginfo_class_ZMQDevice_run, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, setidlecallback, arginfo_class_ZMQDevice_setidlecallback, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, setidletimeout, arginfo_class_ZMQDevice_setidletimeout, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, getidletimeout, arginfo_class_ZMQDevice_getidletimeout, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, settimercallback, arginfo_class_ZMQDevice_settimercallback, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, settimertimeout, arginfo_class_ZMQDevice_settimertimeout, ZEND_ACC_PUBLIC)
-	ZEND_ME(ZMQDevice, gettimertimeout, arginfo_class_ZMQDevice_gettimertimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, setIdleCallback, arginfo_class_ZMQDevice_setIdleCallback, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, setIdleTimeout, arginfo_class_ZMQDevice_setIdleTimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, getIdleTimeout, arginfo_class_ZMQDevice_getIdleTimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, setTimerCallback, arginfo_class_ZMQDevice_setTimerCallback, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, setTimerTimeout, arginfo_class_ZMQDevice_setTimerTimeout, ZEND_ACC_PUBLIC)
+	ZEND_ME(ZMQDevice, getTimerTimeout, arginfo_class_ZMQDevice_getTimerTimeout, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1000,13 +999,13 @@ static zend_class_entry *register_class_ZMQ(void)
 	zval const_SOCKOPT_ROUTER_RAW_value;
 	ZVAL_LONG(&const_SOCKOPT_ROUTER_RAW_value, ZMQ_ROUTER_RAW);
 	zend_string *const_SOCKOPT_ROUTER_RAW_name = zend_string_init_interned("SOCKOPT_ROUTER_RAW", sizeof("SOCKOPT_ROUTER_RAW") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_RAW_name, &const_SOCKOPT_ROUTER_RAW_value, ZEND_ACC_PUBLIC, NULL);
+	zend_class_constant *const_SOCKOPT_ROUTER_RAW = zend_declare_class_constant_ex(class_entry, const_SOCKOPT_ROUTER_RAW_name, &const_SOCKOPT_ROUTER_RAW_value, ZEND_ACC_PUBLIC|ZEND_ACC_DEPRECATED, NULL);
 	zend_string_release_ex(const_SOCKOPT_ROUTER_RAW_name, true);
 
 	zval const_SOCKOPT_IPV4ONLY_value;
 	ZVAL_LONG(&const_SOCKOPT_IPV4ONLY_value, ZMQ_IPV4ONLY);
 	zend_string *const_SOCKOPT_IPV4ONLY_name = zend_string_init_interned("SOCKOPT_IPV4ONLY", sizeof("SOCKOPT_IPV4ONLY") - 1, true);
-	zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IPV4ONLY_name, &const_SOCKOPT_IPV4ONLY_value, ZEND_ACC_PUBLIC, NULL);
+	zend_class_constant *const_SOCKOPT_IPV4ONLY = zend_declare_class_constant_ex(class_entry, const_SOCKOPT_IPV4ONLY_name, &const_SOCKOPT_IPV4ONLY_value, ZEND_ACC_PUBLIC|ZEND_ACC_DEPRECATED, NULL);
 	zend_string_release_ex(const_SOCKOPT_IPV4ONLY_name, true);
 
 	zval const_SOCKOPT_DELAY_ATTACH_ON_CONNECT_value;
@@ -1188,6 +1187,26 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_string *const_EVENT_ALL_name = zend_string_init_interned("EVENT_ALL", sizeof("EVENT_ALL") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_ALL_name, &const_EVENT_ALL_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_ALL_name, true);
+
+
+	zend_string *attribute_name_Deprecated_const_SOCKOPT_ROUTER_RAW_0 = zend_string_init_interned("Deprecated", sizeof("Deprecated") - 1, true);
+	zend_attribute *attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0 = zend_add_class_constant_attribute(class_entry, const_SOCKOPT_ROUTER_RAW, attribute_name_Deprecated_const_SOCKOPT_ROUTER_RAW_0, 2);
+	zend_string_release_ex(attribute_name_Deprecated_const_SOCKOPT_ROUTER_RAW_0, true);
+	zend_string *attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0_arg0_str = zend_string_init("1.0", strlen("1.0"), 1);
+	ZVAL_STR(&attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0->args[0].value, attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0_arg0_str);
+	attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0->args[0].name = zend_string_init_interned("since", sizeof("since") - 1, true);
+	zend_string *attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0_arg1_str = zend_string_init("use sockets of type ZMQ::STREAM instead", strlen("use sockets of type ZMQ::STREAM instead"), 1);
+	ZVAL_STR(&attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0->args[1].value, attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0_arg1_str);
+	attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0->args[1].name = ZSTR_KNOWN(ZEND_STR_MESSAGE);
+
+	zend_string *attribute_name_Deprecated_const_SOCKOPT_IPV4ONLY_0 = zend_string_init_interned("Deprecated", sizeof("Deprecated") - 1, true);
+	zend_attribute *attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0 = zend_add_class_constant_attribute(class_entry, const_SOCKOPT_IPV4ONLY, attribute_name_Deprecated_const_SOCKOPT_IPV4ONLY_0, 2);
+	zend_string_release_ex(attribute_name_Deprecated_const_SOCKOPT_IPV4ONLY_0, true);
+	ZVAL_STR_COPY(&attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0->args[0].value, attribute_Deprecated_const_SOCKOPT_ROUTER_RAW_0_arg0_str);
+	attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0->args[0].name = zend_string_init_interned("since", sizeof("since") - 1, true);
+	zend_string *attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0_arg1_str = zend_string_init("use ZMQ::SOCKOPT_IPV6 instead", strlen("use ZMQ::SOCKOPT_IPV6 instead"), 1);
+	ZVAL_STR(&attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0->args[1].value, attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0_arg1_str);
+	attribute_Deprecated_const_SOCKOPT_IPV4ONLY_0->args[1].name = ZSTR_KNOWN(ZEND_STR_MESSAGE);
 
 	return class_entry;
 }

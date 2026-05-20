@@ -33,6 +33,7 @@
 #include "php_zmq_pollset.h"
 #include "zend.h"
 #include "zend_API.h"
+#include "zend_attributes.h"
 #include "zmq_arginfo.h"
 
 ZEND_DECLARE_MODULE_GLOBALS(php_zmq);
@@ -377,7 +378,7 @@ PHP_METHOD(ZMQContext, acquire)
 /* {{{ proto integer ZMQContext::getSocketCount()
 	Number of active sockets in this context
 */
-PHP_METHOD(ZMQContext, getsocketcount)
+PHP_METHOD(ZMQContext, getSocketCount)
 {
 	php_zmq_context_object *intern;
 
@@ -598,7 +599,7 @@ static bool php_zmq_connect_callback(zval *socket, zend_fcall_info *fci, zend_fc
 /* {{{ proto ZMQContext ZMQContext::getSocket(integer $type[, string $persistent_id = null[, callback $on_new_socket = null]])
 	Build a new ZMQContext object
 */
-PHP_METHOD(ZMQContext, getsocket)
+PHP_METHOD(ZMQContext, getSocket)
 {
 	php_zmq_socket *socket;
 	php_zmq_socket_object *interns;
@@ -658,7 +659,7 @@ PHP_METHOD(ZMQContext, getsocket)
 /* {{{ proto ZMQContext ZMQContext::isPersistent()
 	Whether the context is persistent
 */
-PHP_METHOD(ZMQContext, ispersistent)
+PHP_METHOD(ZMQContext, isPersistent)
 {
 	php_zmq_context_object *intern;
 
@@ -801,6 +802,7 @@ PHP_METHOD(ZMQSocket, send)
 {
 	php_zmq_sendmsg_impl(INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
+
 /* }}} */
 
 static int php_zmq_send_cb(zval *zv, int num_args, va_list args, zend_hash_key *hash_key)
@@ -915,6 +917,7 @@ PHP_METHOD(ZMQSocket, recv)
 {
 	php_zmq_recvmsg_impl(INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
+
 /* }}} */
 
 /* {{{ proto array ZMQ::recvmulti([integer $flags = 0])
@@ -1030,7 +1033,7 @@ PHP_METHOD(ZMQSocket, monitor)
 
 #endif
 
-PHP_METHOD(ZMQSocket, setsockopt)
+PHP_METHOD(ZMQSocket, setSockOpt)
 {
 	php_zmq_socket_object *intern;
 	zend_long key;
@@ -1056,7 +1059,7 @@ PHP_METHOD(ZMQSocket, setsockopt)
 	ZMQ_RETURN_THIS;
 }
 
-PHP_METHOD(ZMQSocket, getsockopt)
+PHP_METHOD(ZMQSocket, getSockOpt)
 {
 	php_zmq_socket_object *intern;
 	zend_long key;
@@ -1075,7 +1078,7 @@ PHP_METHOD(ZMQSocket, getsockopt)
 /** {{{ string ZMQ::getPersistentId() 
 	Returns the persistent id of the object
 */
-PHP_METHOD(ZMQSocket, getpersistentid)
+PHP_METHOD(ZMQSocket, getPersistentId)
 {
 	php_zmq_socket_object *intern;
 
@@ -1222,7 +1225,7 @@ static int php_zmq_get_keys(zval *ppzval, int num_args, va_list args, zend_hash_
 /* {{{ proto array ZMQ::getEndpoints()
 	Returns endpoints where this socket is connected/bound to. Contains two keys ('bind', 'connect')
 */
-PHP_METHOD(ZMQSocket, getendpoints)
+PHP_METHOD(ZMQSocket, getEndpoints)
 {
 	php_zmq_socket_object *intern;
 	zval connect, bind;
@@ -1246,7 +1249,7 @@ PHP_METHOD(ZMQSocket, getendpoints)
 /* {{{ proto integer ZMQSocket::getSocketType()
 	Returns the socket type
 */
-PHP_METHOD(ZMQSocket, getsockettype)
+PHP_METHOD(ZMQSocket, getSocketType)
 {
 	int type;
 	size_t type_siz;
@@ -1267,7 +1270,7 @@ PHP_METHOD(ZMQSocket, getsockettype)
 /* {{{ proto boolean ZMQSocket::isPersistent()
 	Whether the socket is persistent
 */
-PHP_METHOD(ZMQSocket, ispersistent)
+PHP_METHOD(ZMQSocket, isPersistent)
 {
 	php_zmq_socket_object *intern;
 
@@ -1480,7 +1483,7 @@ PHP_METHOD(ZMQPoll, items)
 /* {{{ proto array ZMQPoll::getLastErrors()
 	Returns last errors
 */
-PHP_METHOD(ZMQPoll, getlasterrors)
+PHP_METHOD(ZMQPoll, getLastErrors)
 {
 	php_zmq_poll_object *intern;
 
@@ -1585,7 +1588,7 @@ static void s_init_device_callback(php_zmq_device_cb_t *cb, zend_fcall_info *fci
 /* {{{ proto void ZMQDevice::setIdleTimeout (int $milliseconds)
 	Set the idle timeout value
 */
-PHP_METHOD(ZMQDevice, setidletimeout)
+PHP_METHOD(ZMQDevice, setIdleTimeout)
 {
 	php_zmq_device_object *intern;
 	zend_long timeout;
@@ -1600,7 +1603,7 @@ PHP_METHOD(ZMQDevice, setidletimeout)
 }
 /* }}} */
 
-PHP_METHOD(ZMQDevice, getidletimeout)
+PHP_METHOD(ZMQDevice, getIdleTimeout)
 {
 	php_zmq_device_object *intern;
 
@@ -1610,7 +1613,7 @@ PHP_METHOD(ZMQDevice, getidletimeout)
 	RETURN_LONG(intern->idle_cb.timeout);
 }
 
-PHP_METHOD(ZMQDevice, settimertimeout)
+PHP_METHOD(ZMQDevice, setTimerTimeout)
 {
 	php_zmq_device_object *intern;
 	zend_long timeout;
@@ -1624,7 +1627,7 @@ PHP_METHOD(ZMQDevice, settimertimeout)
 	ZMQ_RETURN_THIS;
 }
 
-PHP_METHOD(ZMQDevice, gettimertimeout)
+PHP_METHOD(ZMQDevice, getTimerTimeout)
 {
 	php_zmq_device_object *intern;
 
@@ -1637,7 +1640,7 @@ PHP_METHOD(ZMQDevice, gettimertimeout)
 /* {{{ proto void ZMQDevice::setIdleCallback (callable $function, integer timeout [, mixed $userdata])
 	Set the idle timeout value
 */
-PHP_METHOD(ZMQDevice, setidlecallback)
+PHP_METHOD(ZMQDevice, setIdleCallback)
 {
 	php_zmq_device_object *intern;
 	zval *user_data = NULL;
@@ -1672,7 +1675,7 @@ PHP_METHOD(ZMQDevice, setidlecallback)
 /* {{{ proto void ZMQDevice::setTimerCallback (callable $function, integer timeout [, mixed $userdata])
 	Set the timer function
 */
-PHP_METHOD(ZMQDevice, settimercallback)
+PHP_METHOD(ZMQDevice, setTimerCallback)
 {
 	php_zmq_device_object *intern;
 	zval *user_data = NULL;
