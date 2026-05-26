@@ -843,6 +843,74 @@ class ZMQ
     const EVENT_ALL = UNKNOWN;
 
     /**
+     * @var int
+     * @cvalue ZMQ_BLOCKY
+     */
+    const CTXOPT_BLOCKY = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_IO_THREADS
+     */
+    const CTXOPT_IO_THREADS = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_THREAD_SCHED_POLICY
+     */
+    const CTXOPT_THREAD_SCHED_POLICY = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_THREAD_PRIORITY
+     */
+    const CTXOPT_THREAD_PRIORITY = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_THREAD_AFFINITY_CPU_ADD
+     */
+    const CTXOPT_THREAD_AFFINITY_CPU_ADD = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_THREAD_AFFINITY_CPU_REMOVE
+     */
+    const CTXOPT_THREAD_AFFINITY_CPU_REMOVE = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_THREAD_NAME_PREFIX
+     */
+    const CTXOPT_THREAD_NAME_PREFIX = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_MAX_MSGSZ
+     */
+    const CTXOPT_MAX_MSGSZ = UNKNOWN;
+
+#ifdef ZMQ_ZERO_COPY_RECV
+    /**
+     * @var int
+     * @cvalue ZMQ_ZERO_COPY_RECV
+     */
+    const CTXOPT_ZERO_COPY_RECV = UNKNOWN;
+#endif
+
+    /**
+     * @var int
+     * @cvalue ZMQ_IPV6
+     */
+    const CTXOPT_IPV6 = UNKNOWN;
+
+    /**
+     * @var int
+     * @cvalue ZMQ_MAX_SOCKETS
+     */
+    const CTXOPT_MAX_SOCKETS = UNKNOWN;
+
+    /**
      * A monotonic clock
      */
     public static function clock(): int {}

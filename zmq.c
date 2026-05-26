@@ -406,20 +406,27 @@ PHP_METHOD(ZMQContext, setOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
+		case ZMQ_BLOCKY:
+		case ZMQ_IO_THREADS:
+		case ZMQ_THREAD_SCHED_POLICY:
+		case ZMQ_THREAD_PRIORITY:
+		case ZMQ_THREAD_AFFINITY_CPU_ADD:
+		case ZMQ_THREAD_AFFINITY_CPU_REMOVE:
+		case ZMQ_THREAD_NAME_PREFIX:
+		case ZMQ_MAX_MSGSZ:
+#ifdef ZMQ_ZERO_COPY_RECV
+		case ZMQ_ZERO_COPY_RECV:
+#endif
+		case ZMQ_IPV6:
 		case ZMQ_MAX_SOCKETS:
-		{
 			if (zmq_ctx_set(intern->context->z_ctx, option, value) != 0) {
-				zend_throw_exception_ex(php_zmq_context_exception_sc_entry_get (), errno, "Failed to set the option ZMQ::CTXOPT_MAX_SOCKETS value: %s", zmq_strerror(errno));
+				zend_throw_exception_ex(php_zmq_context_exception_sc_entry_get(), errno, "Failed to set the context option value: %s", zmq_strerror(errno));
 				RETURN_THROWS();
 			}
-		}
-		break;
-
+			break;
 		default:
-		{
-			zend_throw_exception(php_zmq_context_exception_sc_entry_get (), "Unknown option key", PHP_ZMQ_INTERNAL_ERROR);
+			zend_throw_exception(php_zmq_context_exception_sc_entry_get(), "Unknown option key", PHP_ZMQ_INTERNAL_ERROR);
 			RETURN_THROWS();
-		}
 	}
 }
 /* }}} */
@@ -439,19 +446,31 @@ PHP_METHOD(ZMQContext, getOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
-
+		case ZMQ_BLOCKY:
+		case ZMQ_IO_THREADS:
+		case ZMQ_THREAD_SCHED_POLICY:
+		case ZMQ_THREAD_PRIORITY:
+		case ZMQ_THREAD_AFFINITY_CPU_ADD:
+		case ZMQ_THREAD_AFFINITY_CPU_REMOVE:
+		case ZMQ_THREAD_NAME_PREFIX:
+		case ZMQ_MAX_MSGSZ:
+#ifdef ZMQ_ZERO_COPY_RECV
+		case ZMQ_ZERO_COPY_RECV:
+#endif
+		case ZMQ_IPV6:
 		case ZMQ_MAX_SOCKETS:
-		{
-			int value = zmq_ctx_get(intern->context->z_ctx, option);
-			RETURN_LONG(value);
-		}
-		break;
-
+			{
+				int value = zmq_ctx_get(intern->context->z_ctx, option);
+				if (value < 0) {
+					zend_throw_exception_ex(php_zmq_context_exception_sc_entry_get(), errno, "Failed to get the context option value: %s", zmq_strerror(errno));
+					RETURN_THROWS();
+				}
+				RETURN_LONG(value);
+			}
+			break;
 		default:
-		{
-			zend_throw_exception(php_zmq_context_exception_sc_entry_get (), "Unknown option key", PHP_ZMQ_INTERNAL_ERROR);
+			zend_throw_exception(php_zmq_context_exception_sc_entry_get(), "Unknown option key", PHP_ZMQ_INTERNAL_ERROR);
 			RETURN_THROWS();
-		}
 	}
 }
 /* }}} */
