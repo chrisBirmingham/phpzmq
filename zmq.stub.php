@@ -830,11 +830,13 @@ class ZMQ
      */
     const EVENT_DISCONNECTED = UNKNOWN;
 
+#ifdef ZMQ_EVENT_MONITOR_STOPPED
     /**
      * @var int
      * @cvalue ZMQ_EVENT_MONITOR_STOPPED
      */
     const EVENT_MONITOR_STOPPED = UNKNOWN;
+#endif
 
     /**
      * @var int
@@ -952,7 +954,6 @@ class ZMQContext
 
     public function isPersistent(): bool {}
 
-#if PHP_ZMQ_HAVE_CTX_OPTIONS
     /**
      * Set a context option
      *
@@ -969,7 +970,6 @@ class ZMQContext
      * @return ZMQContext
      */
     public function getOpt(int $option): int {}
-#endif
 }
 
 class ZMQSocket
@@ -1024,13 +1024,10 @@ class ZMQSocket
      */
     public function connect(string $dsn, bool $force = false): static {}
 
-#if PHP_ZMQ_HAVE_SOCKET_MONITOR
     public function monitor(string $dsn, int $events = 0): static {}
-#endif
 
     public function recvevent(int $flags = 0): array {}
 
-#if PHP_ZMQ_HAVE_UNBIND
     /**
      * Unbind the socket from an endpoint
      *
@@ -1038,9 +1035,7 @@ class ZMQSocket
      * @return ZMQSocket
      */
     public function unbind(string $dsn): static {}
-#endif
 
-#if PHP_ZMQ_HAVE_DISCONNECT
     /**
      * Disconnect the socket from an endpoint
      *
@@ -1048,7 +1043,6 @@ class ZMQSocket
      * @return ZMQSocket
      */
     public function disconnect(string $dsn): static {}
-#endif
 
     public function setSockOpt(int $key, string|int $value): static {}
 
@@ -1125,7 +1119,6 @@ class ZMQPoll
      */
     public function items(): array {}
 }
-
 
 class ZMQDevice
 {

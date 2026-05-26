@@ -74,27 +74,6 @@ if test "$PHP_ZMQ" != "no"; then
     )]
   )
 
-  AC_CHECK_LIB(
-    [zmq], [zmq_ctx_get],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_CTX_OPTIONS], [1], [Whether zmq_ctx_get/set is available]
-    )]
-  )
-
-  AC_CHECK_LIB(
-    [zmq], [zmq_unbind],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_UNBIND], [1], [Whether zmq_unbind function is available]
-    )]
-  )
-
-  AC_CHECK_LIB(
-    [zmq], [zmq_disconnect],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_DISCONNECT], [1], [Whether zmq_disconnect function is available]
-    )]
-  )
-
   CFLAGS="$ORIG_CFLAGS"
   LDFLAGS="$ORIG_LDFLAGS"
 

@@ -1,5 +1,5 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: c40159745da0c0646ffcdea5e4812bff885c8572 */
+ * Stub hash: a8cccdbad20e184356d36dd2bb5afdaecb8757fd */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -36,7 +36,6 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_isPersistent, 0, 0, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
-#if PHP_ZMQ_HAVE_CTX_OPTIONS
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_setOpt, 0, 2, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
@@ -45,7 +44,6 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQContext_getOpt, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
 ZEND_END_ARG_INFO()
-#endif
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_ZMQSocket___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, ZMQContext, ZMQContext, 0)
@@ -79,28 +77,20 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_ZMQSocket_connect arginfo_class_ZMQSocket_bind
 
-#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_monitor, 0, 1, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, events, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
-#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_recvevent, 0, 0, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, flags, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
-#if PHP_ZMQ_HAVE_UNBIND
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_unbind, 0, 1, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
 ZEND_END_ARG_INFO()
-#endif
 
-#if PHP_ZMQ_HAVE_DISCONNECT
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_disconnect, 0, 1, IS_STATIC, 0)
-	ZEND_ARG_TYPE_INFO(0, dsn, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-#endif
+#define arginfo_class_ZMQSocket_disconnect arginfo_class_ZMQSocket_unbind
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQSocket_setSockOpt, 0, 2, IS_STATIC, 0)
 	ZEND_ARG_TYPE_INFO(0, key, IS_LONG, 0)
@@ -189,10 +179,8 @@ ZEND_METHOD(ZMQContext, acquire);
 ZEND_METHOD(ZMQContext, getSocketCount);
 ZEND_METHOD(ZMQContext, getSocket);
 ZEND_METHOD(ZMQContext, isPersistent);
-#if PHP_ZMQ_HAVE_CTX_OPTIONS
 ZEND_METHOD(ZMQContext, setOpt);
 ZEND_METHOD(ZMQContext, getOpt);
-#endif
 ZEND_METHOD(ZMQSocket, __construct);
 ZEND_METHOD(ZMQSocket, send);
 ZEND_METHOD(ZMQSocket, recv);
@@ -200,16 +188,10 @@ ZEND_METHOD(ZMQSocket, sendmulti);
 ZEND_METHOD(ZMQSocket, recvmulti);
 ZEND_METHOD(ZMQSocket, bind);
 ZEND_METHOD(ZMQSocket, connect);
-#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 ZEND_METHOD(ZMQSocket, monitor);
-#endif
 ZEND_METHOD(ZMQSocket, recvevent);
-#if PHP_ZMQ_HAVE_UNBIND
 ZEND_METHOD(ZMQSocket, unbind);
-#endif
-#if PHP_ZMQ_HAVE_DISCONNECT
 ZEND_METHOD(ZMQSocket, disconnect);
-#endif
 ZEND_METHOD(ZMQSocket, setSockOpt);
 ZEND_METHOD(ZMQSocket, getEndpoints);
 ZEND_METHOD(ZMQSocket, getSocketType);
@@ -250,10 +232,8 @@ static const zend_function_entry class_ZMQContext_methods[] = {
 	ZEND_ME(ZMQContext, getSocketCount, arginfo_class_ZMQContext_getSocketCount, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, getSocket, arginfo_class_ZMQContext_getSocket, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, isPersistent, arginfo_class_ZMQContext_isPersistent, ZEND_ACC_PUBLIC)
-#if PHP_ZMQ_HAVE_CTX_OPTIONS
 	ZEND_ME(ZMQContext, setOpt, arginfo_class_ZMQContext_setOpt, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQContext, getOpt, arginfo_class_ZMQContext_getOpt, ZEND_ACC_PUBLIC)
-#endif
 	ZEND_FE_END
 };
 
@@ -265,16 +245,10 @@ static const zend_function_entry class_ZMQSocket_methods[] = {
 	ZEND_ME(ZMQSocket, recvmulti, arginfo_class_ZMQSocket_recvmulti, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, bind, arginfo_class_ZMQSocket_bind, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, connect, arginfo_class_ZMQSocket_connect, ZEND_ACC_PUBLIC)
-#if PHP_ZMQ_HAVE_SOCKET_MONITOR
 	ZEND_ME(ZMQSocket, monitor, arginfo_class_ZMQSocket_monitor, ZEND_ACC_PUBLIC)
-#endif
 	ZEND_ME(ZMQSocket, recvevent, arginfo_class_ZMQSocket_recvevent, ZEND_ACC_PUBLIC)
-#if PHP_ZMQ_HAVE_UNBIND
 	ZEND_ME(ZMQSocket, unbind, arginfo_class_ZMQSocket_unbind, ZEND_ACC_PUBLIC)
-#endif
-#if PHP_ZMQ_HAVE_DISCONNECT
 	ZEND_ME(ZMQSocket, disconnect, arginfo_class_ZMQSocket_disconnect, ZEND_ACC_PUBLIC)
-#endif
 	ZEND_ME(ZMQSocket, setSockOpt, arginfo_class_ZMQSocket_setSockOpt, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getEndpoints, arginfo_class_ZMQSocket_getEndpoints, ZEND_ACC_PUBLIC)
 	ZEND_ME(ZMQSocket, getSocketType, arginfo_class_ZMQSocket_getSocketType, ZEND_ACC_PUBLIC)
@@ -1175,12 +1149,14 @@ static zend_class_entry *register_class_ZMQ(void)
 	zend_string *const_EVENT_DISCONNECTED_name = zend_string_init_interned("EVENT_DISCONNECTED", sizeof("EVENT_DISCONNECTED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_DISCONNECTED_name, &const_EVENT_DISCONNECTED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_DISCONNECTED_name, true);
+#if defined(ZMQ_EVENT_MONITOR_STOPPED)
 
 	zval const_EVENT_MONITOR_STOPPED_value;
 	ZVAL_LONG(&const_EVENT_MONITOR_STOPPED_value, ZMQ_EVENT_MONITOR_STOPPED);
 	zend_string *const_EVENT_MONITOR_STOPPED_name = zend_string_init_interned("EVENT_MONITOR_STOPPED", sizeof("EVENT_MONITOR_STOPPED") - 1, true);
 	zend_declare_class_constant_ex(class_entry, const_EVENT_MONITOR_STOPPED_name, &const_EVENT_MONITOR_STOPPED_value, ZEND_ACC_PUBLIC, NULL);
 	zend_string_release_ex(const_EVENT_MONITOR_STOPPED_name, true);
+#endif
 
 	zval const_EVENT_ALL_value;
 	ZVAL_LONG(&const_EVENT_ALL_value, ZMQ_EVENT_ALL);

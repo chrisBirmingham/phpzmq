@@ -952,8 +952,6 @@ PHP_METHOD(ZMQSocket, recvmulti)
 }
 /* }}} */
 
-#if PHP_ZMQ_HAVE_SOCKET_MONITOR
-
 /* {{{ proto array ZMQ::recvevent([integer $flags = 0])
 	Receive an event from monitor endpoint
 */
@@ -1027,8 +1025,6 @@ PHP_METHOD(ZMQSocket, monitor)
 	ZMQ_RETURN_THIS;
 }
 /* }}} */
-
-#endif
 
 PHP_METHOD(ZMQSocket, setSockOpt)
 {
@@ -1156,7 +1152,6 @@ PHP_METHOD(ZMQSocket, connect)
 }
 /* }}} */
 
-#ifdef PHP_ZMQ_HAVE_UNBIND
 /* {{{ proto ZMQSocket ZMQSocket::unbind(string $dsn)
 	Unbind the socket from an endpoint
 */
@@ -1181,9 +1176,7 @@ PHP_METHOD(ZMQSocket, unbind)
 	ZMQ_RETURN_THIS;
 }
 /* }}} */
-#endif
 
-#ifdef PHP_ZMQ_HAVE_DISCONNECT
 /* {{{ proto ZMQSocket ZMQSocket::disconnect(string $dsn)
 	Disconnect the socket from an endpoint
 */
@@ -1208,8 +1201,6 @@ PHP_METHOD(ZMQSocket, disconnect)
 	ZMQ_RETURN_THIS;
 }
 /* }}} */
-#endif
-
 
 static int php_zmq_get_keys(zval *ppzval, int num_args, va_list args, zend_hash_key *hash_key)
 {
