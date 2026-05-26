@@ -73,24 +73,22 @@ uint64_t s_backup_clock ()
 
 struct _php_zmq_clock_ctx_t {};
 
-php_zmq_clock_ctx_t *php_zmq_clock_init (void)
+php_zmq_clock_ctx_t *php_zmq_clock_init(void)
 {
-	return
-		malloc (sizeof (php_zmq_clock_ctx_t));
+	return malloc(sizeof(php_zmq_clock_ctx_t));
 }
 
 uint64_t php_zmq_clock (php_zmq_clock_ctx_t *clock_ctx)
 {
 	struct timespec ts;
 #if defined(CLOCK_MONOTONIC_RAW)
-	if (clock_gettime (CLOCK_MONOTONIC_RAW, &ts) == 0) {
+	if (clock_gettime(CLOCK_MONOTONIC_RAW, &ts) == 0) {
 #else
-	if (clock_gettime (CLOCK_MONOTONIC, &ts) == 0) {
+	if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
 #endif
 		return (uint64_t) (((uint64_t) ts.tv_sec * 1000) + ((uint64_t) ts.tv_nsec / 1000000));
 	}
-	return
-		s_backup_clock ();
+	return s_backup_clock();
 }
 
 /*
@@ -102,7 +100,7 @@ struct _php_zmq_clock_ctx_t {
 	uint64_t scaling_factor;
 };
 
-php_zmq_clock_ctx_t *php_zmq_clock_init ()
+php_zmq_clock_ctx_t *php_zmq_clock_init()
 {
 	php_zmq_clock_ctx_t *ctx;
 	mach_timebase_info_data_t info;
@@ -115,10 +113,9 @@ php_zmq_clock_ctx_t *php_zmq_clock_init ()
 	return ctx;
 }
 
-uint64_t php_zmq_clock (php_zmq_clock_ctx_t *ctx)
+uint64_t php_zmq_clock(php_zmq_clock_ctx_t *ctx)
 {
-	return
-		(mach_absolute_time () * ctx->scaling_factor) / 1000000;
+	return (mach_absolute_time() * ctx->scaling_factor) / 1000000;
 }
 
 /*
@@ -132,19 +129,19 @@ struct _php_zmq_clock_ctx_t {
 	uint64_t last_ticks;
 };
 
-php_zmq_clock_ctx_t *php_zmq_clock_init ()
+php_zmq_clock_ctx_t *php_zmq_clock_init()
 {
-	return calloc (1, sizeof (php_zmq_clock_ctx_t));
+	return calloc(1, sizeof(php_zmq_clock_ctx_t));
 }
 
-static
-uint64_t s_get_tick_count (php_zmq_clock_ctx_t *clock_ctx)
+static uint64_t s_get_tick_count(php_zmq_clock_ctx_t *clock_ctx)
 {
-	uint64_t ticks = (uint64_t) GetTickCount ();
+	uint64_t ticks = (uint64_t) GetTickCount();
 
 	/* Has the clock wrapped? */
-	if (ticks < clock_ctx->last_ticks)
+	if (ticks < clock_ctx->last_ticks) {
 		++clock_ctx->wrap_count;
+	}
 
 	clock_ctx->last_ticks = ticks;
 
@@ -152,45 +149,45 @@ uint64_t s_get_tick_count (php_zmq_clock_ctx_t *clock_ctx)
 	return ticks;
 }
 
-uint64_t php_zmq_clock (php_zmq_clock_ctx_t *clock_ctx)
+uint64_t php_zmq_clock(php_zmq_clock_ctx_t *clock_ctx)
 {
-	return s_get_tick_count (clock_ctx);
+	return s_get_tick_count(clock_ctx);
 }
 
 #elif defined(HAVE_GETTIMEOFDAY)
 
 struct _php_zmq_clock_ctx_t {};
 
-php_zmq_clock_ctx_t *php_zmq_clock_init ()
+php_zmq_clock_ctx_t *php_zmq_clock_init()
 {
-	return malloc (sizeof (php_zmq_clock_ctx_t));
+	return malloc(sizeof(php_zmq_clock_ctx_t));
 }
 
-static
-uint64_t s_get_tick_count (php_zmq_clock_ctx_t *clock_ctx)
+static uint64_t s_get_tick_count(php_zmq_clock_ctx_t *clock_ctx)
 {
-	uint64_t ticks = (uint64_t) GetTickCount ();
+	uint64_t ticks = (uint64_t)GetTickCount();
 
 	/* Has the clock wrapped? */
-	if (ticks < clock_ctx->last_ticks)
+	if (ticks < clock_ctx->last_ticks) {
 		++clock_ctx->wrap_count;
+	}
 
 	clock_ctx->last_ticks = ticks;
 
-	ticks += (uint64_t) clock_ctx->wrap_count * MAX_DWORD;
+	ticks += (uint64_t)clock_ctx->wrap_count * MAX_DWORD;
 	return ticks;
 }
 
-uint64_t php_zmq_clock (php_zmq_clock_ctx_t *clock_ctx)
+uint64_t php_zmq_clock(php_zmq_clock_ctx_t *clock_ctx)
 {
-	return s_backup_clock ();
+	return s_backup_clock();
 }
 
 #else
 #  error "Cannot find a clock that would work on this platform. Please report a bug"
 #endif
 
-void php_zmq_clock_destroy (php_zmq_clock_ctx_t **clock_ctx)
+void php_zmq_clock_destroy(php_zmq_clock_ctx_t **clock_ctx)
 {
-	free (*clock_ctx);
+	free(*clock_ctx);
 }
