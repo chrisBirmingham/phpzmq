@@ -406,8 +406,8 @@ PHP_METHOD(ZMQContext, setOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
+#if ZMQ_VERSION_MAJOR >= 4
 		case ZMQ_BLOCKY:
-		case ZMQ_IO_THREADS:
 		case ZMQ_THREAD_SCHED_POLICY:
 		case ZMQ_THREAD_PRIORITY:
 		case ZMQ_THREAD_AFFINITY_CPU_ADD:
@@ -418,6 +418,8 @@ PHP_METHOD(ZMQContext, setOpt)
 		case ZMQ_ZERO_COPY_RECV:
 #endif
 		case ZMQ_IPV6:
+#endif
+		case ZMQ_IO_THREADS:
 		case ZMQ_MAX_SOCKETS:
 			if (zmq_ctx_set(intern->context->z_ctx, option, value) != 0) {
 				zend_throw_exception_ex(php_zmq_context_exception_sc_entry_get(), errno, "Failed to set the context option value: %s", zmq_strerror(errno));
@@ -446,8 +448,8 @@ PHP_METHOD(ZMQContext, getOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
+#if ZMQ_VERSION_MAJOR >= 4
 		case ZMQ_BLOCKY:
-		case ZMQ_IO_THREADS:
 		case ZMQ_THREAD_SCHED_POLICY:
 		case ZMQ_THREAD_PRIORITY:
 		case ZMQ_THREAD_AFFINITY_CPU_ADD:
@@ -458,6 +460,8 @@ PHP_METHOD(ZMQContext, getOpt)
 		case ZMQ_ZERO_COPY_RECV:
 #endif
 		case ZMQ_IPV6:
+#endif
+		case ZMQ_IO_THREADS:
 		case ZMQ_MAX_SOCKETS:
 			{
 				int value = zmq_ctx_get(intern->context->z_ctx, option);

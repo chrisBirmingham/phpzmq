@@ -181,7 +181,7 @@ class ZMQ
      */
     const LIBZMQ_VERSION_PATCH = UNKNOWN;
 
-#if ZMQ_VERSION_MAJOR == 4
+#if ZMQ_VERSION_MAJOR >= 4
 #if ZMQ_VERSION_MINOR >= 3
 #ifdef ZMQ_ONLY_FIRST_SUBSCRIBE
     /**
@@ -842,17 +842,12 @@ class ZMQ
      */
     const EVENT_ALL = UNKNOWN;
 
+#if ZMQ_VERSION_MAJOR >= 4
     /**
      * @var int
      * @cvalue ZMQ_BLOCKY
      */
     const CTXOPT_BLOCKY = UNKNOWN;
-
-    /**
-     * @var int
-     * @cvalue ZMQ_IO_THREADS
-     */
-    const CTXOPT_IO_THREADS = UNKNOWN;
 
     /**
      * @var int
@@ -903,6 +898,13 @@ class ZMQ
      * @cvalue ZMQ_IPV6
      */
     const CTXOPT_IPV6 = UNKNOWN;
+#endif
+
+    /**
+     * @var int
+     * @cvalue ZMQ_IO_THREADS
+     */
+    const CTXOPT_IO_THREADS = UNKNOWN;
 
     /**
      * @var int
