@@ -30,9 +30,6 @@
 
 #include "php_zmq.h"
 #include "php_zmq_private.h"
-#include "zend_types.h"
-#include <sys/socket.h>
-#include <zmq.h>
 
 #define SOCKOPTS_GET_INT(NAME, TYPE) \
 { \
@@ -73,8 +70,6 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
   }
 
   switch (key) {
-#if ZMQ_VERSION_MAJOR >= 4
-#if ZMQ_VERSION_MINOR >= 3
 #ifdef ZMQ_OUT_BATCH_SIZE
     case ZMQ_OUT_BATCH_SIZE:
       SOCKOPTS_GET_INT(OUT_BATCH_SIZE, int);
@@ -123,8 +118,6 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
     case ZMQ_BINDTODEVICE:
       SOCKOPTS_GET_STRING(BINDTODEVICE, 255, 0)
 #endif
-#endif
-#if ZMQ_VERSION_MINOR >= 2
 #ifdef ZMQ_HEARTBEAT_IVL
     case ZMQ_HEARTBEAT_IVL:
       SOCKOPTS_GET_INT(HEARTBEAT_IVL, int);
@@ -183,8 +176,6 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
     case ZMQ_VMCI_CONNECT_TIMEOUT:
       SOCKOPTS_GET_INT(VMCI_CONNECT_TIMEOUT, int);
 #endif
-#endif
-#if ZMQ_VERSION_MINOR >= 1
 #ifdef ZMQ_TOS
     case ZMQ_TOS:
       SOCKOPTS_GET_INT(TOS, int);
@@ -196,7 +187,6 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
 #ifdef ZMQ_SOCKS_PROXY
     case ZMQ_SOCKS_PROXY:
       SOCKOPTS_GET_STRING(SOCKS_PROXY, 255, 0)
-#endif
 #endif
 #ifdef ZMQ_ZAP_DOMAIN
     case ZMQ_ZAP_DOMAIN:
@@ -257,7 +247,6 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
 #ifdef ZMQ_IMMEDIATE
     case ZMQ_IMMEDIATE:
       SOCKOPTS_GET_INT(IMMEDIATE, int);
-#endif
 #endif
     case ZMQ_SNDHWM:
       SOCKOPTS_GET_INT(SNDHWM, int);
@@ -358,7 +347,7 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
 zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long key, zval *val)
 {
   if (key > INT_MAX) {
-    zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get (), PHP_ZMQ_INTERNAL_ERROR, "The key must be smaller than %d", INT_MAX);
+    zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get(), PHP_ZMQ_INTERNAL_ERROR, "The key must be smaller than %d", INT_MAX);
     return FAILURE;
   }
 
@@ -395,8 +384,6 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
   }
 
   switch (key) {
-#if ZMQ_VERSION_MAJOR == 4
-#if ZMQ_VERSION_MINOR >= 3
 #ifdef ZMQ_ONLY_FIRST_SUBSCRIBE
     case ZMQ_ONLY_FIRST_SUBSCRIBE:
       if (socket_type != ZMQ_XPUB &&
@@ -482,34 +469,47 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
     case ZMQ_BINDTODEVICE:
       SOCKOPTS_SET_STRING(BINDTODEVICE)
 #endif
-#endif
-#if ZMQ_VERSION_MINOR >= 2
+#ifdef ZMQ_HEARTBEAT_IVL
     case ZMQ_HEARTBEAT_IVL:
       SOCKOPTS_SET_INT(HEARTBEAT_IVL, int)
+#endif
+#ifdef ZMQ_HEARTBEAT_TTL
     case ZMQ_HEARTBEAT_TTL:
       SOCKOPTS_SET_INT(HEARTBEAT_TTL, int)
+#endif
+#ifdef ZMQ_HEARTBEAT_TIMEOUT
     case ZMQ_HEARTBEAT_TIMEOUT:
       SOCKOPTS_SET_INT(HEARTBEAT_TIMEOUT, int)
+#endif
+#ifdef ZMQ_USE_FD
     case ZMQ_USE_FD:
       SOCKOPTS_SET_INT(USE_FD, int)
+#endif
+#ifdef ZMQ_XPUB_MANUAL
     case ZMQ_XPUB_MANUAL:
       if (socket_type != ZMQ_XPUB) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_XPUB_MANUAL is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(XPUB_MANUAL, int)
+#endif
+#ifdef ZMQ_XPUB_WELCOME_MSG
     case ZMQ_XPUB_WELCOME_MSG:
       if (socket_type != ZMQ_XPUB) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_XPUB_WELCOME_MSG is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_STRING(XPUB_WELCOME_MSG)
+#endif
+#ifdef ZMQ_STREAM_NOTIFY
     case ZMQ_STREAM_NOTIFY:
       if (socket_type != ZMQ_STREAM) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_STREAM_NOTIFY is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(STREAM_NOTIFY, int)
+#endif
+#ifdef ZMQ_INVERT_MATCHING
     case ZMQ_INVERT_MATCHING:
       if (socket_type != ZMQ_XPUB &&
           socket_type != ZMQ_PUB &&
@@ -518,36 +518,56 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
         return FAILURE;
       }
       SOCKOPTS_SET_INT(INVERT_MATCHING, int)
+#endif
+#ifdef ZMQ_XPUB_VERBOSER
     case ZMQ_XPUB_VERBOSER:
       if (socket_type != ZMQ_XPUB) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_XPUB_VERBOSER is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(XPUB_VERBOSER, int)
+#endif
+#ifdef ZMQ_CONNECT_TIMEOUT
     case ZMQ_CONNECT_TIMEOUT:
       SOCKOPTS_SET_INT(CONNECT_TIMEOUT, int)
+#endif
+#ifdef ZMQ_TCP_MAXRT
     case ZMQ_TCP_MAXRT:
       SOCKOPTS_SET_INT(TCP_MAXRT, int)
+#endif
+#ifdef ZMQ_MULTICAST_MAXTPDU
     case ZMQ_MULTICAST_MAXTPDU:
       SOCKOPTS_SET_INT(MULTICAST_MAXTPDU, int)
+#endif
+#ifdef ZMQ_VMCI_BUFFER_SIZE
     case ZMQ_VMCI_BUFFER_SIZE:
       SOCKOPTS_SET_INT(VMCI_BUFFER_SIZE, uint64_t)
+#endif
+#ifdef ZMQ_VMCI_BUFFER_MIN_SIZE
     case ZMQ_VMCI_BUFFER_MIN_SIZE:
       SOCKOPTS_SET_INT(VMCI_BUFFER_MIN_SIZE, uint64_t)
+#endif
+#ifdef ZMQ_VMCI_BUFFER_MAX_SIZE
     case ZMQ_VMCI_BUFFER_MAX_SIZE:
       SOCKOPTS_SET_INT(VMCI_BUFFER_MAX_SIZE, uint64_t)
+#endif
+#ifdef ZMQ_VMCI_CONNECT_TIMEOUT
     case ZMQ_VMCI_CONNECT_TIMEOUT:
       SOCKOPTS_SET_INT(VMCI_CONNECT_TIMEOUT, int)
 #endif
-#if ZMQ_VERSION_MINOR >= 1
+#ifdef ZMQ_TOS
     case ZMQ_TOS:
       SOCKOPTS_SET_INT(ZMQ_TOS, int)
+#endif
+#ifdef ZMQ_ROUTER_HANDOVER
     case ZMQ_ROUTER_HANDOVER:
       if (socket_type != ZMQ_ROUTER) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_ROUTER_HANDOVER is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_ROUTER_HANDOVER, int)
+#endif
+#ifdef ZMQ_CONNECT_RID
     case ZMQ_CONNECT_RID:
       if (socket_type != ZMQ_ROUTER &&
           socket_type != ZMQ_STREAM) {
@@ -555,10 +575,16 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
         return FAILURE;
       }
       SOCKOPTS_SET_STRING(ZMQ_CONNECT_RID)
+#endif
+#ifdef ZMQ_HANDSHAKE_IVL
     case ZMQ_HANDSHAKE_IVL:
       SOCKOPTS_SET_INT(ZMQ_HANDSHAKE_IVL, int)
+#endif
+#ifdef ZMQ_SOCKS_PROXY
     case ZMQ_SOCKS_PROXY:
       SOCKOPTS_SET_STRING(ZMQ_SOCKS_PROXY)
+#endif
+#ifdef ZMQ_XPUB_NODROP
     case ZMQ_XPUB_NODROP:
       if (socket_type != ZMQ_XPUB &&
           socket_type != ZMQ_PUB) {
@@ -567,12 +593,15 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
       }
       SOCKOPTS_SET_INT(ZMQ_XPUB_NODROP, int)
 #endif
+#ifdef ZMQ_ROUTER_MANDATORY
     case ZMQ_ROUTER_MANDATORY:
       if (socket_type != ZMQ_ROUTER) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_ROUTER_MANDATORY is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_ROUTER_MANDATORY, int)
+#endif
+#ifdef ZMQ_PROBE_ROUTER
     case ZMQ_PROBE_ROUTER:
       if (socket_type != ZMQ_ROUTER &&
           socket_type != ZMQ_DEALER &&
@@ -581,18 +610,24 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_PROBE_ROUTER, int)
+#endif
+#ifdef ZMQ_REQ_RELAXED
     case ZMQ_REQ_RELAXED:
       if (socket_type != ZMQ_REQ) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_REQ_RELAXED is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_REQ_RELAXED, int)
+#endif
+#ifdef ZMQ_REQ_CORRELATE
     case ZMQ_REQ_CORRELATE:
       if (socket_type != ZMQ_REQ) {
         zend_throw_exception(php_zmq_socket_exception_sc_entry_get(), "ZMQ::SOCKOPT_REQ_CORRELATE is not valid for this socket type", errno);
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_REQ_CORRELATE, int)
+#endif
+#ifdef ZMQ_CONFLATE
     case ZMQ_CONFLATE:
       if (socket_type != ZMQ_PUSH &&
           socket_type != ZMQ_PULL &&
@@ -603,16 +638,27 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
         return FAILURE;
       }
       SOCKOPTS_SET_INT(ZMQ_CONFLATE, int)
+#endif
+#ifdef ZMQ_ZAP_DOMAIN
     case ZMQ_ZAP_DOMAIN:
       SOCKOPTS_SET_STRING(ZMQ_ZAP_DOMAIN)
+#endif
+#ifdef ZMQ_MECHANISM
     case ZMQ_MECHANISM:
       SOCKOPTS_SET_INT(ZMQ_MECHANISM, int)
+#endif
+#ifdef ZMQ_PLAIN_SERVER
     case ZMQ_PLAIN_SERVER:
       SOCKOPTS_SET_INT(ZMQ_PLAIN_SERVER, int)
+#endif
+#ifdef ZMQ_PLAIN_USERNAME
     case ZMQ_PLAIN_USERNAME:
       SOCKOPTS_SET_STRING(ZMQ_PLAIN_USERNAME)
+#endif
+#ifdef ZMQ_PLAIN_PASSWORD
     case ZMQ_PLAIN_PASSWORD:
       SOCKOPTS_SET_STRING(ZMQ_PLAIN_PASSWORD)
+#endif
 #ifdef ZMQ_CURVE_SERVER
     case ZMQ_CURVE_SERVER:
       SOCKOPTS_SET_INT(CURVE_SERVER, int)
@@ -649,7 +695,6 @@ zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long
       SOCKOPTS_SET_INT(ZMQ_IPV6, int)
     case ZMQ_IMMEDIATE:
       SOCKOPTS_SET_INT(ZMQ_IMMEDIATE, int)
-#endif
     case ZMQ_SNDHWM:
       SOCKOPTS_SET_INT(SNDHWM, int)
     case ZMQ_RCVHWM:

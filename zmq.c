@@ -31,8 +31,6 @@
 #include "php_zmq.h"
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
-#include "zend.h"
-#include "zend_API.h"
 #include "zend_attributes.h"
 #include "zmq_arginfo.h"
 
@@ -56,17 +54,17 @@ static zend_object_handlers zmq_context_object_handlers;
 static zend_object_handlers zmq_poll_object_handlers;
 static zend_object_handlers zmq_device_object_handlers;
 
-zend_class_entry *php_zmq_context_exception_sc_entry_get ()
+zend_class_entry *php_zmq_context_exception_sc_entry_get()
 {
 	return php_zmq_context_exception_sc_entry;
 }
 
-zend_class_entry *php_zmq_socket_exception_sc_entry_get (void)
+zend_class_entry *php_zmq_socket_exception_sc_entry_get(void)
 {
 	return php_zmq_socket_exception_sc_entry;
 }
 
-zend_class_entry *php_zmq_device_exception_sc_entry_get (void)
+zend_class_entry *php_zmq_device_exception_sc_entry_get(void)
 {
 	return php_zmq_device_exception_sc_entry;
 }
@@ -246,8 +244,6 @@ PHP_METHOD(ZMQ, clock)
 }
 /* }}} */
 
-#ifdef PHP_ZMQ_HAVE_Z85
-
 /* {{{ proto string ZMQ::z85Encode(string $data)
 	
 */
@@ -305,9 +301,6 @@ PHP_METHOD(ZMQ, z85decode)
 	efree(buffer);
 }
 /* }}} */
-#endif
-
-#ifdef PHP_ZMQ_HAVE_CURVE_KEYPAIR
 
 #define PHP_ZMQ_KEY_SIZE 41
 
@@ -327,9 +320,6 @@ PHP_METHOD(ZMQ, curvekeypair)
 	}
 }
 /* }}} */
-
-#endif
-
 
 /* {{{ proto ZMQContext ZMQContext::__construct(integer $io_threads[, boolean $is_persistent = true])
 	Build a new ZMQContext object
@@ -389,7 +379,6 @@ PHP_METHOD(ZMQContext, getSocketCount)
 }
 /* }}} */
 
-#ifdef PHP_ZMQ_HAVE_CTX_OPTIONS
 /* {{{ proto ZMQContext ZMQContext::setOpt(int option, int value)
 	Set a context option
 */
@@ -406,7 +395,6 @@ PHP_METHOD(ZMQContext, setOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
-#if ZMQ_VERSION_MAJOR >= 4
 		case ZMQ_BLOCKY:
 		case ZMQ_THREAD_SCHED_POLICY:
 		case ZMQ_THREAD_PRIORITY:
@@ -418,7 +406,6 @@ PHP_METHOD(ZMQContext, setOpt)
 		case ZMQ_ZERO_COPY_RECV:
 #endif
 		case ZMQ_IPV6:
-#endif
 		case ZMQ_IO_THREADS:
 		case ZMQ_MAX_SOCKETS:
 			if (zmq_ctx_set(intern->context->z_ctx, option, value) != 0) {
@@ -448,7 +435,6 @@ PHP_METHOD(ZMQContext, getOpt)
 	intern = PHP_ZMQ_CONTEXT_OBJECT(ZEND_THIS);
 
 	switch (option) {
-#if ZMQ_VERSION_MAJOR >= 4
 		case ZMQ_BLOCKY:
 		case ZMQ_THREAD_SCHED_POLICY:
 		case ZMQ_THREAD_PRIORITY:
@@ -460,7 +446,6 @@ PHP_METHOD(ZMQContext, getOpt)
 		case ZMQ_ZERO_COPY_RECV:
 #endif
 		case ZMQ_IPV6:
-#endif
 		case ZMQ_IO_THREADS:
 		case ZMQ_MAX_SOCKETS:
 			{
@@ -478,8 +463,6 @@ PHP_METHOD(ZMQContext, getOpt)
 	}
 }
 /* }}} */
-#endif
-
 
 /* {{{ static php_zmq_socket *php_zmq_socket_new(php_zmq_context *context, int type, zend_bool is_persistent)
 	Create a new zmq socket
@@ -509,7 +492,7 @@ static php_zmq_socket *php_zmq_socket_new(php_zmq_context *context, zend_long ty
 }
 /* }}} */
 
-static zend_string *php_zmq_socket_plist_key(zend_long type, zend_string *persistent_id, bool use_shared_ctx)
+static inline zend_string *php_zmq_socket_plist_key(zend_long type, zend_string *persistent_id, bool use_shared_ctx)
 {
 	return strpprintf(0, "zmq_socket:[%ld]-[%s]-[%d]", (long)type, persistent_id->val, use_shared_ctx);
 }
@@ -1373,7 +1356,7 @@ PHP_METHOD(ZMQPoll, remove)
 			/* break intentionally missing */
 		case IS_RESOURCE:
 			RETVAL_BOOL(php_zmq_pollset_delete(intern->set, item));
-		break;
+			break;
 
 		default: {
 			zend_string *str = zval_get_string(item);
@@ -1680,7 +1663,7 @@ PHP_METHOD(ZMQDevice, setTimerCallback)
 
 	s_clear_device_callback(&intern->timer_cb);
 	if (fci.size > 0) {
-		s_init_device_callback (&intern->timer_cb, &fci, &fci_cache, timeout, user_data);
+		s_init_device_callback(&intern->timer_cb, &fci, &fci_cache, timeout, user_data);
 	}
 	ZMQ_RETURN_THIS;
 }
@@ -1689,7 +1672,7 @@ PHP_METHOD(ZMQDevice, setTimerCallback)
 /* {{{ proto ZMQDevice ZMQDevice::__clone()
 	Clones the instance of the ZMQDevice class
 */
-PHP_METHOD(ZMQDevice, __clone) { }
+PHP_METHOD(ZMQDevice, __clone) {}
 /* }}} */
 
 /* -- END ZMQPoll */
@@ -1751,8 +1734,8 @@ static void php_zmq_device_object_free_storage(zend_object *object)
 		return;
 	}
 
-	s_clear_device_callback (&intern->idle_cb);
-	s_clear_device_callback (&intern->timer_cb);
+	s_clear_device_callback(&intern->idle_cb);
+	s_clear_device_callback(&intern->timer_cb);
 
 	if (!Z_ISUNDEF(intern->front)) {
 		zval_ptr_dtor(&intern->front);

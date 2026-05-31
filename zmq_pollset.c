@@ -32,7 +32,6 @@
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
 #include "ext/spl/php_spl.h"
-#include "zend_types.h"
 
 #define PHP_ZMQ_ALLOC_SIZE 20
 
@@ -132,9 +131,9 @@ static void s_pollset_delete(php_zmq_pollset *set, size_t index)
 	if ((set->allocated - set->alloc_size > set->num_items) &&
 	    (set->allocated - set->alloc_size > set->alloc_size)) {
 
-		set->items = erealloc (set->items, (set->allocated - set->alloc_size) * sizeof(zmq_pollitem_t));
-		set->keys = erealloc (set->keys, (set->allocated - set->alloc_size) * sizeof(zend_string *));
-		set->zv = erealloc (set->zv, (set->allocated - set->alloc_size) * sizeof(zval));
+		set->items = erealloc(set->items, (set->allocated - set->alloc_size) * sizeof(zmq_pollitem_t));
+		set->keys = erealloc(set->keys, (set->allocated - set->alloc_size) * sizeof(zend_string *));
+		set->zv = erealloc(set->zv, (set->allocated - set->alloc_size) * sizeof(zval));
 
 		set->allocated -= set->alloc_size;
 	}
@@ -153,7 +152,7 @@ static zend_result s_index_for_key(php_zmq_pollset *set, zend_string *key, size_
 	return FAILURE;
 }
 
-static zval *s_zval_for_index(php_zmq_pollset *set, size_t index)
+static inline zval *s_zval_for_index(php_zmq_pollset *set, size_t index)
 {
 	return &set->zv[index];
 }
@@ -289,7 +288,8 @@ bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry)
 int php_zmq_pollset_poll(php_zmq_pollset *set, int timeout, zval *r_array, zval *w_array)
 {
 	int rc, i;
-	bool readable = false, writable = false;
+	bool readable = false;
+	bool writable = false;
 
 	if (!set->items) {
 		return -1;

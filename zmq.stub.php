@@ -181,8 +181,6 @@ class ZMQ
      */
     const LIBZMQ_VERSION_PATCH = UNKNOWN;
 
-#if ZMQ_VERSION_MAJOR >= 4
-#if ZMQ_VERSION_MINOR >= 3
 #ifdef ZMQ_ONLY_FIRST_SUBSCRIBE
     /**
      * @var int
@@ -316,202 +314,230 @@ class ZMQ
      */
   	const SOCKOPT_BINDTODEVICE = UNKNOWN;
 #endif
-#endif
-#if ZMQ_VERSION_MINOR >= 2
+#ifdef ZMQ_HEARTBEAT_IVL
   	/**
      * @var int
      * @cvalue ZMQ_HEARTBEAT_IVL
      */
   	const SOCKOPT_HEARTBEAT_IVL = UNKNOWN;
-
+#endif
+#ifdef ZMQ_HEARTBEAT_TTL
   	/**
      * @var int
      * @cvalue ZMQ_HEARTBEAT_TTL
      */
   	const SOCKOPT_HEARTBEAT_TTL = UNKNOWN;
-
+#endif
+#ifdef ZMQ_HEARTBEAT_TIMEOUT
   	/**
      * @var int
      * @cvalue ZMQ_HEARTBEAT_TIMEOUT
      */
   	const SOCKOPT_HEARTBEAT_TIMEOUT = UNKNOWN;
-
+#endif
+#ifdef ZMQ_USE_FD
   	/**
      * @var int
      * @cvalue ZMQ_USE_FD
      */
   	const SOCKOPT_USE_FD = UNKNOWN;
-
+#endif
+#ifdef ZMQ_XPUB_MANUAL
   	/**
      * @var int
      * @cvalue ZMQ_XPUB_MANUAL
      */
   	const SOCKOPT_XPUB_MANUAL = UNKNOWN;
-
+#endif
+#ifdef ZMQ_XPUB_WELCOME_MSG
   	/**
    	 * @var int
    	 * @cvalue ZMQ_XPUB_WELCOME_MSG
    	 */
   	const SOCKOPT_XPUB_WELCOME_MSG = UNKNOWN;
-
+#endif
+#ifdef ZMQ_STREAM_NOTIFY
     /**
    	 * @var int
    	 * @cvalue ZMQ_STREAM_NOTIFY
    	 */
   	const SOCKOPT_STREAM_NOTIFY = UNKNOWN;
-
+#endif
+#ifdef ZMQ_INVERT_MATCHING
     /**
    	 * @var int
    	 * @cvalue ZMQ_INVERT_MATCHING
    	 */
   	const SOCKOPT_INVERT_MATCHING = UNKNOWN;
-
+#endif
+#ifdef ZMQ_XPUB_VERBOSER
     /**
    	 * @var int
    	 * @cvalue ZMQ_XPUB_VERBOSER
    	 */
     const SOCKOPT_XPUB_VERBOSER = UNKNOWN;
-
+#endif
+#ifdef ZMQ_CONNECT_TIMEOUT
     /**
    	 * @var int
    	 * @cvalue ZMQ_CONNECT_TIMEOUT
    	 */
   	const SOCKOPT_CONNECT_TIMEOUT = UNKNOWN;
-
+#endif
+#ifdef ZMQ_TCP_MAXRT
     /**
    	 * @var int
    	 * @cvalue ZMQ_TCP_MAXRT
    	 */
   	const SOCKOPT_TCP_MAXRT = UNKNOWN;
-
+#endif
+#ifdef ZMQ_MULTICAST_MAXTPDU
     /**
    	 * @var int
    	 * @cvalue ZMQ_MULTICAST_MAXTPDU
    	 */
   	const SOCKOPT_MULTICAST_MAXTPDU = UNKNOWN;
-
+#endif
+#ifdef ZMQ_VMCI_BUFFER_SIZE
     /**
    	 * @var int
    	 * @cvalue ZMQ_VMCI_BUFFER_SIZE
    	 */
   	const SOCKOPT_VMCI_BUFFER_SIZE = UNKNOWN;
-
+#endif
+#ifdef ZMQ_VMCI_BUFFER_MIN_SIZE
     /**
    	 * @var int
    	 * @cvalue ZMQ_VMCI_BUFFER_MIN_SIZE
    	 */
   	const SOCKOPT_VMCI_BUFFER_MIN_SIZE = UNKNOWN;
-
+#endif
+#ifdef SOCKOPT_VMCI_BUFFER_MAX_SIZE
     /**
    	 * @var int
    	 * @cvalue ZMQ_VMCI_BUFFER_MAX_SIZE
    	 */
   	const SOCKOPT_VMCI_BUFFER_MAX_SIZE = UNKNOWN;
-
+#endif
+#ifdef ZMQ_VMCI_CONNECT_TIMEOUT
     /**
    	 * @var int
    	 * @cvalue ZMQ_VMCI_CONNECT_TIMEOUT
    	 */
   	const SOCKOPT_VMCI_CONNECT_TIMEOUT = UNKNOWN;
 #endif
-#if ZMQ_VERSION_MINOR >= 1
-
+#ifdef ZMQ_TOS
     /**
    	 * @var int
    	 * @cvalue ZMQ_TOS
    	 */
   	const SOCKOPT_TOS = UNKNOWN;
-
+#endif
+#ifdef ZMQ_ROUTER_HANDOVER
   	/**
    	 * @var int
    	 * @cvalue ZMQ_ROUTER_HANDOVER
    	 */
   	const ZMQ_ROUTER_HANDOVER = UNKNOWN;
-
+#endif
+#ifdef ZMQ_CONNECT_RID
 	/**
 	 * @var int
 	 * @cvalue ZMQ_CONNECT_RID
 	 */
 	const SOCKOPT_CONNECT_RID = UNKNOWN;
-
+#endif
+#ifdef ZMQ_HANDSHAKE_IVL
 	/**
 	 * @var int
 	 * @cvalue ZMQ_HANDSHAKE_IVL
 	 */
 	const SOCKOPT_HANDSHAKE_IVL = UNKNOWN;
-
+#endif
+#ifdef ZMQ_SOCKS_PROXY
 	/**
 	 * @var int
 	 * @cvalue ZMQ_SOCKS_PROXY
 	 */
 	const SOCKOPT_SOCKS_PROXY = UNKNOWN;
-
+#endif
+#ifdef ZMQ_XPUB_NODROP
 	/**
 	 * @var int
 	 * @cvalue ZMQ_XPUB_NODROP
 	 */
 	const SOCKOPT_XPUB_NODROP = UNKNOWN;
 #endif
-
+#ifdef ZMQ_ROUTER_MANDATORY
   	/**
    	 * @var int
    	 * @cvalue ZMQ_ROUTER_MANDATORY
    	 */
   	const SOCKOPT_ROUTER_MANDATORY = UNKNOWN;
-
+#endif
+#ifdef ZMQ_PROBE_ROUTER
   	/**
    	 * @var int
    	 * @cvalue ZMQ_PROBE_ROUTER
    	 */
   	const SOCKOPT_PROBE_ROUTER = UNKNOWN;
-
+#endif
+#ifdef ZMQ_REQ_RELAXED
   	/**
    	 * @var int
    	 * @cvalue ZMQ_REQ_RELAXED
    	 */
   	const SOCKOPT_REQ_RELAXED = UNKNOWN;
-
+#endif
+#ifdef ZMQ_REQ_CORRELATE
   	/**
    	 * @var int
    	 * @cvalue ZMQ_REQ_CORRELATE
    	 */
   	const SOCKOPT_REQ_CORRELATE = UNKNOWN;
-
+#endif
+#ifdef ZMQ_CONFLATE
   	/**
    	 * @var int
    	 * @cvalue ZMQ_CONFLATE
    	 */
   	const SOCKOPT_CONFLATE = UNKNOWN;
-
+#endif
+#ifdef ZMQ_ZAP_DOMAIN
   	/**
      * @var int
      * @cvalue ZMQ_ZAP_DOMAIN
      */
   	const SOCKOPT_ZAP_DOMAIN = UNKNOWN;
-
+#endif
+#ifdef ZMQ_MECHANISM
   	/**
    	 * @var int
    	 * @cvalue ZMQ_MECHANISM
    	 */
   	const SOCKOPT_MECHANISM = UNKNOWN;
-
+#endif
+#ifdef ZMQ_PLAIN_SERVER
   	/**
    	 * @var int
    	 * @cvalue ZMQ_PLAIN_SERVER
    	 */
   	const SOCKOPT_PLAIN_SERVER = UNKNOWN;
-
+#endif
+#ifdef ZMQ_PLAIN_USERNAME
   	/**
    	 * @var int
    	 * @cvalue ZMQ_PLAIN_USERNAME
    	 */
   	const SOCKOPT_PLAIN_USERNAME = UNKNOWN;
-
+#endif
+#ifdef ZMQ_PLAIN_PASSWORD
   	/**
      * @var int
      * @cvalue ZMQ_PLAIN_PASSWORD
      */
   	const SOCKOPT_PLAIN_PASSWORD = UNKNOWN;
+#endif
 #ifdef ZMQ_CURVE_SERVER
   	/**
    	 * @var int
@@ -580,7 +606,6 @@ class ZMQ
    	 * @cvalue ZMQ_IMMEDIATE
    	 */
 	const SOCKOPT_IMMEDIATE = UNKNOWN;
-#endif
 
     /**
      * @var int
@@ -844,7 +869,6 @@ class ZMQ
      */
     const EVENT_ALL = UNKNOWN;
 
-#if ZMQ_VERSION_MAJOR >= 4
     /**
      * @var int
      * @cvalue ZMQ_BLOCKY
@@ -900,7 +924,6 @@ class ZMQ
      * @cvalue ZMQ_IPV6
      */
     const CTXOPT_IPV6 = UNKNOWN;
-#endif
 
     /**
      * @var int
@@ -919,15 +942,11 @@ class ZMQ
      */
     public static function clock(): int {}
 
-#if PHP_ZMQ_HAVE_Z85
     public static function z85encode(string $data): ?string {}
 
     public static function z85decode(string $data): ?string {}
-#endif
 
-#if PHP_ZMQ_HAVE_CURVE_KEYPAIR
-    public static function curvekeypair(): void {}
-#endif
+    public static function curvekeypair(): array {}
 }
 
 class ZMQContext
@@ -1127,7 +1146,6 @@ class ZMQDevice
      *
      * @param ZMQSocket $frontend
      * @param ZMQSocket $backend
-     * @return void
      */
     public function __construct(ZMQSocket $frontend, ZMQSocket $backend, ?ZMQSocket $capture = null) {}
     /**
@@ -1141,7 +1159,7 @@ class ZMQDevice
 
     public function getIdleTimeout(): int {}
 
-    public function setTimerCallback(callable $idleCallback, int $timeout, ?object $userData = null): static {}
+    public function setTimerCallback(callable $timerCallback, int $timeout, ?object $userData = null): static {}
 
     public function setTimerTimeout(int $timeout): static {}
 

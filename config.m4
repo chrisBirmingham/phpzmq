@@ -52,27 +52,8 @@ if test "$PHP_ZMQ" != "no"; then
 
   $PKG_CONFIG libzmq --atleast-version 4.0.0
   if test $? = 0; then
-    AC_CHECK_LIB(
-      [zmq], [zmq_socket_monitor],
-      [AC_DEFINE(
-        [PHP_ZMQ_HAVE_SOCKET_MONITOR], [1], [Whether zmq_socket_monitor function is available]
-      )]
-    )
+    AC_MSG_ERROR(Only libzmq versions 4.0.0 and above are supported)
   fi
-
-  AC_CHECK_LIB(
-    [zmq], [zmq_z85_decode],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_Z85], [1], [Whether zmq_z85_decode function is available]
-    )]
-  )
-
-  AC_CHECK_LIB(
-    [zmq], [zmq_curve_keypair],
-    [AC_DEFINE(
-      [PHP_ZMQ_HAVE_CURVE_KEYPAIR], [1], [Whether zmq_curve_keypair function is available]
-    )]
-  )
 
   CFLAGS="$ORIG_CFLAGS"
   LDFLAGS="$ORIG_LDFLAGS"
