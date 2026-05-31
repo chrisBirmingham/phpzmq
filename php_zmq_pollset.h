@@ -28,15 +28,14 @@
 +-----------------------------------------------------------------------------------+
 */
 
-#ifndef _PHP_ZMQ_POLLSET_H_
-# define _PHP_ZMQ_POLLSET_H_
+#pragma once
 
-#define PHP_ZMQ_POLLSET_ERR_NO_STREAM    -1
-#define PHP_ZMQ_POLLSET_ERR_CANNOT_CAST  -2
-#define PHP_ZMQ_POLLSET_ERR_CAST_FAILED  -3
-#define PHP_ZMQ_POLLSET_ERR_NO_INIT      -4
-#define PHP_ZMQ_POLLSET_ERR_NO_POLL      -5
-#define PHP_ZMQ_POLLSET_ERR_KEY_FAIL     -6
+#define PHP_ZMQ_POLLSET_ERR_NO_STREAM -1
+#define PHP_ZMQ_POLLSET_ERR_CANNOT_CAST -2
+#define PHP_ZMQ_POLLSET_ERR_CAST_FAILED -3
+#define PHP_ZMQ_POLLSET_ERR_NO_INIT -4
+#define PHP_ZMQ_POLLSET_ERR_NO_POLL -5
+#define PHP_ZMQ_POLLSET_ERR_KEY_FAIL -6
 #define PHP_ZMQ_POLLSET_ERR_INVALID_TYPE -7
 
 
@@ -47,7 +46,7 @@ php_zmq_pollset *php_zmq_pollset_init(void);
 
 /** {{{ zend_bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value);
 */
-zend_bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value);
+bool php_zmq_pollset_items(php_zmq_pollset *set, zval *return_value);
 /* }}} */
 
 /** {{{ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, int *error);
@@ -58,12 +57,12 @@ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, 
 
 /** {{{ zend_bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry);
 */
-zend_bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry);
+bool php_zmq_pollset_delete(php_zmq_pollset *set, zval *entry);
 /* }}} */
 
 /** {{{ zend_bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key);
 */
-zend_bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key);
+bool php_zmq_pollset_delete_by_key(php_zmq_pollset *set, zend_string *key);
 /* }}} */
 
 /** {{{ void php_zmq_pollset_clear(php_zmq_pollset *set);
@@ -90,5 +89,3 @@ zval *php_zmq_pollset_errors(php_zmq_pollset *set);
 */
 void php_zmq_pollset_destroy(php_zmq_pollset **set);
 /* }}} */
-
-#endif /* _PHP_ZMQ_POLLSET_H_ */

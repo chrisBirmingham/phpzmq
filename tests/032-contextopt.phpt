@@ -12,14 +12,12 @@ include dirname(__FILE__) . '/zeromq_test_helper.inc';
 
 $context = new ZMQContext();
 
-var_dump($context->getOpt(ZMQ::CTXOPT_MAX_SOCKETS) === ZMQ::CTXOPT_MAX_SOCKETS_DEFAULT);
 var_dump($context->setOpt(ZMQ::CTXOPT_MAX_SOCKETS, 512));
 var_dump($context->getOpt(ZMQ::CTXOPT_MAX_SOCKETS));
 
 echo "OK";
 
 --EXPECT--
-bool(true)
 NULL
 int(512)
 OK

@@ -28,22 +28,15 @@
 +-----------------------------------------------------------------------------------+
 */
 
-#ifndef _PHP_ZMQ_PRIVATE_H_
-# define _PHP_ZMQ_PRIVATE_H_
+#pragma once
 
 #include "ext/standard/info.h"
 #include "Zend/zend_exceptions.h"
 #include "Zend/zend_llist.h"
 #include "main/php_ini.h"
+#include "zend_types.h"
 
 #include <zmq.h>
-
-#ifdef HAVE_CZMQ
-# include <czmq.h>
-# if CZMQ_VERSION_MAJOR >= 2
-#  define HAVE_CZMQ_2
-# endif
-#endif
 
 #ifdef PHP_WIN32
 # include "win32/php_stdint.h"
@@ -63,10 +56,10 @@ typedef struct _php_zmq_context {
 	int io_threads;
 
 	/* Is this a persistent context */
-	zend_bool is_persistent;
+	bool is_persistent;
 
 	/* Should this context live to end of process */
-	zend_bool use_shared_ctx;
+	bool use_shared_ctx;
 
 	/* How many active sockets */
 	zend_long socket_count;
@@ -78,7 +71,7 @@ typedef struct _php_zmq_context {
 
 /* {{{ typedef struct _php_zmq_socket
 */
-typedef struct _php_zmq_socket  {
+typedef struct _php_zmq_socket {
 	void *z_socket;
 	int socket_type;
 	php_zmq_context *ctx;
@@ -86,7 +79,7 @@ typedef struct _php_zmq_socket  {
 	HashTable connect;
 	HashTable bind;
 
-	zend_bool is_persistent;
+	bool is_persistent;
 
 	/* Who created me */
 	int pid;
@@ -95,16 +88,16 @@ typedef struct _php_zmq_socket  {
 
 /* {{{ typedef struct _php_zmq_context_object 
 */
-typedef struct _php_zmq_context_object  {
+typedef struct _php_zmq_context_object {
 	php_zmq_context *context;
-	zend_object zo;
+	zend_object std;
 } php_zmq_context_object;
 
 /* }}} */
 
 /* {{{ typedef struct _php_zmq_socket_object 
 */
-typedef struct _php_zmq_socket_object  {
+typedef struct _php_zmq_socket_object {
 	php_zmq_socket *socket;
 
 	/* options for the context */
@@ -112,20 +105,20 @@ typedef struct _php_zmq_socket_object  {
 
 	/* zval of the context */
 	zval context_obj;
-	zend_object zo;
+	zend_object std;
 } php_zmq_socket_object;
 /* }}} */
 
 /* {{{ typedef struct _php_zmq_poll_object 
 */
-typedef struct _php_zmq_poll_object  {
+typedef struct _php_zmq_poll_object {
 	php_zmq_pollset *set;
-	zend_object zo;
+	zend_object std;
 } php_zmq_poll_object;
 /* }}} */
 
 typedef struct _php_zmq_device_cb_t {
-	zend_bool initialized;
+	bool initialized;
 	long timeout;
 	zend_fcall_info fci;
 	zend_fcall_info_cache fci_cache;
@@ -135,14 +128,14 @@ typedef struct _php_zmq_device_cb_t {
 
 /* {{{ typedef struct _php_zmq_device_object 
 */
-typedef struct _php_zmq_device_object  {
+typedef struct _php_zmq_device_object {
 	php_zmq_device_cb_t idle_cb;
 	php_zmq_device_cb_t timer_cb;
 
 	zval front;
 	zval back;
 	zval capture;
-	zend_object zo;
+	zend_object std;
 } php_zmq_device_object;
 /* }}} */
 
@@ -153,12 +146,6 @@ typedef struct _php_zmq_device_object  {
 #endif
 
 #define ZMQ_RETURN_THIS RETURN_ZVAL(getThis(), 1, 0);
-
-#define PHP_ZMQ_ERROR_HANDLING_INIT() zend_error_handling error_handling;
-
-#define PHP_ZMQ_ERROR_HANDLING_THROW() zend_replace_error_handling(EH_THROW, php_zmq_socket_exception_sc_entry, &error_handling);
-
-#define PHP_ZMQ_ERROR_HANDLING_RESTORE() zend_restore_error_handling(&error_handling);
 
 /* Compatibility macros between zeromq 2.x and 3.x */
 #ifndef ZMQ_DONTWAIT
@@ -186,16 +173,13 @@ typedef struct _php_zmq_device_object  {
 
 #define PHP_ZMQ_INTERNAL_ERROR -99
 
-PHP_METHOD(zmqsocket, getsockopt);
-PHP_METHOD(zmqsocket, setsockopt);
-zend_bool php_zmq_device(php_zmq_device_object *intern);
+bool php_zmq_device(php_zmq_device_object *intern);
 
-zend_class_entry *php_zmq_socket_exception_sc_entry_get (void);
-zend_class_entry *php_zmq_device_exception_sc_entry_get (void);
+zend_result php_zmq_socket_setsockopt(void *z_socket, int socket_type, zend_long key, zval *val);
+zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long key, zval *retval);
 
-php_stream *php_zmq_create_zmq_fd(zval *obj);
-
-void php_zmq_register_sockopt_constants (zend_class_entry *ce);
+zend_class_entry *php_zmq_socket_exception_sc_entry_get(void);
+zend_class_entry *php_zmq_device_exception_sc_entry_get(void);
 
 typedef struct _php_zmq_clock_ctx_t php_zmq_clock_ctx_t;
 
@@ -209,10 +193,9 @@ char *php_zmq_get_libzmq_version(void);
 
 zend_long php_zmq_get_libzmq_version_id(void);
 
-char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_cache);
+char *php_zmq_printable_func(zend_fcall_info *fci, zend_fcall_info_cache *fci_cache);
 
-
-zend_bool php_zmq_shared_ctx_init(void);
+bool php_zmq_shared_ctx_init(void);
 
 void php_zmq_shared_ctx_assign_to(php_zmq_context *context);
 
@@ -224,28 +207,31 @@ void php_zmq_shared_ctx_socket_count_incr(void);
 
 void php_zmq_shared_ctx_socket_count_decr(void);
 
-
-
-
 ZEND_BEGIN_MODULE_GLOBALS(php_zmq)
 	php_zmq_clock_ctx_t *clock_ctx;
-ZEND_END_MODULE_GLOBALS(php_zmq)
+ZEND_END_MODULE_GLOBALS(php_zmq);
 
-#ifdef HAVE_CZMQ_2
+static inline php_zmq_context_object *php_zmq_context_fetch_object(zend_object *obj)
+{
+	return (php_zmq_context_object *)((char *)obj - XtOffsetOf(php_zmq_context_object, std));
+}
 
-# define PHP_ZMQ_AUTH_TYPE_PLAIN 0
-# define PHP_ZMQ_AUTH_TYPE_CURVE 1
+static inline php_zmq_socket_object *php_zmq_socket_fetch_object(zend_object *obj)
+{
+	return (php_zmq_socket_object *)((char *)obj - XtOffsetOf(php_zmq_socket_object, std));
+}
 
-typedef struct _php_zmq_cert {
-	zcert_t *zcert;
-	zend_object zo;
-} php_zmq_cert_object;
+static inline php_zmq_poll_object *php_zmq_poll_fetch_object(zend_object *obj)
+{
+	return (php_zmq_poll_object *)((char *)obj - XtOffsetOf(php_zmq_poll_object, std));
+}
 
-typedef struct _php_zmq_auth {
-	zctx_t *shadow_context;
-	zauth_t *zauth;
-	zend_object zo;
-} php_zmq_auth_object;
-#endif
+static inline php_zmq_device_object *php_zmq_device_fetch_object(zend_object *obj)
+{
+	return (php_zmq_device_object *)((char *)obj - XtOffsetOf(php_zmq_device_object, std));
+}
 
-#endif /* _PHP_ZMQ_PRIVATE_H_ */
+#define PHP_ZMQ_CONTEXT_OBJECT(zv) php_zmq_context_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_SOCKET_OBJECT(zv) php_zmq_socket_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_POLL_OBJECT(zv) php_zmq_poll_fetch_object(Z_OBJ_P(zv));
+#define PHP_ZMQ_DEVICE_OBJECT(zv) php_zmq_device_fetch_object(Z_OBJ_P(zv));

@@ -1,0 +1,25 @@
+{
+    "name": "intermaterium/phpzmq",
+    "description": "ZeroMQ is a software library that lets you quickly design and implement a fast message-based applications",
+    "type": "php-ext",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Christopher Birmingham",
+            "email": "chris.birmingham@hotmail.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "php-ext": {
+        "extension-name": "zmq",
+        "configure-options": [
+            {
+                "name": "with-zmq",
+                "description": "Enable 0MQ support. DIR is the prefix to libzmq installation directory",
+                "needs-value": true
+            }
+        ]
+    }
+}

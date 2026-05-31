@@ -3,7 +3,7 @@ Test unbind
 --SKIPIF--
 <?php 
     require_once(dirname(__FILE__) . '/skipif.inc'); 
-	if (version_compare(ZMQ::LIBZMQ_VER, '4.1.0', '<')) {
+	if (ZMQ::LIBZMQ_VERSION_MAJOR < 4) {
 		die("skip Unbind doesnt work well before libzqm 4.1.x");
 	}
 ?>
