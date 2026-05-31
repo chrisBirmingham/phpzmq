@@ -1,3 +1,10 @@
+2.0.0
+- Dropped support for libzmq below version 4
+- Dropped support for PHP versions lower than 8.1
+- Removed czmq support
+- Updated to use PHP's new arginfo generator
+- Updated all functions to use php's new parameter parsing api, except for one func
+
 1.0.4
 - Added 3.2.x context options
 - Added 3.2.x socket options
