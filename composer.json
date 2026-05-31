@@ -2,7 +2,7 @@
     "name": "intermaterium/phpzmq",
     "description": "ZeroMQ is a software library that lets you quickly design and implement a fast message-based applications",
     "type": "php-ext",
-    "license": "BSD",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Christopher Birmingham",
