@@ -1,3 +1,6 @@
+2.0.1
+- Update poll method to use new zend parsing macros
+
 2.0.0
 - Dropped support for libzmq below version 4
 - Dropped support for PHP versions lower than 8.1

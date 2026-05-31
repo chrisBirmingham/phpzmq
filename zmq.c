@@ -1377,14 +1377,34 @@ PHP_METHOD(ZMQPoll, remove)
 PHP_METHOD(ZMQPoll, poll)
 {
 	php_zmq_poll_object *intern;
-	zval *r_array, *w_array;
-
+	zval *r_array = NULL;
+	zval *w_array = NULL;
 	zend_long timeout = -1;
 	int rc;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS(), "a!/a!/|l", &r_array, &w_array, &timeout) == FAILURE) {
-    return;
-  }
+	ZEND_PARSE_PARAMETERS_START(2, 3)
+		Z_PARAM_ZVAL(r_array)
+		Z_PARAM_ZVAL(w_array)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_LONG(timeout)
+	ZEND_PARSE_PARAMETERS_END();
+
+	if (Z_TYPE_P(Z_REFVAL_P(r_array)) != IS_ARRAY) {
+		zend_argument_type_error(1, "must be an array");
+		RETURN_THROWS();
+	}
+
+	if (Z_TYPE_P(Z_REFVAL_P(w_array)) != IS_ARRAY) {
+		zend_argument_type_error(2, "must be an array");
+		RETURN_THROWS();
+	}
+
+	ZVAL_DEREF(r_array);
+	/* I don't fully understand the zend engine but this stops a segfault */
+	SEPARATE_ARRAY(r_array);
+
+	ZVAL_DEREF(w_array);
+	SEPARATE_ARRAY(w_array);
 
 	intern = PHP_ZMQ_POLL_OBJECT(ZEND_THIS);
 

@@ -2,9 +2,9 @@
 
 PHP bindings for 0MQ. The documentation is available [here][1]
 
-This is a hardfork of the [PHP Extension][2], updated for a PHP's newer extension sensibilities and API functions. As such, support for versions of PHP older than 8.1 and versionf of libzmq below version 4 have been dropped.
+This is a hardfork of the [PHP Extension][2], updated for a PHP's newer extension sensibilities and API functions. As such, support for versions of PHP older than 8.1 and versions of libzmq below version 4 have been dropped.
 
-Additionally the support for libczmq has been dropped as it wasn't documented and wastn't used at $work. Will be added back at a later date should it be required.
+Additionally the support for libczmq has been dropped as it wasn't documented and wasn't used at $work. Will be added back at a later date should it be required.
 
 ## Prerequisites
 
