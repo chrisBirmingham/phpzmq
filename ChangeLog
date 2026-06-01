@@ -1,3 +1,6 @@
+2.0.2
+- Fix config.m4 not testing pkg-config return correctly on some machines
+
 2.0.1
 - Update poll method to use new zend parsing macros
 

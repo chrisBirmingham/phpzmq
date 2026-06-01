@@ -50,8 +50,7 @@ if test "$PHP_ZMQ" != "no"; then
   CFLAGS="$CFLAGS $PHP_ZMQ_CFLAGS"
   LDFLAGS="$LDFLAGS $PHP_ZMQ_LIBS"
 
-  $PKG_CONFIG libzmq --atleast-version 4.0.0
-  if test $? = 0; then
+  if ! $PKG_CONFIG libzmq --atleast-version 4.0.0; then
     AC_MSG_ERROR(Only libzmq versions 4.0.0 and above are supported)
   fi
 
