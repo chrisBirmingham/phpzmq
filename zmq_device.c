@@ -162,7 +162,7 @@ bool php_zmq_device(php_zmq_device_object *intern)
 		capture_sock = capture->socket->z_socket;
 	}
 
-	last_message_received = php_zmq_clock (ZMQ_G (clock_ctx));
+	last_message_received = php_zmq_clock(ZMQ_G(clock_ctx));
 
 	intern->timer_cb.scheduled_at = last_message_received + intern->timer_cb.timeout;
 	intern->idle_cb.scheduled_at = last_message_received + intern->idle_cb.timeout;

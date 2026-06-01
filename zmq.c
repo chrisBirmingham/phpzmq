@@ -69,7 +69,7 @@ zend_class_entry *php_zmq_device_exception_sc_entry_get(void)
 	return php_zmq_device_exception_sc_entry;
 }
 
-static zend_long php_zmq_context_socket_count_get(php_zmq_context *context)
+static inline zend_long php_zmq_context_socket_count_get(php_zmq_context *context)
 {
 	return (context->use_shared_ctx)
 		? php_zmq_shared_ctx_socket_count()
@@ -95,7 +95,8 @@ static void php_zmq_context_socket_count_decr(php_zmq_context *context)
 }
 
 /* list entries */
-static int le_zmq_socket, le_zmq_context;
+static int le_zmq_socket;
+static int le_zmq_context;
 
 /** {{{ static int php_zmq_socket_list_entry(void)
 */
@@ -119,7 +120,7 @@ static inline int php_zmq_context_list_entry(void)
 static void php_zmq_context_destroy(php_zmq_context *context)
 {
 	if (context->pid == getpid()) {
-		(void) zmq_term(context->z_ctx);
+		(void)zmq_term(context->z_ctx);
 	}
 	pefree(context, context->is_persistent);
 }
@@ -212,7 +213,7 @@ static php_zmq_context *php_zmq_context_get(zend_long io_threads, bool is_persis
 		GC_SET_REFCOUNT(&le, 1);
 
 		/* plist_key is not a persistent allocated key, thus we use str_update here */
-		if (zend_hash_str_update_mem(&EG(persistent_list), plist_key->val, plist_key->len, &le, sizeof(le)) == NULL) {
+		if (zend_hash_str_update_mem(&EG(persistent_list), ZSTR_VAL(plist_key), ZSTR_LEN(plist_key), &le, sizeof(le)) == NULL) {
 			if (plist_key) {
 				zend_string_release(plist_key);
 			}
@@ -417,6 +418,8 @@ PHP_METHOD(ZMQContext, setOpt)
 			zend_throw_exception(php_zmq_context_exception_sc_entry_get(), "Unknown option key", PHP_ZMQ_INTERNAL_ERROR);
 			RETURN_THROWS();
 	}
+
+	ZMQ_RETURN_THIS;
 }
 /* }}} */
 
@@ -494,7 +497,7 @@ static php_zmq_socket *php_zmq_socket_new(php_zmq_context *context, zend_long ty
 
 static inline zend_string *php_zmq_socket_plist_key(zend_long type, zend_string *persistent_id, bool use_shared_ctx)
 {
-	return strpprintf(0, "zmq_socket:[%ld]-[%s]-[%d]", (long)type, persistent_id->val, use_shared_ctx);
+	return strpprintf(0, "zmq_socket:[%ld]-[%s]-[%d]", (long)type, ZSTR_VAL(persistent_id), use_shared_ctx);
 }
 
 static void php_zmq_socket_store(php_zmq_socket *zmq_sock_p, zend_long type, zend_string *persistent_id, bool use_shared_ctx)
@@ -510,7 +513,7 @@ static void php_zmq_socket_store(php_zmq_socket *zmq_sock_p, zend_long type, zen
 	plist_key = php_zmq_socket_plist_key(type, persistent_id, use_shared_ctx);
 
 	/* plist_key is not a persistent allocated key, thus we use str_update here */
-	if (zend_hash_str_update_mem(&EG(persistent_list), plist_key->val, plist_key->len, &le, sizeof(le)) == NULL) {
+	if (zend_hash_str_update_mem(&EG(persistent_list), ZSTR_VAL(plist_key), ZSTR_LEN(plist_key), &le, sizeof(le)) == NULL) {
 		if (plist_key) {
 			zend_string_release(plist_key);
 		}
@@ -543,7 +546,7 @@ static php_zmq_socket *php_zmq_socket_get(php_zmq_context *context, zend_long ty
 				if (plist_key) {
 					zend_string_release(plist_key);
 				}
-				return (php_zmq_socket *) le_p->ptr;
+				return (php_zmq_socket *)le_p->ptr;
 			}
 		}
 	}
@@ -657,7 +660,7 @@ PHP_METHOD(ZMQContext, getSocket)
 		}
 	}
 	if (socket->is_persistent) {
-		interns->persistent_id = estrdup(persistent_id->val);
+		interns->persistent_id = estrdup(ZSTR_VAL(persistent_id));
 	}
 }
 /* }}} */
@@ -742,7 +745,7 @@ PHP_METHOD(ZMQSocket, __construct)
 		}
 	}
 	if (socket->is_persistent) {
-		intern->persistent_id = estrdup(persistent_id->val);
+		intern->persistent_id = estrdup(ZSTR_VAL(persistent_id));
 	}
 }
 /* }}} */
@@ -757,7 +760,7 @@ static zend_result php_zmq_send(php_zmq_socket_object *intern, zend_string *mess
 		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to initialize message structure: %s", zmq_strerror(errno));
 		return FAILURE;
 	}
-	memcpy(zmq_msg_data(&message), message_param->val, message_param->len);
+	memcpy(zmq_msg_data(&message), ZSTR_VAL(message_param), ZSTR_LEN(message_param));
 
 	if (zmq_sendmsg(intern->socket->z_socket, &message, flags) < 0) {
 		zmq_msg_close(&message);
@@ -1188,7 +1191,7 @@ PHP_METHOD(ZMQSocket, disconnect)
 static int php_zmq_get_keys(zval *ppzval, int num_args, va_list args, zend_hash_key *hash_key)
 {
 	zval *retval = va_arg(args, zval *);
-	add_next_index_string(retval, hash_key->key->val);
+	add_next_index_string(retval, ZSTR_VAL(hash_key->key));
 	return ZEND_HASH_APPLY_KEEP;
 }
 /* }}} */
@@ -1560,7 +1563,7 @@ static void s_clear_device_callback(php_zmq_device_cb_t *cb)
 static void s_init_device_callback(php_zmq_device_cb_t *cb, zend_fcall_info *fci, zend_fcall_info_cache *fci_cache, zend_long timeout, zval *user_data)
 {
 	memcpy(&cb->fci, fci, sizeof (zend_fcall_info));
-	memcpy(&cb->fci_cache, fci_cache, sizeof (zend_fcall_info_cache));
+	memcpy(&cb->fci_cache, fci_cache, sizeof(zend_fcall_info_cache));
 
 	Z_TRY_ADDREF(fci->function_name);
 	cb->initialized  = true;

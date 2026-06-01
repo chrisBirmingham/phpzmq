@@ -18,6 +18,7 @@ var_dump($context->getOpt(ZMQ::CTXOPT_MAX_SOCKETS));
 echo "OK";
 
 --EXPECT--
-NULL
+object(ZMQContext)#1 (0) {
+}
 int(512)
 OK

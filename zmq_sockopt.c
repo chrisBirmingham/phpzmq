@@ -331,7 +331,7 @@ zend_result php_zmq_socket_getsockopt(void *z_socket, int socket_type, zend_long
 { \
   int rc; \
   zend_string *str = zval_get_string(val); \
-  rc = zmq_setsockopt(z_socket, key, str->val, str->len); \
+  rc = zmq_setsockopt(z_socket, key, ZSTR_VAL(str), ZSTR_LEN(str)); \
   zend_string_release(str); \
   if (rc != 0) { \
     zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get(), errno, \

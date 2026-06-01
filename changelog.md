@@ -1,3 +1,8 @@
+2.0.3
+- Return static from setOpt method, it was documented in the api but never implemented?
+- Replace what should be all direct accesses to php strings internals with macros
+- Theoretically fixed pie not setting the extension version correctly
+
 2.0.2
 - Fix config.m4 not testing pkg-config return correctly on some machines
 

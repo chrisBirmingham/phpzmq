@@ -980,7 +980,7 @@ class ZMQContext
      * @param int $value
      * @return ZMQContext
      */
-    public function setOpt(int $option, int $value): void {}
+    public function setOpt(int $option, int $value): static {}
 
     /**
      * Set a context option

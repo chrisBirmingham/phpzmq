@@ -105,10 +105,10 @@ php_zmq_clock_ctx_t *php_zmq_clock_init()
 	php_zmq_clock_ctx_t *ctx;
 	mach_timebase_info_data_t info;
 
-	if (mach_timebase_info (&info) != 0) {
+	if (mach_timebase_info(&info) != 0) {
 		return NULL;
 	}
-	ctx = malloc (sizeof (php_zmq_clock_ctx_t));
+	ctx = malloc(sizeof(php_zmq_clock_ctx_t));
 	ctx->scaling_factor = (info.numer / info.denom);
 	return ctx;
 }
@@ -145,7 +145,7 @@ static uint64_t s_get_tick_count(php_zmq_clock_ctx_t *clock_ctx)
 
 	clock_ctx->last_ticks = ticks;
 
-	ticks += (uint64_t) clock_ctx->wrap_count * (uint64_t) MAXDWORD;
+	ticks += (uint64_t)clock_ctx->wrap_count * (uint64_t) MAXDWORD;
 	return ticks;
 }
 

@@ -79,14 +79,14 @@ static void s_shared_ctx_destroy()
 			s_ctx_mutex = NULL;
 
 			zmq_term(s_ctx);
-			s_ctx     = NULL;
+			s_ctx = NULL;
 			s_ctx_pid = -1;
 
 			tsrm_mutex_unlock(tmp_mutex);
 			tsrm_mutex_free(tmp_mutex);
 
 			s_ctx_mutex = NULL;
-			s_ctx_pid   = -1;
+			s_ctx_pid = -1;
 			return;
 		} else {
 			s_shared_ctx_unlock();
