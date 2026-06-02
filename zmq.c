@@ -31,11 +31,8 @@
 #include "php_zmq.h"
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
-#include "zend.h"
 #include "zend_attributes.h"
-#include "zend_types.h"
 #include "zmq_arginfo.h"
-#include <zmq.h>
 
 ZEND_DECLARE_MODULE_GLOBALS(php_zmq);
 
@@ -1573,68 +1570,68 @@ static void s_init_device_callback(php_zmq_device_cb_t *cb, zend_fcall_info *fci
 	}
 }
 
+static void zmq_device_set_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
+{
+	php_zmq_device_object *intern;
+	zend_long timeout;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(timeout)
+	ZEND_PARSE_PARAMETERS_END();
+
+	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
+
+	if (idle) {
+		intern->idle_cb.timeout = timeout;
+	} else {
+		intern->timer_cb.timeout = timeout;
+	}
+
+	ZMQ_RETURN_THIS;
+}
+
 /* {{{ proto void ZMQDevice::setIdleTimeout (int $milliseconds)
 	Set the idle timeout value
 */
 PHP_METHOD(ZMQDevice, setIdleTimeout)
 {
-	php_zmq_device_object *intern;
-	zend_long timeout;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(timeout)
-	ZEND_PARSE_PARAMETERS_END();
-
-	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
-	intern->idle_cb.timeout = timeout;
-	ZMQ_RETURN_THIS;
+	zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
-PHP_METHOD(ZMQDevice, getIdleTimeout)
+PHP_METHOD(ZMQDevice, setTimerTimeout)
+{
+	zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
+}
+
+static void zmq_device_get_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 {
 	php_zmq_device_object *intern;
 
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
-	RETURN_LONG(intern->idle_cb.timeout);
+	RETURN_LONG((idle) ? intern->idle_cb.timeout : intern->timer_cb.timeout);
 }
 
-PHP_METHOD(ZMQDevice, setTimerTimeout)
+PHP_METHOD(ZMQDevice, getIdleTimeout)
 {
-	php_zmq_device_object *intern;
-	zend_long timeout;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(timeout)
-	ZEND_PARSE_PARAMETERS_END();
-
-	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
-	intern->timer_cb.timeout = timeout;
-	ZMQ_RETURN_THIS;
+	zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 
 PHP_METHOD(ZMQDevice, getTimerTimeout)
 {
-	php_zmq_device_object *intern;
-
-	ZEND_PARSE_PARAMETERS_NONE();
-
-	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
-	RETURN_LONG(intern->timer_cb.timeout);
+	zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 
-/* {{{ proto void ZMQDevice::setIdleCallback (callable $function, integer timeout [, mixed $userdata])
-	Set the idle timeout value
-*/
-PHP_METHOD(ZMQDevice, setIdleCallback)
+static void zmq_device_set_callback(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 {
 	php_zmq_device_object *intern;
 	zval *user_data = NULL;
 	zend_fcall_info fci;
 	zend_fcall_info_cache fci_cache;
 	zend_long timeout = 0;
+	php_zmq_device_cb_t *cb;
 
 	ZEND_PARSE_PARAMETERS_START(2, 3)
 		Z_PARAM_FUNC(fci, fci_cache)
@@ -1645,18 +1642,31 @@ PHP_METHOD(ZMQDevice, setIdleCallback)
 
 	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
 
-	/* Hack for backwards compatible behaviour */
-	if (!timeout && intern->idle_cb.timeout) {
-		timeout = intern->idle_cb.timeout;
+	if (idle) {
+		cb = &intern->idle_cb;
+
+		if (!timeout && intern->idle_cb.timeout) {
+			timeout = intern->idle_cb.timeout;
+		}
+	} else {
+		cb = &intern->timer_cb;
 	}
 
-	s_clear_device_callback(&intern->idle_cb);
+	s_clear_device_callback(cb);
 
 	if (fci.size > 0) {
-		s_init_device_callback(&intern->idle_cb, &fci, &fci_cache, timeout, user_data);
+		s_init_device_callback(cb, &fci, &fci_cache, timeout, user_data);
 	}
-	ZMQ_RETURN_THIS;
 
+	ZMQ_RETURN_THIS;
+}
+
+/* {{{ proto void ZMQDevice::setIdleCallback (callable $function, integer timeout [, mixed $userdata])
+	Set the idle timeout value
+*/
+PHP_METHOD(ZMQDevice, setIdleCallback)
+{
+	zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
@@ -1665,26 +1675,7 @@ PHP_METHOD(ZMQDevice, setIdleCallback)
 */
 PHP_METHOD(ZMQDevice, setTimerCallback)
 {
-	php_zmq_device_object *intern;
-	zval *user_data = NULL;
-	zend_fcall_info fci;
-	zend_fcall_info_cache fci_cache;
-	zend_long timeout;
-
-	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_FUNC(fci, fci_cache)
-		Z_PARAM_LONG(timeout)
-		Z_PARAM_OPTIONAL
-		Z_PARAM_ZVAL_OR_NULL(user_data)
-	ZEND_PARSE_PARAMETERS_END();
-
-	intern = PHP_ZMQ_DEVICE_OBJECT(ZEND_THIS);
-
-	s_clear_device_callback(&intern->timer_cb);
-	if (fci.size > 0) {
-		s_init_device_callback(&intern->timer_cb, &fci, &fci_cache, timeout, user_data);
-	}
-	ZMQ_RETURN_THIS;
+	zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 /* }}} */
 
