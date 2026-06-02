@@ -1,18 +1,18 @@
 2.0.4
-- Fix wrong return type for Poll::add. Was documented as int but actually returns string
-- Move common functionality into common functions and use internal function passthru
-- Return the stored socket type instead of querying zmq for it
+- Fix wrong return type for ZMQPoll::add. Was documented as int but actually returns a string
+- Moved common functionality for the ZMQSocket::bind/connect, ZMQSocket::unbind/disconnect and ZMQDevice::get/set[Idle|Timer]Timeout, ZMQDevice::get/set[Idle|Timer]Callback into common functions and use `INTERNAL_FUNCTION_PARAM_PASSTHRU`
+- Updated the ZMQSocket::getSocketType method to return the stored socket type instead of calling `zmq_getsockopt`
 
 2.0.3
-- Return static from setOpt method, it was documented in the api but never implemented?
-- Replace what should be all direct accesses to php strings internals with macros
-- Theoretically fixed pie not setting the extension version correctly
+- Changed the return type of ZMQContext::setOpt from void to static. It was documented in the original api file to return static but was never implemented
+- Hopefully replace all instances of direct accesses to the zend_strings internals with php's macros `ZSTR_VAL` and `ZSTR_LEN`
+- Attempted to fix PIE not setting the extension version correctly in the `php_zmq.h` header file
 
 2.0.2
-- Fix config.m4 not testing pkg-config return correctly on some machines
+- Fix the libzmq version check in config.m4 not returning the correct value on certain machines
 
 2.0.1
-- Update poll method to use new zend parsing macros
+- Updated ZMQPoll::poll method to use new zend parameter parsing macros
 
 2.0.0
 - Dropped support for libzmq below version 4
