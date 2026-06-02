@@ -1,5 +1,5 @@
 /* This is a generated file, edit zmq.stub.php instead.
- * Stub hash: ace290a5137a5dddc58afe930d14f396778b7b56 */
+ * Stub hash: 644e8e584e9df4b54bbd6cf373d59eb156abcd71 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQ_clock, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -110,7 +110,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_ZMQSocket_recvmsg arginfo_class_ZMQSocket_recv
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_add, 0, 2, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ZMQPoll_add, 0, 2, IS_STRING, 0)
 	ZEND_ARG_OBJ_INFO(0, entry, ZMQSocket, 0)
 	ZEND_ARG_TYPE_INFO(0, type, IS_LONG, 0)
 ZEND_END_ARG_INFO()

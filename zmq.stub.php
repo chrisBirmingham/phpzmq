@@ -1093,9 +1093,9 @@ class ZMQPoll
      *
      * @param ZMQSocket $object
      * @param int $events
-     * @return int
+     * @return string
      */
-    public function add(ZMQSocket $entry, int $type): int {}
+    public function add(ZMQSocket $entry, int $type): string {}
 
     /**
      * Poll the sockets

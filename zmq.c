@@ -31,8 +31,11 @@
 #include "php_zmq.h"
 #include "php_zmq_private.h"
 #include "php_zmq_pollset.h"
+#include "zend.h"
 #include "zend_attributes.h"
+#include "zend_types.h"
 #include "zmq_arginfo.h"
+#include <zmq.h>
 
 ZEND_DECLARE_MODULE_GLOBALS(php_zmq);
 
@@ -1072,15 +1075,14 @@ PHP_METHOD(ZMQSocket, getPersistentId)
 }
 /* }}} */
 
-/* {{{ proto ZMQSocket ZMQSocket::bind(string $dsn[, boolean $force = false])
-	Bind the socket to an endpoint
-*/
-PHP_METHOD(ZMQSocket, bind)
+static void zmq_socket_connect(INTERNAL_FUNCTION_PARAMETERS, bool bind)
 {
 	php_zmq_socket_object *intern;
 	char *dsn;
 	size_t dsn_len;
 	bool force = false;
+	HashTable *ht;
+	int rc;
 
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STRING(dsn, dsn_len)
@@ -1090,18 +1092,36 @@ PHP_METHOD(ZMQSocket, bind)
 
 	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
 
+	ht = (bind) ? &intern->socket->bind : &intern->socket->connect;
+
 	/* already connected ? */
-	if (!force && zend_hash_str_exists(&(intern->socket->bind), dsn, dsn_len)) {
+	if (!force && zend_hash_str_exists(ht, dsn, dsn_len)) {
 		ZMQ_RETURN_THIS;
 	}
 
-	if (zmq_bind(intern->socket->z_socket, dsn) != 0) {
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to bind the ZMQ: %s", zmq_strerror(errno));
+	rc = (bind)
+		? zmq_bind(intern->socket->z_socket, dsn)
+		: zmq_connect(intern->socket->z_socket, dsn);
+
+	if (rc != 0) {
+		zend_throw_exception_ex(
+			php_zmq_socket_exception_sc_entry,
+			errno,
+			"Failed to %s the ZMQ: %s", (bind) ? "bind" : "connect", zmq_strerror(errno)
+		);
 		RETURN_THROWS();
 	}
 
-	zend_hash_str_add_empty_element(&(intern->socket->bind), dsn, dsn_len);
+	zend_hash_str_add_empty_element(ht, dsn, dsn_len);
 	ZMQ_RETURN_THIS;
+}
+
+/* {{{ proto ZMQSocket ZMQSocket::bind(string $dsn[, boolean $force = false])
+	Bind the socket to an endpoint
+*/
+PHP_METHOD(ZMQSocket, bind)
+{
+	zmq_socket_connect(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
@@ -1110,42 +1130,17 @@ PHP_METHOD(ZMQSocket, bind)
 */
 PHP_METHOD(ZMQSocket, connect)
 {
-	php_zmq_socket_object *intern;
-	char *dsn;
-	size_t dsn_len;
-	bool force = false;
-
-	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_STRING(dsn, dsn_len)
-		Z_PARAM_OPTIONAL
-		Z_PARAM_BOOL(force)
-	ZEND_PARSE_PARAMETERS_END();
-
-	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
-
-	/* already connected ? */
-	if (!force && zend_hash_str_exists(&(intern->socket->connect), dsn, dsn_len)) {
-		ZMQ_RETURN_THIS;
-	}
-
-	if (zmq_connect(intern->socket->z_socket, dsn) != 0) {
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to connect the ZMQ: %s", zmq_strerror(errno));
-		RETURN_THROWS();
-	}
-
-	zend_hash_str_add_empty_element(&(intern->socket->connect), dsn, dsn_len);
-	ZMQ_RETURN_THIS;
+	zmq_socket_connect(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 /* }}} */
 
-/* {{{ proto ZMQSocket ZMQSocket::unbind(string $dsn)
-	Unbind the socket from an endpoint
-*/
-PHP_METHOD(ZMQSocket, unbind)
+static void zmq_socket_disconnect(INTERNAL_FUNCTION_PARAMETERS, bool bind)
 {
 	php_zmq_socket_object *intern;
 	char *dsn;
 	size_t dsn_len;
+	HashTable *ht;
+	int rc;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STRING(dsn, dsn_len)
@@ -1153,13 +1148,30 @@ PHP_METHOD(ZMQSocket, unbind)
 
 	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
 
-	if (zmq_unbind(intern->socket->z_socket, dsn) != 0) {
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to unbind the ZMQ socket: %s", zmq_strerror(errno));
+	rc = (bind)
+		? zmq_unbind(intern->socket->z_socket, dsn)
+		: zmq_disconnect(intern->socket->z_socket, dsn);
+
+	if (rc != 0) {
+		zend_throw_exception_ex(
+			php_zmq_socket_exception_sc_entry,
+			errno,
+			"Failed to %s the ZMQ socket: %s", (bind) ? "unbind" : "disconnect", zmq_strerror(errno)
+		);
 		RETURN_THROWS();
 	}
 
-	zend_hash_str_del(&(intern->socket->bind), dsn, dsn_len);
+	ht = (bind) ? &intern->socket->bind : &intern->socket->connect;
+	zend_hash_str_del(ht, dsn, dsn_len);
 	ZMQ_RETURN_THIS;
+}
+
+/* {{{ proto ZMQSocket ZMQSocket::unbind(string $dsn)
+	Unbind the socket from an endpoint
+*/
+PHP_METHOD(ZMQSocket, unbind)
+{
+	zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
@@ -1168,23 +1180,7 @@ PHP_METHOD(ZMQSocket, unbind)
 */
 PHP_METHOD(ZMQSocket, disconnect)
 {
-	php_zmq_socket_object *intern;
-	char *dsn;
-	size_t dsn_len;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STRING(dsn, dsn_len)
-	ZEND_PARSE_PARAMETERS_END();
-
-	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
-
-	if (zmq_disconnect(intern->socket->z_socket, dsn) != 0) {
-		zend_throw_exception_ex(php_zmq_socket_exception_sc_entry, errno, "Failed to disconnect the ZMQ socket: %s", zmq_strerror(errno));
-		RETURN_THROWS();
-	}
-
-	zend_hash_str_del(&(intern->socket->connect), dsn, dsn_len);
-	ZMQ_RETURN_THIS;
+	zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 /* }}} */
 
