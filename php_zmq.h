@@ -31,7 +31,7 @@
 #pragma once
 
 #define PHP_ZMQ_EXTNAME "zmq"
-#define PHP_ZMQ_VERSION "@package_version@"
+#define PHP_ZMQ_VERSION "2.0.4"
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"

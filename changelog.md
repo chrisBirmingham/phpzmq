@@ -1,3 +1,8 @@
+2.0.4
+- Fix wrong return type for Poll::add. Was documented as int but actually returns string
+- Move common functionality into common functions and use internal function passthru
+- Return the stored socket type instead of querying zmq for it
+
 2.0.3
 - Return static from setOpt method, it was documented in the api but never implemented?
 - Replace what should be all direct accesses to php strings internals with macros

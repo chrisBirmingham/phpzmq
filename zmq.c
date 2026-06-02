@@ -1131,7 +1131,7 @@ PHP_METHOD(ZMQSocket, connect)
 }
 /* }}} */
 
-static void zmq_socket_disconnect(INTERNAL_FUNCTION_PARAMETERS, bool bind)
+static void php_zmq_socket_disconnect(INTERNAL_FUNCTION_PARAMETERS, bool bind)
 {
 	php_zmq_socket_object *intern;
 	char *dsn;
@@ -1168,7 +1168,7 @@ static void zmq_socket_disconnect(INTERNAL_FUNCTION_PARAMETERS, bool bind)
 */
 PHP_METHOD(ZMQSocket, unbind)
 {
-	zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
+	php_zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
@@ -1177,7 +1177,7 @@ PHP_METHOD(ZMQSocket, unbind)
 */
 PHP_METHOD(ZMQSocket, disconnect)
 {
-	zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
+	php_zmq_socket_disconnect(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 /* }}} */
 
@@ -1218,19 +1218,12 @@ PHP_METHOD(ZMQSocket, getEndpoints)
 */
 PHP_METHOD(ZMQSocket, getSocketType)
 {
-	int type;
-	size_t type_siz;
 	php_zmq_socket_object *intern;
 
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	intern = PHP_ZMQ_SOCKET_OBJECT(ZEND_THIS);
-	type_siz = sizeof(int);
-
-	if (zmq_getsockopt(intern->socket->z_socket, ZMQ_TYPE, &type, &type_siz) != -1) {
-		RETURN_LONG(type);
-	}
-	RETURN_LONG(-1);
+	RETURN_LONG(intern->socket->socket_type);
 }
 /* }}} */
 
@@ -1570,7 +1563,7 @@ static void s_init_device_callback(php_zmq_device_cb_t *cb, zend_fcall_info *fci
 	}
 }
 
-static void zmq_device_set_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
+static void php_zmq_device_set_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 {
 	php_zmq_device_object *intern;
 	zend_long timeout;
@@ -1595,16 +1588,16 @@ static void zmq_device_set_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 */
 PHP_METHOD(ZMQDevice, setIdleTimeout)
 {
-	zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
+	php_zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
 PHP_METHOD(ZMQDevice, setTimerTimeout)
 {
-	zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
+	php_zmq_device_set_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 
-static void zmq_device_get_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
+static void php_zmq_device_get_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 {
 	php_zmq_device_object *intern;
 
@@ -1616,15 +1609,15 @@ static void zmq_device_get_timeout(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 
 PHP_METHOD(ZMQDevice, getIdleTimeout)
 {
-	zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
+	php_zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 
 PHP_METHOD(ZMQDevice, getTimerTimeout)
 {
-	zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
+	php_zmq_device_get_timeout(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 
-static void zmq_device_set_callback(INTERNAL_FUNCTION_PARAMETERS, bool idle)
+static void php_zmq_device_set_callback(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 {
 	php_zmq_device_object *intern;
 	zval *user_data = NULL;
@@ -1666,7 +1659,7 @@ static void zmq_device_set_callback(INTERNAL_FUNCTION_PARAMETERS, bool idle)
 */
 PHP_METHOD(ZMQDevice, setIdleCallback)
 {
-	zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
+	php_zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, true);
 }
 /* }}} */
 
@@ -1675,7 +1668,7 @@ PHP_METHOD(ZMQDevice, setIdleCallback)
 */
 PHP_METHOD(ZMQDevice, setTimerCallback)
 {
-	zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
+	php_zmq_device_set_callback(INTERNAL_FUNCTION_PARAM_PASSTHRU, false);
 }
 /* }}} */
 
