@@ -366,7 +366,7 @@ void php_zmq_pollset_destroy(php_zmq_pollset **ptr)
 	s_pollset_clear(set, 0);
 
 	// Errors
-	zval_dtor(&(set->errors));
+	zval_ptr_dtor_nogc(&(set->errors));
 
 	efree(set);
 	*ptr = NULL;

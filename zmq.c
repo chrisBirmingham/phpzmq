@@ -929,7 +929,7 @@ PHP_METHOD(ZMQSocket, recvmulti)
 	do {
 		zend_string *part = php_zmq_recv(intern, flags);
 		if (!part) {
-			zval_dtor(return_value);
+			zval_ptr_dtor_nogc(return_value);
 			RETURN_THROWS();
 		}
 		add_next_index_str(return_value, part);
@@ -1851,25 +1851,25 @@ PHP_MINIT_FUNCTION(zmq)
 
 	php_zmq_context_sc_entry = register_class_ZMQContext();
 	php_zmq_context_sc_entry->create_object = php_zmq_context_object_new;
-	zmq_context_object_handlers.offset = XtOffsetOf(php_zmq_context_object, std);
+	zmq_context_object_handlers.offset = offsetof(php_zmq_context_object, std);
 	zmq_context_object_handlers.clone_obj = NULL;
 	zmq_context_object_handlers.free_obj  = php_zmq_context_object_free_storage;
 
 	php_zmq_socket_sc_entry = register_class_ZMQSocket();
 	php_zmq_socket_sc_entry->create_object = php_zmq_socket_object_new;
-	zmq_socket_object_handlers.offset = XtOffsetOf(php_zmq_socket_object, std);
+	zmq_socket_object_handlers.offset = offsetof(php_zmq_socket_object, std);
 	zmq_socket_object_handlers.clone_obj = NULL;
 	zmq_socket_object_handlers.free_obj = php_zmq_socket_object_free_storage;
 
 	php_zmq_poll_sc_entry = register_class_ZMQPoll();
 	php_zmq_poll_sc_entry->create_object = php_zmq_poll_object_new;
-	zmq_poll_object_handlers.offset = XtOffsetOf(php_zmq_poll_object, std);
+	zmq_poll_object_handlers.offset = offsetof(php_zmq_poll_object, std);
 	zmq_poll_object_handlers.clone_obj = NULL;
 	zmq_poll_object_handlers.free_obj = php_zmq_poll_object_free_storage;
 
 	php_zmq_device_sc_entry = register_class_ZMQDevice();
 	php_zmq_device_sc_entry->create_object = php_zmq_device_object_new;
-	zmq_device_object_handlers.offset = XtOffsetOf(php_zmq_device_object, std);
+	zmq_device_object_handlers.offset = offsetof(php_zmq_device_object, std);
 	zmq_device_object_handlers.clone_obj = NULL;
 	zmq_device_object_handlers.free_obj = php_zmq_device_object_free_storage;
 

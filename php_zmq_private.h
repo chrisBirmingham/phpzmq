@@ -213,22 +213,22 @@ ZEND_END_MODULE_GLOBALS(php_zmq);
 
 static inline php_zmq_context_object *php_zmq_context_fetch_object(zend_object *obj)
 {
-	return (php_zmq_context_object *)((char *)obj - XtOffsetOf(php_zmq_context_object, std));
+	return (php_zmq_context_object *)((char *)obj - offsetof(php_zmq_context_object, std));
 }
 
 static inline php_zmq_socket_object *php_zmq_socket_fetch_object(zend_object *obj)
 {
-	return (php_zmq_socket_object *)((char *)obj - XtOffsetOf(php_zmq_socket_object, std));
+	return (php_zmq_socket_object *)((char *)obj - offsetof(php_zmq_socket_object, std));
 }
 
 static inline php_zmq_poll_object *php_zmq_poll_fetch_object(zend_object *obj)
 {
-	return (php_zmq_poll_object *)((char *)obj - XtOffsetOf(php_zmq_poll_object, std));
+	return (php_zmq_poll_object *)((char *)obj - offsetof(php_zmq_poll_object, std));
 }
 
 static inline php_zmq_device_object *php_zmq_device_fetch_object(zend_object *obj)
 {
-	return (php_zmq_device_object *)((char *)obj - XtOffsetOf(php_zmq_device_object, std));
+	return (php_zmq_device_object *)((char *)obj - offsetof(php_zmq_device_object, std));
 }
 
 #define PHP_ZMQ_CONTEXT_OBJECT(zv) php_zmq_context_fetch_object(Z_OBJ_P(zv));

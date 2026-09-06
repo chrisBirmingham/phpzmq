@@ -10,6 +10,8 @@ if (!defined('ZMQ::LIBZMQ_VERSION_MAJOR') || ZMQ::LIBZMQ_VERSION_MAJOR < 3) {
 --FILE--
 <?php
 
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 $tested = 0;
 
 $removedVersion = false;

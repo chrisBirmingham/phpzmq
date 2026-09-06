@@ -1,3 +1,10 @@
+2.0.5
+
+- Update for PHP 8.6 removals
+    - Replace removed `zval_dtor` with `zval_ptr_dtor_nogc`
+    - Replace removed `XtOffsetOf` with `offsetof`
+    - Replace removed `zval_is_true` with `zend_is_true`
+
 2.0.4
 - Fix wrong return type for ZMQPoll::add. Was documented as int but actually returns a string
 - Moved common functionality for the ZMQSocket::bind/connect, ZMQSocket::unbind/disconnect and ZMQDevice::get/set[Idle|Timer]Timeout, ZMQDevice::get/set[Idle|Timer]Callback into common functions and use `INTERNAL_FUNCTION_PARAM_PASSTHRU`
